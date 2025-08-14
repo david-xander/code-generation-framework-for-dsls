@@ -1,0 +1,13 @@
+At the core, we have a a fruit. Every fruit has a name (like "banana" or "pear") and a color, which should be selected from a fixed list of common fruit colors (such as black, red, green, yellow, orange, brown or pink).
+
+Some fruits are more specific — for example, apples. Apples have some apple-specific details like a label (perhaps indicating the variety, like "Granny Smith" or "Pink Lady"), and possibly a stem — though not all apples have one, so this is optional.
+
+We also want to be able to express relationships between fruits. For example, a fruit might be related to other fruits — like varieties of the same kind, or maybe fruits that are often used together (like apples and cinnamon, or lemons and limes). So a fruit can have zero or more related fruits.
+
+A tree has a name and can bear multiple fruits. Additionally, trees can keep track of fruits that have dropped underneath them — separate from those still on the tree.
+
+FruitUtil isn’t a fruit itself, but is designed to work with groups of fruits. It can hold collections of fruits in various ways:
+- as a set (no duplicates, order doesn’t matter),
+- a bag (duplicates allowed),
+- a sequence (duplicates allowed and order matters), and
+- an ordered set (no duplicates, but with a defined order).

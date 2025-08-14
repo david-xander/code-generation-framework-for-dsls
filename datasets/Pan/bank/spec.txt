@@ -1,0 +1,15 @@
+We want to build a system to represent how a bank works, especially how it handles its clients, managers, accounts, and cards.
+
+Each bank will have multiple managers, multiple clients and manage multiple accounts.
+
+Every client has a name and a capacity (which could reflect things like financial strength, account limits, or relationship depth with the bank).
+
+Each manager also has a name. A client can be looked after by more than one manager and a manager can handle multiple clients.
+
+Clients can also hold multiple accounts, and an account can be owned by multiple clients — so it supports shared or joint accounts.
+
+In addition, clients can sponsor other clients.
+
+Each account includes a credit limit and an overdraft limit, which tells us how far the account is allowed to go below zero.
+
+Accounts can also have one or more cards linked. Each card has a card number and can be either credit or debit.

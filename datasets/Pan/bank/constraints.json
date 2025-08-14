@@ -1,0 +1,18 @@
+[
+  {
+    "ocl": "context Client inv: Client::allInstances()->forAll(var | var.accounts->size() <= var.capacity)",
+        "specification": "Every client can only have a number of accounts up to their specified capacity."
+  },
+  {
+    "ocl": "context Client inv: self.accounts->size()> 0",
+        "specification": "A client should have at least one account."
+  },
+  {
+	"ocl": "context Client inv: self.manager->size()>0",
+        "specification": "A client must have at least one manager."
+  },
+  {
+	"ocl": "context Account inv: Account::allInstances()->select(var| var.credit < 0)->isEmpty()",
+        "specification": "No account should have a credit balance less than zero."
+  }
+]

@@ -1,0 +1,55 @@
+### Domain Model Description
+
+1. **FeatureModel**
+   - Represents the top-level structure of the feature modeling system.
+   - Has a mandatory association with exactly one **RootFeature**.
+   - Can include zero or more **FeatureConstraints**.
+
+2. **RootFeature**
+   - Represents the primary or root feature of the model.
+   - Has a mandatory association with one or more **ConfigConstraints**.
+
+3. **Constraint**
+   - Serves as a generalization for constraints in the model.
+   - Specialized into two types:
+     - **FeatureConstraint**
+     - **ConfigConstraint**
+
+4. **FeatureConstraint**
+   - A specific type of constraint associated with **Features**.
+   - Includes an attribute type of type **Type**, which can have values require or exclude.
+   - Associates with two or more **Features**.
+
+5. **Feature**
+   - Represents an individual feature in the model.
+   - Has the following attributes:
+     - id: An integer identifier for the feature.
+     - name: A string representing the name of the feature.
+   - Can be linked to zero or more **ConfigConstraints** as "ConfigFeatures", with each constraint having a mandatory configuration of exactly one **ConfigConstraint**.
+
+6. **ConfigConstraint**
+   - A specific type of constraint related to the configuration of features.
+   - Includes an attribute kind of type **kind**, which can have values optional or mandatory.
+   - Specialized into three types:
+     - **And**
+     - **Or**
+     - **Xor**
+
+7. **And**
+   - A specific type of **ConfigConstraint** that represents an "AND" relationship between features.
+
+8. **Or**
+   - A specific type of **ConfigConstraint** that represents an "OR" relationship between features.
+
+9. **Xor**
+   - A specific type of **ConfigConstraint** that represents an "XOR" relationship between features.
+
+10. **kind (Enumeration)**
+    - Represents the configuration type for **ConfigConstraint**:
+      - optional
+      - mandatory
+
+11. **Type (Enumeration)**
+    - Represents the relationship type for **FeatureConstraint**:
+      - require
+      - exclude

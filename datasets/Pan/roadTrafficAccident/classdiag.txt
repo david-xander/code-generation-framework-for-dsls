@@ -1,0 +1,50 @@
+1. **Road Traffic Accident**  
+   - Represents an incident that occurs on the road involving vehicles and people.  
+   - It keeps track of the number of individuals who lost their lives in the accident through an attribute called `fatalvictims`.  
+   - Each accident occurs at a specific roadway and may involve one or more victims.  
+   - A specific type of accident, such as a rear-end collision, is modeled as a subtype.
+
+2. **Roadway**  
+   - Represents a segment of a road or highway.  
+   - When an accident happens, the specific roadway where the incident occurred is captured as a **RoadwayWithAccident**.
+
+3. **Roadway With Accident**  
+   - Extends the concept of a **Roadway** to represent a location involved in a traffic accident.  
+   - It is connected to the accident and the vehicles involved.
+
+4. **Vehicle**  
+   - Represents any motor vehicle, such as a car or truck.  
+   - A **TravelingVehicle** is a type of vehicle that is currently in motion as part of a trip.  
+
+5. **Traveling Vehicle**  
+   - A more specific vehicle type that is associated with travel.  
+   - If this vehicle is involved in an accident, it is further classified as a **CrashedVehicle**.  
+   - For every instance of travel, there is exactly one traveling vehicle.
+
+6. **Crashed Vehicle**  
+   - Represents a vehicle that has been involved in an accident.  
+   - Each crashed vehicle is linked to the accident it was involved in and to the specific roadway where it occurred.
+
+7. **Person**  
+   - Represents an individual who might play various roles in the domain.  
+   - People are classified into several categories:  
+     - **LivingPerson**: Individuals who are alive.  
+     - **DeceasedPerson**: Individuals who lost their lives, often due to an accident.  
+     - **Traveler**: A person traveling in a vehicle.
+
+8. **Traveler**  
+   - A person participating in a journey within a vehicle.  
+   - Travelers can be further classified into:  
+     - **Driver**: The individual operating the vehicle.  
+     - **Passenger**: A person being transported in the vehicle.  
+     - **Victim**: A traveler who is impacted by an accident.
+
+9. **Victim**  
+   - Represents any traveler affected by an accident, whether they were driving or a passenger.
+
+10. **Travel**  
+    - Represents an instance of travel involving people and vehicles.  
+    - Each travel event includes at least one person (as a traveler) and a single vehicle.
+
+11. **Rear-End Collision**  
+    - A specific subtype of a **Road Traffic Accident**, characterized by one vehicle colliding with the rear of another.

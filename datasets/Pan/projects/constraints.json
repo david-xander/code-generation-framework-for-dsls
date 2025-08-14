@@ -1,0 +1,14 @@
+[
+    {
+        "ocl": "context Company inv: employees->includesAll(projects.members->asSet())",
+        "specification": "A company must ensure that all members of its projects are its employees."
+    },
+    {
+        "ocl": "context Worker inv: not ( projects->select(p|p.status = ProjectStatus::active)->select(p|p.size=ProjectSize::big)->size() * 2 + projects->select(p|p.status = ProjectStatus::active)->select(p|p.size=ProjectSize::medium)->size() > 3)",
+        "specification": "A worker is not considered overloaded if the total composed of twice the number of large active projects plus the number of medium active projects does not exceed three."
+    },
+    {
+        "ocl": "context Project inv: status = ProjectStatus::active implies (requirements->select(q|not members->exists(m | m.qualifications->includes(q))))->isEmpty()",
+        "specification": "For an active project, all required qualifications must be met by the qualifications of at least one member of the project."
+    }
+]

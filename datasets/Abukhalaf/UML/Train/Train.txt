@@ -1,0 +1,17 @@
+The domain model consists of two primary classes: Train and Wagon. 
+
+The Train class has the following attributes:
+- identifier: A String that uniquely identifies the train.
+- numOfWagons: An Integer representing the number of wagons attached to the train.
+- numOfEngines: An Integer indicating the number of engines the train has.
+- weight: An Integer specifying the total weight of the train.
+
+The Wagon class includes these attributes:
+- weight: An Integer indicating the weight of the wagon.
+- smoking: A Boolean that denotes whether smoking is allowed in the wagon.
+- currentLoad: An Integer representing the current load of the wagon.
+- capacity: An Integer specifying the maximum capacity of the wagon.
+
+There is an association between Train and Wagon, where a Train can have multiple Wagons associated with it, indicated by the multiplicity "wagon *". 
+
+Additionally, there is a self-association within the Wagon class, where each Wagon can have a successor and a predecessor, both of which are optional, as indicated by the multiplicity "succ 0..1" and "pred 0..1".

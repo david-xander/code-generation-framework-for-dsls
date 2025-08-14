@@ -1,0 +1,79 @@
+### Domain Model Description in Natural Language
+
+#### Entities and Attributes:
+1. **Trip**: Represents a journey.
+   - Attributes: 
+     - name (String): The name of the trip.
+     - origin (String): The starting location of the trip.
+     - destination (String): The end location of the trip.
+     - type (String): The type of trip (e.g., regular or private).
+     - number (Integer): A unique identifier for the trip.
+
+2. **RegularTrip**: A specialized type of trip. Inherits from the Trip class.
+
+3. **PrivateTrip**: A specialized type of trip. Inherits from the Trip class.
+   - Attributes:
+     - extras (String): Additional services or features for the trip.
+
+4. **Coach**: Represents a vehicle used for trips.
+   - Attributes:
+     - id (Integer): A unique identifier for the coach.
+     - name (String): The name of the coach.
+     - model (String): The model of the coach.
+     - noOfSeats (Integer): The number of seats available in the coach.
+
+5. **Passenger**: Represents a person traveling on a trip.
+   - Attributes:
+     - name (String): The name of the passenger.
+     - age (Integer): The age of the passenger.
+     - idCard (String): An identification card of the passenger.
+
+6. **Employee**: Represents a person employed by the system.
+   - Attributes:
+     - id (Integer): A unique identifier for the employee.
+     - baseSalary (Double): The base salary of the employee.
+
+7. **SecurityGuard**: A specialized type of employee responsible for security. Inherits from the Employee class.
+   - Attributes:
+     - shift (String): The work shift of the security guard.
+
+8. **Manager**: A specialized type of employee responsible for management. Inherits from the Employee class.
+   - Attributes:
+     - hasMBA (Boolean): Indicates whether the manager holds an MBA degree.
+
+9. **BookingOffice**: Represents an office where trips can be booked.
+   - Attributes:
+     - name (String): The name of the office.
+     - location (String): The location of the office.
+     - officeID (Integer): A unique identifier for the office.
+
+10. **Ticket**: Represents a ticket purchased for a trip.
+    - Attributes:
+      - number (Integer): A unique identifier for the ticket.
+      - price (Double): The price of the ticket.
+      - isRoundTrip (Boolean): Indicates if the ticket is for a round trip.
+
+11. **AdultTicket**: A specialized type of ticket for adults. Inherits from the Ticket class.
+    - Attributes:
+      - isElderlyDiscount (Boolean): Indicates if an elderly discount applies.
+
+12. **ChildTicket**: A specialized type of ticket for children. Inherits from the Ticket class.
+    - Attributes:
+      - isSchoolTrip (Boolean): Indicates if the ticket is for a school trip.
+
+13. **VendingMachine**: Represents a machine used for dispensing tickets.
+    - Attributes:
+      - number (Integer): A unique identifier for the vending machine.
+
+#### Relationships:
+1. A **Trip** is associated with one or more **Coaches**.
+2. A **Trip** is associated with one or more **Passengers**.
+3. **RegularTrip** and **PrivateTrip** inherit from the **Trip** class.
+4. A **Coach** is associated with zero or more **SecurityGuards**.
+5. A **Coach** is associated with zero or more **BookingOffices**.
+6. A **Passenger** is associated with zero or more **Tickets**.
+7. **SecurityGuard** and **Manager** inherit from the **Employee** class.
+8. A **Manager** may manage one **BookingOffice**.
+9. A **BookingOffice** is associated with zero or more **VendingMachines**.
+10. A **Ticket** is dispensed by one **VendingMachine**.
+11. **AdultTicket** and **ChildTicket** inherit from the **Ticket** class.

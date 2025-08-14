@@ -1,0 +1,27 @@
+class Bank {}
+class Client {
+name : String
+capacity : Int
+}
+class Manager {
+name : String
+}
+class Account {
+credit : Double
+overdraft : Double
+}
+class Card {
+number : Double
+type : CardType
+}
+Bank *--> "managers 0..*" Manager
+Bank  *--> "accounts 0..*" Account
+Bank  *--> "clients 0..*" Client
+Client "clients 0..*" -- "manager 0..*" Manager
+Client "owners 0..*" -- "accounts 0..*" Account
+Client "sponsorships 0..*" --> Client
+Account  --> "cards 0..*" Card
+enum CardType {
+credit
+debit
+}

@@ -1,0 +1,48 @@
+@startuml
+enum kind{
+optional
+mandatory
+}
+enum Type{
+require
+exclude
+}
+class FeatureModel {
+
+}
+class RootFeature {
+
+}
+class Constraint {
+
+}
+class FeatureConstraint {
+type : Type
+}
+class Feature {
+id : EInt
+name : EString
+}
+class ConfigConstraint {
+kind : kind
+}
+class And {
+
+}
+class Or {
+
+}
+class Xor {
+
+}
+FeatureModel  *--> "RootFeature 1..1" RootFeature
+FeatureModel  *--> "FConst 0..*" FeatureConstraint
+RootFeature  *--> "ConfConst 1..*" ConfigConstraint
+Constraint <|-- FeatureConstraint
+FeatureConstraint  --> "Features 2..*" Feature
+Feature "ConfFeatures 0..*" --* "Config 1..1" ConfigConstraint
+Constraint <|-- ConfigConstraint
+ConfigConstraint <|-- And
+ConfigConstraint <|-- Or
+ConfigConstraint <|-- Xor
+@enduml

@@ -1,0 +1,21 @@
+The domain model describes an Internet Service Provider (ISP) system with several classes and their relationships. The main classes in the model are Customer, Bill, SurfRecord, Provider, Service, and Date. Additionally, there are specialized service classes: Max1GB, Max10GB, and Max100GB, which inherit from the Service class.
+
+- **Customer Class**: Represents a customer with attributes such as id (Integer), name (String), address (String), and active (Boolean). It includes a method changeService(s: Service) that returns a Boolean value.
+
+- **Bill Class**: Represents a bill with attributes send_date (Date), paid_date (Date), and amount (Real). It has a method confirm_payment() that returns a Boolean.
+
+- **SurfRecord Class**: Represents a record of internet usage with an attribute downloadRate (Integer). It includes methods setRate(rate: Integer) and getRate(), both returning an Integer.
+
+- **Provider Class**: Represents a service provider with methods to manage services and customers, such as disableService(), enableService(), disableCustomer(), reenableCustomer(c: Customer), and sendBill(), all returning OclVoid.
+
+- **Service Class**: Represents a service with attributes price (Real), QoS (Integer), and freedownload (Integer). It includes a method provide_service() that returns a Boolean. The Service class has three specialized subclasses: Max1GB, Max10GB, and Max100GB.
+
+- **Date Class**: Represents a date with methods today() returning a Date, and durationInDays(d: Date) returning an Integer.
+
+The associations between classes are as follows:
+
+- A Customer is associated with one or more Bills, Services, and Providers, and has a single SurfRecord.
+- A Bill is associated with a SurfRecord and a Service.
+- A SurfRecord is associated with one or more Providers.
+- A Provider is associated with one or more Services.
+- The Service class is the superclass for Max1GB, Max10GB, and Max100GB, indicating these are specific types of services offered.

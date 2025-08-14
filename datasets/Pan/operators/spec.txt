@@ -1,0 +1,34 @@
+At the core is the idea of an Operator — which is basically an action or command. Each operator knows whether it's been executed yet or not.
+
+Then there are all these specific types of operators, depending on what you're trying to do:
+
+CREATE: The create operator creates a new TypeVariable.
+
+DELETE: The delete operator deletes a Referable element. It points to the element that needs to be deleted.
+
+ASSIGN: The assign operator sets values of attributes, this is, it assigs a new value to an attribute. It needs to know which attribute, who owns it, and what the value is.
+
+SET: The set operator is similar to ASSIGN, but it deals with references between objects instead of primitive values.
+
+MOVE: Moves an element under a new parent"
+
+SPLIT: Breaks up an element into multiple parts, using a group of structural features to define how.
+
+MERGE: The opposite of SPLIT — takes multiple elements and combines them into one.
+
+VAR: Refers to a variable in a query-like context. It is composed by QueryVariable elements.
+
+There's also a whole system for handling variables and references:
+
+We have a generic Variable, which just has a name.
+
+A QueryVariable is a specific kind — it's tied to some part of the structure, and it holds a result. It can also have qualifiers to specify more detail, like:
+
+- EOperationQualifier (it uses an operation)
+- EReferenceQualifier (it uses a reference)
+
+There are also references to objects:
+- EObjectReference points to real model elements.
+- PrimitiveReference holds simple Java-like values.
+
+All of these references are used as results of operations or variables.

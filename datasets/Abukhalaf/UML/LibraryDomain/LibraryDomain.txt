@@ -1,0 +1,9 @@
+The domain model represents a library system with several classes and their relationships. 
+
+The **Book** class has an attribute `title` of type `String`. Each book can belong to one **BookCategory**, which has a `description` attribute of type `String`. A book can be on hold by multiple **Members**, with the association being ordered.
+
+The **BookCopy** class includes attributes `barcode` of type `Integer` and `onReserve` of type `Boolean`. Each book copy is associated with one **Book** and can be borrowed by a **Member**, who can be the current holder of zero or one book copy. The relationship between **BookCopy** and **Member** is connected to the **Loan** class, which has `startDate` and `endDate` attributes of type `Date`.
+
+The **Member** class has attributes `name` and `email`, both of type `String`. Each member belongs to one **MemberCategory**, which includes a `description` of type `String` and `maxNumberBooks` of type `Integer`. Members can request multiple books to be on hold.
+
+The **LoanPeriod** class, which is associated with both **BookCategory** and **MemberCategory**, has a `duration` attribute of type `Integer`. This suggests that the loan period may vary depending on the book and member categories.

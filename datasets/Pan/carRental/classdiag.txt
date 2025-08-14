@@ -1,0 +1,77 @@
+### Domain Model in Natural Language
+
+#### Enumerations
+1. **CarGroupKind**: Represents the type of car group. It has three possible values:
+   - Compact
+   - Intermediate
+   - Luxury
+
+#### Classes and Attributes
+1. **Person**
+   - firstname: A string representing the first name of the person.
+   - lastname: A string representing the last name of the person.
+   - age: An integer representing the age of the person.
+   - isMarried: A boolean indicating whether the person is married.
+
+2. **Customer** (inherits from Person)
+   - address: A string representing the address of the customer.
+
+3. **Employee** (inherits from Person)
+   - salary: A double representing the employee's salary.
+
+4. **Branch**
+   - location: A string representing the location of the branch.
+
+5. **Rental**
+   - framDate: A string representing the start date of the rental.
+   - untilDate: A string representing the end date of the rental.
+
+6. **CarGroup**
+   - kind: A CarGroupKind enumeration representing the type of the car group.
+
+7. **Car**
+   - id: A string representing the unique identifier of the car.
+
+8. **ServiceDepot**
+   - location: A string representing the location of the service depot.
+
+9. **Check**
+   - description: A string representing a description of the check.
+
+#### Relationships and Associations
+1. **Inheritance**
+   - Customer** inherits from **Person**.
+   - Employee** inherits from **Person**.
+
+2. **Employee and Branch**
+   - An employee may manage a branch (0 or 1 branch).
+   - An employee is employed by exactly one branch.
+
+3. **Branch and Employee**
+   - A branch has one manager.
+   - A branch can have multiple employees.
+
+4. **Branch and Car**
+   - A branch can have multiple cars (0 or more).
+
+5. **Branch and CarGroup**
+   - A branch can have multiple car groups (0 or more).
+
+6. **Branch and Rental**
+   - A branch handles multiple rentals (0 or more).
+
+7. **Rental and Customer**
+   - A rental is associated with exactly one customer.
+
+8. **Rental and Car**
+   - A rental can have one car (0 or 1).
+
+9. **Rental and CarGroup**
+   - A rental is associated with exactly one car group.
+   - A rental can involve multiple rentals for the same car group.
+
+10. **CarGroup and Car**
+    - A car group is associated with multiple cars (0 or more).
+
+11. **CarGroup Hierarchy**
+    - A car group can have a hierarchy, where one car group can be a "higher" group relative to another "lower" group (0 or 1 in each direction).

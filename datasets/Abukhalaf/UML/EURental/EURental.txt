@@ -1,0 +1,37 @@
+The domain model for EURental consists of several classes, each representing a different aspect of the car rental business. 
+
+1. **Date Class**: This class has a single attribute, `date`, which is a string representing a specific date.
+
+2. **Car Class**: This class includes the attribute `regNum`, a string that denotes the registration number of the car.
+
+3. **CarGroup Class**: This class contains the attribute `category`, a string that specifies the category of the car group.
+
+4. **Branch Class**: This class has the attribute `address`, a string that indicates the location of the branch.
+
+5. **Quote Class**: This class includes the attribute `value`, an integer representing the monetary value of the quote.
+
+6. **Rental Class**: This class has several attributes:
+   - `id`: A string that uniquely identifies the rental.
+   - `price`: A real number indicating the price of the rental.
+   - `state`: A string representing the current state of the rental.
+   - `startingDate`: A `Date` object marking the start of the rental period.
+   - `endingDate`: A `Date` object marking the end of the rental period.
+
+7. **Customer Class**: This class includes multiple attributes:
+   - `id`: A string that uniquely identifies the customer.
+   - `name`: A string representing the customer's name.
+   - `birthday`: A `Date` object indicating the customer's date of birth.
+   - `licenseExpData`: A `Date` object showing the expiration date of the customer's driving license.
+   - `premium`: A boolean indicating whether the customer is a premium member.
+   - `discount`: An integer representing any discount applicable to the customer.
+
+8. **BlackListed Class**: This class has a single attribute, `blackListedDate`, which is a `Date` object indicating when the customer was blacklisted.
+
+**Associations**:
+- A `Car` belongs to one `CarGroup`, and each `CarGroup` can have one or more cars.
+- A `Car` can be associated with zero or one `Rental`, and each `Rental` can involve multiple cars.
+- `CarGroup` can be associated with another `CarGroup`, representing a hierarchical relationship with optional low and high categories.
+- Each `CarGroup` is associated with one or more `Branch` locations, and each `Branch` can have multiple car groups.
+- A `Branch` serves as a `pickUpBranch` for multiple rentals and as a `dropOffBranch` for multiple rentals.
+- Each `Rental` involves one or more `Customer` drivers.
+- The `BlackListed` class is a specialization of the `Customer` class, indicating that a blacklisted customer is a type of customer.

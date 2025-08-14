@@ -1,0 +1,19 @@
+The domain model represents a system involving people, their employment, financial activities, and relationships. The main classes in this model are Person, Bank, Job, Company, and Marriage, each with specific attributes and associations.
+
+The `Person` class includes attributes such as `firstName`, `lastName`, `gender` (which is an enumeration of `male` or `female`), `birthDate`, `age`, `isMarried`, `maidenName`, and `isUnemployed`. It also has methods like `income()`, which returns an integer, `currentSpouse()`, which returns a `Person`, and `descendants()`, which returns a set of persons.
+
+The `Bank` class has a single attribute, `accountNo`, which is an integer.
+
+The `Job` class includes attributes such as `title`, `startDate`, and `salary`, all of which are relevant to employment.
+
+The `Company` class has attributes `name` and `noEmployees`, with a method `stockPrice()` that returns a real number. It also has a method `hireEmployee(p: Person)` to hire a person.
+
+The `Marriage` class includes attributes `place`, `date`, and `ended`, indicating the location, date, and status of the marriage.
+
+There are several associations between these classes:
+
+- A `Person` can be employed by multiple `Company` instances, and a `Company` can have multiple `Person` employees.
+- A `Person` can manage multiple `Company` instances, but each `Company` has only one manager.
+- A `Person` can be a customer of multiple `Bank` instances, but each `Bank` can have zero or one customer.
+- A `Person` can have up to two parents and can have multiple children.
+- A `Person` can be a wife or husband to another `Person`, and this relationship is modeled through the `Marriage` class, which connects two `Person` instances.

@@ -1,0 +1,36 @@
+The domain model represents an airport system with several key entities: Airport, Flight, Airline, and Passenger.
+
+1. **Airport Class**:
+   - Attributes:
+     - `name`: A string representing the name of the airport.
+   - Associations:
+     - An airport can have multiple departing flights (`departingFlights`), each associated with one origin airport.
+     - An airport can have multiple arriving flights (`arrivingFlights`), each associated with one destination airport.
+
+2. **Flight Class**:
+   - Attributes:
+     - `departTime`: A date indicating the departure time of the flight.
+     - `arrivalTime`: A date indicating the arrival time of the flight.
+     - `duration`: A date representing the duration of the flight.
+     - `maxNrPassenger`: An integer specifying the maximum number of passengers the flight can accommodate.
+   - Associations:
+     - A flight is associated with one airline, and an airline can have multiple flights.
+     - A flight can have multiple passengers.
+
+3. **Airline Class**:
+   - Attributes:
+     - `name`: A string representing the name of the airline.
+   - Associations:
+     - An airline can have multiple flights.
+     - An airline can optionally have a CEO, who is a passenger.
+
+4. **Passenger Class**:
+   - Attributes:
+     - `minAge`: An integer specifying the minimum age requirement for a passenger.
+     - `age`: An integer representing the age of the passenger.
+     - `needsAssistance`: A boolean indicating whether the passenger requires assistance.
+   - Methods:
+     - `book(f: Flight)`: A method allowing a passenger to book a flight.
+   - Associations:
+     - A passenger can be associated with a flight.
+     - A passenger can optionally be the CEO of an airline.

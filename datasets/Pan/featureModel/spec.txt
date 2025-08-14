@@ -1,0 +1,16 @@
+We are going to create the structure of a Feature Modeling System.
+
+A feature model includes exactly one root feature, which represents the main entry point or top-level feature in the hierarchy. This root feature is always associated with one or more configuration constraints, which define the rules governing the relationships between features in a configuration.
+
+Features are the core building blocks of the model. Each feature has a unique identifier (id) and a name.
+
+Features can be linked to configuration constraints through a composition relationship, meaning that a feature participates in at least one configuration rule.
+
+To express logical relationships between features, we can use configuration constraints, which define how features are grouped or selected. These can be specialized into:
+- And: All connected features must be included.
+- Or: One or more of the connected features can be included.
+- Xor: Exactly one of the connected features must be included.
+
+Each configuration constraint has a kind attribute, indicating whether the associated features are mandatory or optional within that constraint.
+
+In addition to configuration constraints, the model includes FeatureConstraints, which express cross-tree constraints between features that are not directly connected in the hierarchy. These constraints specify whether a relationship is of type require (one feature depends on another) or exclude (one feature cannot coexist with another). Each feature constraint must involve at least two features.

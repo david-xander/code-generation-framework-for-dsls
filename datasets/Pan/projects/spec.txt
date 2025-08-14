@@ -1,0 +1,9 @@
+At the core, we have a Company, which oversees multiple Projects and employs multiple Workers. Each worker is associated with a salary and a nickname, and every company can have one or more employees.
+
+Projects vary in size — categorized as small, medium, or big — and can exist in different states, such as planned, active, finished, or suspended. A company can initiate multiple projects, and each project may involve multiple workers as team members.
+
+Workers possess one or more Qualifications, which represent their specific skills or competencies. These qualifications are essential because Projects also specify which qualifications are required for successful completion. This ensures that only suitably qualified workers are assigned to the appropriate projects.
+
+Projects may also have dependencies on one another — for instance, a project might need to wait for the completion of another before it can begin. This is represented through predecessor-successor relationships between projects.
+
+To support skill development, the model also includes Trainings, which are special types of projects aimed at helping workers acquire qualifications. A qualification may be associated with a training, indicating that the skill can be gained through participation in that program.

@@ -1,0 +1,111 @@
+@startuml
+
+
+class Operator {
+executed : EBoolean
+}
+class CREATE {
+
+}
+class TypeVariable {
+
+}
+class DELETE {
+
+}
+class ASSIGN {
+value : EJavaObject
+}
+class EObjectReference {
+
+}
+class Result {
+
+}
+class Referrable {
+
+}
+class PrimitiveReference {
+value : EJavaObject
+}
+class SET {
+
+}
+class VariableReference {
+
+}
+class MOVE {
+
+}
+class SPLIT {
+
+}
+class StructuralFeatureSet {
+
+}
+class MERGE {
+
+}
+class VAR {
+
+}
+class QueryVariable {
+
+}
+class Variable {
+name : EString
+}
+class QueryVariableQualifier {
+
+}
+class EOperationQualifier {
+
+}
+class EReferenceQualifier {
+
+}
+Operator  *--> "result 0..1" Result
+Operator <|-- CREATE
+CREATE  *--> "newInstanceVariable 1..1" TypeVariable
+CREATE  *--> "parent 1..1" Referrable
+CREATE  --> "parentCompositeReference 1..1" EReference
+Variable <|-- TypeVariable
+TypeVariable  --> "type 1..1" EClass
+TypeVariable  --> "instance 1..1" EObject
+Operator <|-- DELETE
+DELETE  *--> "deletion 1..1" Referrable
+Operator <|-- ASSIGN
+ASSIGN  --> "attribute 1..1" EAttribute
+ASSIGN *--> "attributeOwner 1..1" Referrable
+Result <|-- EObjectReference
+Referrable <|-- EObjectReference
+EObjectReference  --> "elements 1..*" EObject
+Result <|-- PrimitiveReference
+Operator <|-- SET
+SET  --> "reference 1..1" EReference
+SET  *--> "value 1..1" Referrable
+SET  *--> "referenceOwner 1..1" Referrable
+Referrable <|-- VariableReference
+VariableReference  --> "referencedVariable 1..1" Variable
+Operator <|-- MOVE
+MOVE  *--> "newParent 1..1" Referrable
+MOVE  --> "parentReference 1..1" EReference
+MOVE  *--> "movee 1..1" Referrable
+Operator <|-- SPLIT
+SPLIT  *--> "splitSets 1..*" StructuralFeatureSet
+SPLIT  *--> "splitObject 1..1" Referrable
+StructuralFeatureSet  --> "structuralFeatures 1..*" EStructuralFeature
+Operator <|-- MERGE
+MERGE  *--> "mergeObjects 2..*" Referrable
+Operator <|-- VAR
+VAR  *--> "variable 1..1" QueryVariable
+Variable <|-- QueryVariable
+QueryVariable  *--> "queryObject 1..1" Referrable
+QueryVariable  --> "queryResult 1..1" Result
+QueryVariable "variable 1..1" *-- "qualifier 1..1" QueryVariableQualifier
+QueryVariableQualifier <|-- EOperationQualifier
+EOperationQualifier  --> "operation 1..1" EOperation
+QueryVariableQualifier <|-- EReferenceQualifier
+EReferenceQualifier  --> "reference 1..1" EReference
+
+@enduml

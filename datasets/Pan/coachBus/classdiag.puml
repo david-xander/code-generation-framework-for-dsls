@@ -1,0 +1,71 @@
+@startuml
+
+class Trip {
+name : String
+origin : String
+destination : String
+type : String
+number : Integer
+}
+class RegularTrip {
+
+}
+class PrivateTrip {
+extras : String
+}
+class Coach {
+id : Integer
+name : String
+model : String
+noOfSeats : Integer
+}
+class Passenger {
+name : String
+age : Integer
+idCard : String
+}
+class Employee {
+id : Integer
+baseSalary : Double
+}
+class SecurityGuard {
+shift : String
+}
+class Manager {
+hasMBA : Boolean
+}
+class BookingOffice {
+name : String
+location : String
+officeID : Integer
+}
+class Ticket {
+number : Integer
+price : EDouble
+isRoundTrip : Boolean
+}
+class VendingMachine {
+number : Integer
+}
+class AdultTicket {
+isElderlyDiscount : Boolean
+}
+class ChildTicket {
+isSchoolTrip : Boolean
+}
+Trip "trips 1..*" -- "coaches 1..*" Coach
+Trip "trips 1..*" -- "passengers 1..*" Passenger
+Trip <|-- RegularTrip
+Trip <|-- PrivateTrip
+Coach "coach 1..1" -- "guards 0..*" SecurityGuard
+Coach "coaches 1..*" -- "offices 0..*" BookingOffice
+Passenger "psg 1..1" -- "tickets 0..*" Ticket
+Employee <|-- SecurityGuard
+Employee <|-- Manager
+Manager "manager 0..1" -- "office 0..1" BookingOffice
+BookingOffice "office 1..1" -- "vms 0..*" VendingMachine
+Ticket "tickets 0..*" -- "vm 1..1" VendingMachine
+Ticket <|-- AdultTicket
+Ticket <|-- ChildTicket
+
+@enduml

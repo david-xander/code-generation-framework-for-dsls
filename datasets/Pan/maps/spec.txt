@@ -1,0 +1,5 @@
+We are going to represent maps. A map has a name, belongs to a country, and you can say whether it’s a city or not. It also has a size: small, medium, or big.
+
+Now, each map has roads and public spaces. Roads have names, lengths, and belong to some district. They can connect to other roads to represent intersections, and they border public spaces like gardens or squares. Each public space has a name.
+
+Roads come in different types — streets, boulevards, and pedestrian paths where cars aren't allowed.

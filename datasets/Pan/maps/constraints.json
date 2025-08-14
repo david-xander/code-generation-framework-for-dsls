@@ -1,0 +1,18 @@
+[
+    {
+        "ocl": "context Road inv: length > 1",
+        "specification": "The length of the road should be greater than 1."
+    },
+    {
+        "ocl": "context map inv: roads->forAll(n1, n2 | n1.name <> n2.name)",
+        "specification": "All roads on a map must have unique names."
+    },
+    {
+        "ocl": "context map inv: spaces->forAll(n1, n2 | n1.name <> n2.name)",
+        "specification": "All spaces within a map should have unique names."
+    },
+    {
+        "ocl": "context map inv: roads->forAll(n1, n2 | n1.length <> n2.length)",
+        "specification": "All roads on the map must have unique lengths."
+    }
+]

@@ -1,0 +1,7 @@
+We have accidents, which may be of a specific type — for example, a rear end collision. Each accident occurs on a roadway and may involve multiple victims, with a recorded number of fatal victims.
+
+Vehicles are captured. Some particular kind of vehicles are those that are traveling, and more specifically, we also distinguish those involved in accidents, are classified as crashed vehicles. A crashed vehicle is associated with a single accident and the roadway where the accident occurred. Each accident involves one or more such vehicles.
+
+The system needs to keep track of people. There are three primary subtypes according to the system: living persons, deceased persons and travelers. Travelers can be further categorized into drivers, passengers and victims.
+
+Each Travel instance represents a trip, consisting of one vehicle and one or more travelers. This allows us to trace who was traveling in which vehicle at the time of the incident.

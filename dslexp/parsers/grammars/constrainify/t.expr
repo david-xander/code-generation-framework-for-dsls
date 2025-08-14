@@ -1,0 +1,50 @@
+@Passenger {
+    name: String;
+    hasTicket: Boolean;
+    price: Float;
+    :hasTicket must be some;
+    :age cannot be < 18 when :isMinor = false;
+}
+
+@Flight {
+    :passengerCount cannot be > :capacity;
+    :isInternational if true then {
+        :Passenger:validPassport must be true;
+    }
+}
+
+@Booking {
+    :createdDate cannot be > today();
+    :status must be in [ "pending", "confirmed", "cancelled" ];
+}
+
+////// END DEMO
+
+@Client{
+    name: String;
+    identifier: String;
+    dateOfRegistration: Date;
+    recency: Int;
+    frecuency: Int;
+    monetary: Int;
+    classification: String;
+    :classification equals 'whale' if :recency equals 5 and :frecuency equals 5 and :monetary equals 5
+}
+
+@Purchase{
+    client: @Client;
+    yearsOld: Int;
+    deliveryCost: Float;
+    total: Float;
+    totalForRFM: Float;
+    :yearsOld must be <= 5;
+    :totalForRFM must be equals :total - :deliveryCost;
+}
+
+@ClientPurchaseForRFM{
+    client: String;
+    daysSinceLast: Int;
+    total: Float;
+}
+
+

@@ -1,0 +1,59 @@
+### Domain Model Description
+
+#### **Entities:**
+
+1. **Process**  
+   - Attributes:
+     - name: A string representing the name of the process.
+   - Relationships:
+     - Contains multiple ProcessElement entities (processElements 0..*).
+     - Each ProcessElement belongs to exactly one Process (process 1..1).
+
+2. **ProcessElement**  
+   - Description: Represents a general element of a process.
+   - Relationships:
+     - Belongs to exactly one Process (process 1..1).
+     - Specializations:
+       - WorkDefinition: A type of ProcessElement that defines work.
+       - WorkSequence: A type of ProcessElement that establishes the sequence between WorkDefinition entities.
+       - Guidance: A type of ProcessElement that provides textual guidance related to the process.
+       - Resource: A type of ProcessElement that represents a resource.
+
+3. **WorkDefinition** (Specialization of ProcessElement)  
+   - Attributes:
+     - name: A string representing the name of the work definition.
+   - Relationships:
+     - May have multiple predecessor WorkSequence links (linksToPredecessors 0..*).
+     - May have multiple successor WorkSequence links (linksToSuccessors 0..*).
+     - Links to multiple ResourceUtilise entities (resource_utilise 0..*).
+
+4. **WorkSequence** (Specialization of ProcessElement)  
+   - Attributes:
+     - linkType: An enumerated type (WorkSequenceType) representing the type of sequence between work definitions. Possible values are:
+       - startToStart
+       - finishToStart
+       - startToFinish
+       - finishToFinish
+   - Relationships:
+     - Links a WorkDefinition as a predecessor or successor:
+       - A WorkSequence has one predecessor (predecessor 1..1).
+       - A WorkSequence has one successor (successor 1..1).
+
+5. **Guidance** (Specialization of ProcessElement)  
+   - Attributes:
+     - text: A string containing textual guidance for the process.
+   - Relationships:
+     - May refer to multiple ProcessElement entities (element 0..*).
+
+6. **Resource** (Specialization of ProcessElement)  
+   - Attributes:
+     - type: A string representing the type of the resource.
+     - occurrence: An integer specifying the number of instances of the resource.
+   - Relationships:
+     - Each Resource is linked to one or more ResourceUtilise entities (resource_utilise 0..*).
+
+7. **ResourceUtilise**  
+   - Attributes:
+     - occurrenceUtilise: An integer specifying the number of instances of the resource used.
+   - Relationships:
+     - Links to exactly one Resource (resource 1..1).

@@ -1,0 +1,42 @@
+### **Domain Model: Company, Projects, Workers, and Qualifications**
+
+#### **Entities:**
+
+1. **Company**
+   - Attributes:
+     - name: A string representing the name of the company.
+   - Relationships:
+     - A company is associated with zero or more projects.
+     - A company may employ one or more workers.
+
+2. **Worker**
+   - Attributes:
+     - nickname: A string representing the worker's nickname.
+     - salary: An integer representing the worker's salary.
+   - Relationships:
+     - A worker can possess one or more qualifications.
+     - A worker can participate in zero or more projects as a team member.
+     - Workers are employed by at most one company.
+
+3. **Project**
+   - Attributes:
+     - name: A string representing the project's name.
+     - size: An enumeration representing the project's size (small, medium, big).
+     - status: An enumeration representing the project's current status (planned, active, finished, suspended).
+   - Relationships:
+     - A project is associated with one company.
+     - A project requires one or more qualifications.
+     - A project may have zero or more workers as members.
+     - A project can have zero or more predecessor projects and zero or more successor projects, forming a dependency chain.
+
+4. **Qualification**
+   - Attributes:
+     - description: A string describing the qualification.
+   - Relationships:
+     - A qualification may be associated with zero or more workers.
+     - A qualification may be linked to one or more training sessions.
+
+5. **Training**
+   - Relationships:
+     - A training session may be associated with one or more qualifications.
+     - A training session is considered a specialized type of project.

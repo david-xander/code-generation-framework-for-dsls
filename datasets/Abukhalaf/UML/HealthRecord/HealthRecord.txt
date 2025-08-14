@@ -1,0 +1,30 @@
+The domain model represents a healthcare system involving several key entities: HealthRecord, Prescription, MedicalInfo, Patient, Doctor, and Pharmacist.
+
+The **HealthRecord** class manages medical information and prescriptions associated with a patient. It includes methods to read, create, update, and delete medical information and prescriptions. The methods are:
+- `readMedicalInfo(MedicalInfo: OclVoid)`: Reads medical information.
+- `createMedicalInfo(description: String): HealthRecord`: Creates a new medical information entry.
+- `updateMedicalInfo(description: String): HealthRecord`: Updates existing medical information.
+- `createPrescription(info: MedicalInfo, prescription: Prescription): HealthRecord`: Creates a new prescription linked to medical information.
+- `deletePrescription(prescription: Prescription): HealthRecord`: Deletes a prescription.
+- `readPrescription(): Prescription`: Reads a prescription.
+
+The **Prescription** class includes attributes:
+- `drug: String`: The name of the drug prescribed.
+- `amount: Integer`: The quantity of the drug prescribed.
+- `creator: Doctor`: The doctor who created the prescription.
+
+The **MedicalInfo** class contains:
+- `description: String`: A description of the medical information.
+- `creator: Doctor`: The doctor who created the medical information.
+- `open: Boolean`: Indicates if the medical information is open or closed.
+
+The **Patient** class has a single attribute:
+- `name: String`: The name of the patient.
+
+The **Doctor** and **Pharmacist** classes do not have specified attributes.
+
+Associations between the classes are as follows:
+- A **HealthRecord** is associated with one **Patient**, indicating ownership of the record.
+- A **HealthRecord** can have multiple **Prescriptions** and multiple **MedicalInfo** entries.
+- Each **Prescription** is linked to one **MedicalInfo** entry.
+- A **Patient** can be treated by multiple **Doctors** and **Pharmacists**, indicating a many-to-many relationship between patients and healthcare professionals.

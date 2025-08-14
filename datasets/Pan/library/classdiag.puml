@@ -1,0 +1,65 @@
+@startuml
+
+enum Genre{
+Lyric
+Epic
+Narrative
+Dramatic
+Didactic
+Horror
+}
+enum State{
+Good
+Bad
+}
+class Library {
+address : EString
+}
+class Book {
+ISBN : EString
+title : EString
+editorial : EString
+year : EInt
+genre : Genre
+active : EBoolean
+}
+class Loan {
+startDate : EDate
+endDate : EDate
+returnDate : EDate
+}
+class Autor {
+name : EString
+nacionality : EString
+birthYear : EDate
+}
+class Member {
+membershipNumber : EInt
+name : EString
+phone : EString
+address : EString
+age : EInt
+birthDate : EDate
+}
+class Fine{
+date : EDate
+amount : EInt
+exceedingDays : EInt
+paymentDate : EDate
+}
+class Copy {
+copyNumber : EInt
+state : State
+}
+Library  *--> "books 0..*" Book
+Library  *--> "authors 0..*" Author
+Library  *--> "members 0..*" Member
+Book  --> "author 1..1" Author
+Loan  --> "copy 1..1" Copy
+Loan  --> "member 1..1" Member
+Author  --> "books 1..*" Book
+Member  --> "penalties 0..*" Fine
+Member  --> "loans 0..*" Loan
+Fine  --> "loan 1..1" Loan
+
+@enduml

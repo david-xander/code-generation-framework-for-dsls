@@ -1,0 +1,44 @@
+### Domain Model Description:
+
+1. **Enumerations**:
+   - **Cards**: Represents the size categories of a map. It has the following possible values:
+     - `small`
+     - `medium`
+     - `big`
+
+2. **Classes**:
+   - **Map**:
+     - Attributes:
+       - `name`: A string representing the name of the map.
+       - `isCity`: A boolean indicating whether the map represents a city.
+       - `country`: A string representing the country where the map is located.
+       - `size`: An enumeration (`cards`) representing the size of the map.
+     - Associations:
+       - Has a collection of **Roads** (`0..*` multiplicity).
+       - Has a collection of **PublicSpaces** (`0..*` multiplicity).
+
+   - **Road**:
+     - Attributes:
+       - `name`: A string representing the name of the road.
+       - `length`: An integer representing the length of the road.
+       - `district`: A string representing the district where the road is located.
+     - Associations:
+       - Can be bordered by multiple **PublicSpaces** (with multiplicity `1..*`).
+       - Can meet with other **Roads** (with multiplicity `0..*`).
+     - Subclasses:
+       - **Street**
+       - **Boulevard**
+       - **Pedestrian**
+
+   - **PublicSpace**:
+     - Attributes:
+       - `name`: A string representing the name of the public space.
+     - Subclasses:
+       - **Garden**
+       - **Square**
+
+3. **Relationships**:
+   - A **Map** is associated with multiple **Roads** and **PublicSpaces**.
+   - A **Road** can border multiple **PublicSpaces** and can meet multiple other **Roads**.
+   - **Roads** are further specialized into types: **Street**, **Boulevard**, and **Pedestrian**.
+   - **PublicSpaces** are further specialized into types: **Garden** and **Square**.

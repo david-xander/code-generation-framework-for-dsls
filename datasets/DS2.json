@@ -1,0 +1,504 @@
+[
+    {
+        "domain_name": "Tournament",
+        "domain_context": "The Tournament domain models a structured environment for competitive events, emphasizing the organization and management of players, matches, and tournaments. A **Tournament** serves as the central entity, characterized by its name and schedule, and is responsible for orchestrating matches and managing player participation. Matches are pivotal events within a tournament, each bound by start and end dates, and facilitated by player interactions that determine scores. Players, the core participants, interact dynamically with tournaments and matches, highlighting their critical role in driving competition. Operational integrity is enforced through constraints: matches must occur within the tournament\u2019s timeframe, ensuring temporal alignment, while a mandatory match on the first day underscores the importance of timely engagement. Furthermore, the structure ensures exclusivity, with players limited to one tournament or match at a time, maintaining clear boundaries and avoiding conflicts. Every tournament requires sufficient scale, with at least 33 matches, each comprising at least 10 players, to ensure competitive depth and engagement. These operational guidelines reinforce the domain\u2019s purpose: to provide a fair, well-organized framework for competitive play, promoting integrity and structured gameplay while supporting scalability and participant engagement. The relationships and rules harmonize to deliver a robust and coherent system.",
+        "plantuml_model": "@startuml Tournament\n\n' classes '\nclass Player{}\n\nclass Match{\n    starDate: Date\n    endDate: Date\n    playMove(p,m)\n    getScore()\n}\n\nclass Tournament{\n    name: String\n    startDate: Date\n    endDate: Date\n    acceptPlayer(p)\n    removePlayer(p)\n    schedule()\n}\n\n' associations '\nMatch \"matches *\" -- \"tournament 1\" Tournament\n\nMatch \"matches *\" -- \"players *\" Player\n\nPlayer \"players *\" -- \"tournaments *\" Tournament\n\n@enduml",
+        "nl_model": "The domain model consists of three primary classes: Player, Match, and Tournament.\n\n1. **Player Class**: \n   - This class does not have any explicitly defined attributes or methods in the provided model.\n\n2. **Match Class**:\n   - Attributes:\n     - `starDate`: Date\n     - `endDate`: Date\n   - Methods:\n     - `playMove(p, m)`: A method likely used to record a player's move in the match.\n     - `getScore()`: A method to retrieve the score of the match.\n\n3. **Tournament Class**:\n   - Attributes:\n     - `name`: String\n     - `startDate`: Date\n     - `endDate`: Date\n   - Methods:\n     - `acceptPlayer(p)`: A method to add a player to the tournament.\n     - `removePlayer(p)`: A method to remove a player from the tournament.\n     - `schedule()`: A method to organize or plan the tournament events.\n\n**Associations**:\n- A Tournament is associated with multiple Matches, indicated by the relationship \"matches *\" on the Match side and \"tournament 1\" on the Tournament side, signifying that each tournament can have multiple matches.\n- A Match is associated with multiple Players, as shown by \"matches *\" on the Match side and \"players *\" on the Player side, indicating that each match can involve multiple players.\n- A Player can participate in multiple Tournaments, and a Tournament can have multiple Players, as depicted by \"players *\" on the Player side and \"tournaments *\" on the Tournament side.",
+        "constraints": [
+            {
+                "ocl": "context Tournament inv: self.matches->forAll(m:Match | m.startDate.after(self.startDate) and m.endDate.before(self.endDate))",
+                "specification": "All Matches in a Tournament occur within the Tournament's time frame."
+            },
+            {
+                "ocl": "context Tournament inv: self.matches->exists(m:Match | m.startDate.equals(self.startDate))",
+                "specification": "Each Tournament conducts at least one Match on the first day of the Tournament."
+            }
+        ]
+    },
+    {
+        "domain_name": "Royal&Loyal",
+        "domain_context": "The Royal&Loyal domain encapsulates a sophisticated loyalty management ecosystem designed to foster customer engagement through structured programs and partnerships. At its core, Loyalty Programs connect Customers and Program Partners, offering tiered Service Levels to incentivize participation. Customers, who must meet specific criteria like legal age and unique names, can join multiple programs, each represented by a Membership linked to a CustomerCard and potentially a LoyaltyAccount. These cards, which track transactions and earn points, must remain valid and adhere to strict temporal constraints, such as proper date ranges. Program Partners deliver services within the program\u2019s framework, ensuring points earned or burned align with predefined thresholds. Service Levels further define the program\u2019s structure, offering curated benefits tied to memberships. Constraints like unique account numbers, mandatory service offerings, and age limits ensure operational integrity. Additionally, transactional rules, such as the necessity for at least one transaction above 100 points or the prohibition of accounts in unused memberships, underscore the domain's focus on meaningful participation. The model emphasizes scalability and fairness, with capped participant counts and a diverse array of services, all while upholding the integrity and alignment of its interconnected components to deliver a seamless customer experience.",
+        "plantuml_model": "@startuml Royal&Loyal\n\n' classes '\nclass Date{\n    Year: Integer\n    Month: Integer\n    Day: Integer\n    Hour: Integer\n    Minute: Integer\n    Second: Integer\n    Now: Integer\n    DayOfWeek: String\n}\n\nclass LoyaltyProgram{\n    name: String\n    enroll()\n    getServices(): Service\n}\n\nclass ProgramPartner{\n    numberOfCustomers: Integer\n    name: String\n}\n\nclass Membership{}\n\nclass Customer{\n    name: String\n    title: String\n    isMale: Boolean\n    dateOfBirth: Integer\n    age: Integer\n    cAge()\n}\n\nclass ServiceLevel{\n    name: String\n}\n\nclass Service{\n    condition: Boolean\n    pointsEarned: Integer\n    pointsBurned: Integer\n    description: String\n    serviceNr: Integer\n}\n\nclass CustomerCard{\n    valid: Boolean\n    validFrom: Date\n    goodThru: Date\n    color: Color\n    printedName: String\n}\n\nclass LoyaltyAccount{\n    points: Integer\n    numbers: Integer\n    earn()\n    burn()\n    isEmpty()\n}\n\nclass Transaction{\n    date: String\n    amount: Integer\n    point: Integer\n    programs()\n}\n\n' associations '\nLoyaltyProgram \"programs *\" -- \"participants *\" Customer\n\nLoyaltyProgram \"programs 1..*\" -- \"partners 1..*\" ProgramPartner\n\nLoyaltyProgram \"program 1\" -- \"levels 1..*\" ServiceLevel\n\nLoyaltyProgram \"program 0..1\" -- \"membership 0..1\" Membership\n\nCustomer \"owner 1\" -- \"cards *\" CustomerCard\n\nProgramPartner \"partner 0..1\" -- \"deliveredServices *\" Service\n\nServiceLevel \"currentLevel 1\" -- \"membership *\" Membership\n\nServiceLevel \"level 0..1\" -- \"availableServices *\" Service\n\nMembership --> \"card 1\" CustomerCard\n\nMembership --> \"account 0..1\" LoyaltyAccount\n\nCustomerCard \"card 1\" -- \"transactions *\" Transaction\n\nLoyaltyAccount \"account 1\" -- \"transactions *\" Transaction\n\nService \"generatedBy 0..1\" -- \"transactions *\" Transaction\n\n@enduml",
+        "nl_model": "The domain model describes a loyalty program system with various entities and their relationships. \n\n1. **Date**: This class represents a date and time with attributes for the year, month, day, hour, minute, second, current time (`Now`), and the day of the week.\n\n2. **LoyaltyProgram**: This class has a `name` attribute and methods `enroll()` and `getServices()`. It is associated with multiple `Customer` participants and `ProgramPartner` partners. Each program has one or more `ServiceLevel` levels and optionally one `Membership`.\n\n3. **ProgramPartner**: This class has attributes for the `numberOfCustomers` and `name`. It can deliver multiple `Service` instances and is associated with one or more loyalty programs.\n\n4. **Membership**: This class can be associated with one `CustomerCard` and optionally one `LoyaltyAccount`. It is linked to multiple `ServiceLevel` instances.\n\n5. **Customer**: This class includes attributes such as `name`, `title`, `isMale`, `dateOfBirth`, and `age`, with a method `cAge()` to calculate age. A customer can own multiple `CustomerCard` instances and participate in multiple loyalty programs.\n\n6. **ServiceLevel**: This class has a `name` attribute and is associated with multiple `Membership` instances. It can offer multiple `Service` instances.\n\n7. **Service**: This class includes attributes like `condition`, `pointsEarned`, `pointsBurned`, `description`, and `serviceNr`. It can be generated by transactions and is available through service levels.\n\n8. **CustomerCard**: This class has attributes such as `valid`, `validFrom`, `goodThru`, `color`, and `printedName`. It is associated with multiple `Transaction` instances and belongs to one `Customer`.\n\n9. **LoyaltyAccount**: This class includes attributes `points` and `numbers`, with methods `earn()`, `burn()`, and `isEmpty()`. It is associated with multiple `Transaction` instances and can be linked to one `Membership`.\n\n10. **Transaction**: This class has attributes `date`, `amount`, and `point`, with a method `programs()`. It is associated with one `CustomerCard`, one `LoyaltyAccount`, and optionally one `Service`.",
+        "constraints": [
+            {
+                "ocl": "context Customer inv: self.age >= 18",
+                "specification": "Every customer who enters a loyalty program must be of legal age."
+            },
+            {
+                "ocl": "context Customer inv: self.isMale implies self.title = Mr.",
+                "specification": "Male customers must be approached using the title Mr.."
+            },
+            {
+                "ocl": "context Customer inv: self.cards->select(valid=true)->size()=self.programs->size()",
+                "specification": "The number of valid cards for every customer must be equal to the number of programs in which the customer participates."
+            },
+            {
+                "ocl": "context CustomerCard inv: self.validFrom < self.goodThru",
+                "specification": "The validFrom date of customer cards should be earlier than goodThru."
+            },
+            {
+                "ocl": "context CustomerCard inv: self.owner.dateOfBirth <> future",
+                "specification": "The birth date of the owner of a customer card must not be in the future."
+            },
+            {
+                "ocl": "context CustomerCard inv: self.owner.programs->size() >= 1",
+                "specification": "The owner of a customer card must participate in at least one loyalty program."
+            },
+            {
+                "ocl": "context CustomerCard inv: self.transactions->select(point >= 100)->size()>= 1",
+                "specification": "There must be at least one transaction for a customer card with at least 100 points."
+            },
+            {
+                "ocl": "context Membership inv: self.currentLevel->includes(self.program.levels)",
+                "specification": "The service level of each membership must be a service level known to the loyalty program."
+            },
+            {
+                "ocl": "context Membership inv: self.programs.participants.cards->includes(self.card)",
+                "specification": "The participants of a membership must have the correct card belonging to this membership."
+            },
+            {
+                "ocl": "context Membership inv: self.card.color = self.currentLevel.name",
+                "specification": "The color of a membership's card must match the service level of the membership."
+            },
+            {
+                "ocl": "context Membership inv: self.account->isEmpty()",
+                "specification": "Memberships must not have associated accounts."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.partners.deliveredServices->size() >= 1",
+                "specification": "Loyalty programs must offer at least one service to their customers."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: partners.deliveredServices->forAll(pointsEarned = 0 and pointsBurned = 0) implies Membership.account->isEmpty()",
+                "specification": "If none of the services offered in a loyalty program credits or debits the loyalty accounts, then these instances are useless and should not be present."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.levels->first().name = Silver",
+                "specification": "The name of the first level must be Silver."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.level->exists(name = 'basic')",
+                "specification": "There must exist at least one service level with the name basic."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.participants->size()<10000",
+                "specification": "The number of participants in a loyalty program must be less than 10,000."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.Membership.account->isUnique(acc|acc.numbers)",
+                "specification": "The number of the loyalty account must be unique within a loyalty program."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.participants.name->forAll(c1,c2|c1.name<>c2.name)",
+                "specification": "The names of all customers of a loyalty program must be different."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.participants->forAll(age<= 70)",
+                "specification": "The maximum age of participants in loyalty programs is 70."
+            },
+            {
+                "ocl": "context LoyaltyProgram inv: self.Membership.account->one(number < 10,000)",
+                "specification": "There may be only one loyalty account that has a number lower than 10,000."
+            },
+            {
+                "ocl": "context ProgramPartner inv: self.numberOfCustomers=programs.participants->asSet()->size()",
+                "specification": "The attribute numberOfCustomers of class ProgramPartner must be equal to the number of customers who participate in one or more loyalty programs offered by this program partner."
+            },
+            {
+                "ocl": "context ProgramPartner inv: self.deliveredServices.pointsEarned<=10,000",
+                "specification": "A maximum of 10,000 points may be earned using services of one partner."
+            },
+            {
+                "ocl": "context LoyaltyAccount inv: self.transactions.cards.owner->asSet()->size() = 1",
+                "specification": "All cards that generate transactions on the loyalty account must have the same owner."
+            },
+            {
+                "ocl": "context LoyaltyAccount inv: points > 0 implies transactions->exists(t | t .points > 0)",
+                "specification": "If the points earned in a loyalty account is greater than zero: , there exists a transaction with more than zero points."
+            },
+            {
+                "ocl": "context Transaction inv: self.transaction->select(point = 500)->size()=1",
+                "specification": "There must be one transaction with exactly 500 points."
+            },
+            {
+                "ocl": "context ServiceLevel inv: self.program.partners->includesAll(self.availableServices.partner)",
+                "specification": "The available services for a service level must be offered by a partner of the loyalty program to which the service level belongs."
+            }
+        ]
+    },
+    {
+        "domain_name": "EmploymentAgency",
+        "domain_context": "The Employment Agency domain encapsulates the structure and dynamics of managing workforce assignments, departmental operations, and project allocations within an organization. Central to the domain is the **Employee**, uniquely identified by their SSN and characterized by personal, employment, and supervisory attributes. Employees belong to **Departments**, where a single manager oversees operations while adhering to constraints such as being older and earning more than their subordinates. Departments, in turn, control **Projects**, ensuring alignment between project locations and departmental operations. Employees contribute to these projects within strict hour limits and work only on projects managed by their respective departments. Supervisory relationships emphasize hierarchy, prohibiting self-supervision and cyclic dependencies. **Dependents**, linked to employees by unique identifiers, further personalize the workforce structure. Rigorous constraints ensure compliance, such as maintaining an employee\u2019s age above 18, enforcing sufficient work hours for non-supervisors, and limiting the number of employees contributing minimal effort to projects. By maintaining these rules, the domain achieves operational harmony, supporting scalable workforce management, project execution, and accountability across organizational layers, all while aligning with real-world legal and logistical requirements.",
+        "plantuml_model": "@startuml EmploymentAgency\n\n' classes '\nclass Employee{\n    SSN: Integer\n    firstName: String\n    lastName: String\n    birthDate: Date\n    sex: String\n    salary: Integer\n    address: String\n    hireDate: Date\n    age()\n}\n\nclass Department{\n    number: Integer\n    name: String\n    locations: String\n    nbrEmployees: Integer\n}\n\nclass Project{\n    number: Integer\n    name: String\n    location: String\n}\n\nclass Dependent{\n    name: String\n    relationship: String\n    sex: String\n    birthDate: Date\n}\n\nclass Manages{\n    startDate: Date\n    }\n\nclass WorksOn{\n    hours: Integer\n    }\n\n' associations '\nEmployee \"manager 1\" -- \"department 0..1\" Department\n(Employee, Department) .. Manages\n\nEmployee \"employee 4..*\" -- \"department 1\" Department: WorksFor\n\nEmployee \"owned 1..*\" -- \"worksOn 1..*\" Project\n(Employee, Project) .. WorksOn\n\nEmployee \"supervisor 0..1\" -- \"subordinates *\" Employee: Supervision\n\nEmployee \"employee 1\" -- \"dependents *\" Dependent\n\nDepartment \"department 1..*\" -- \"controls 1\" Project\n\n@enduml",
+        "nl_model": "The domain model represents an employment agency system with several classes and their relationships. \n\nThe **Employee** class includes attributes such as SSN (Integer), firstName (String), lastName (String), birthDate (Date), sex (String), salary (Integer), address (String), hireDate (Date), and a method age(). An Employee can be associated with multiple other entities.\n\nThe **Department** class has attributes number (Integer), name (String), locations (String), and nbrEmployees (Integer). A Department can have one manager and is associated with employees and projects.\n\nThe **Project** class contains attributes number (Integer), name (String), and location (String). Projects are controlled by departments and worked on by employees.\n\nThe **Dependent** class includes attributes name (String), relationship (String), sex (String), and birthDate (Date). Each Employee can have multiple Dependents.\n\nThe **Manages** class represents a relationship between an Employee and a Department, with a startDate (Date) attribute, indicating when the management role began.\n\nThe **WorksOn** class represents a relationship between an Employee and a Project, with an attribute hours (Integer) indicating the number of hours worked on the project.\n\nAssociations between these classes are as follows:\n- An Employee can manage one Department, indicated by the \"manager 1\" to \"department 0..1\" association.\n- An Employee works for exactly one Department, with the \"employee 4..*\" to \"department 1\" association labeled as WorksFor.\n- An Employee can work on multiple Projects, and each Project can have multiple Employees working on it, as shown by the \"owned 1..*\" to \"worksOn 1..*\" association.\n- An Employee can supervise multiple other Employees, with the \"supervisor 0..1\" to \"subordinates *\" association labeled as Supervision.\n- An Employee can have multiple Dependents, indicated by the \"employee 1\" to \"dependents *\" association.\n- A Department controls one or more Projects, as shown by the \"department 1..*\" to \"controls 1\" association.",
+        "constraints": [
+            {
+                "ocl": "context Employee inv: self.age() >= 18",
+                "specification": "The age of employees must be greater than or equal to 18"
+            },
+            {
+                "ocl": "context Employee inv: self.supervisor->notEmpty() implies self.age() > self.supervisor.age()",
+                "specification": "The supervisor of an employee must be older than the employee"
+            },
+            {
+                "ocl": "context Employee inv: self.supervisor->notEmpty() implies self.salary < self.supervisor.salary",
+                "specification": "The salary of an employee cannot be greater than the salary of his/her supervisor"
+            },
+            {
+                "ocl": "context Employee inv: self.hireDate > self.birthDate",
+                "specification": "The hire date of employees must be greater than their birth date"
+            },
+            {
+                "ocl": "context Employee inv: self.manages->notEmpty() implies self.manages.startDate > self.hireDate",
+                "specification": "The start date of an employe as manager of a department must be greater than his/her hire date"
+            },
+            {
+                "ocl": "context Employee inv: self.subordinates->notEmpty() implies self.subordinates->forall( e | e.hireDate > self.hireDate )",
+                "specification": "A supervisor must be hired before every employee s/he supervises"
+            },
+            {
+                "ocl": "context Department inv: self.worksFor->includes(self.manages.employee)",
+                "specification": "The manager of a department must be an employee of the department"
+            },
+            {
+                "ocl": "context Employee inv: Employee.allInstances->forAll( e1, e2 | e1 <> e2 implies e1.SSN <> e2.SSN )",
+                "specification": "The SSN of employees is an identifer (or a key)"
+            },
+            {
+                "ocl": "context Employee inv: self.dependents->notEmpty() implies self.dependents->forAll( e1, e2 | e1 <> e2 implies ( e1.name <> e2.name or e1.relationship <> e2.relationship ))",
+                "specification": "The name and relationship of dependents is a partial identifer: they are unique among all dependents of an employee"
+            },
+            {
+                "ocl": "context Project inv: self.controls.locations->includes(self.location)",
+                "specification": "The location of a project must be in one of the locations of its department"
+            },
+            {
+                "ocl": "context Department inv: self.nbrEmployees = self.worksFor->size()",
+                "specification": "The attribute nbrEmployees in Department keeps the number of employees that works for the department"
+            },
+            {
+                "ocl": "context Employee inv: self.worksOn->size() <= 4",
+                "specification": "An employee works at most in 4 projects"
+            },
+            {
+                "ocl": "context Employee inv: self.worksFor.controls->includesAll(self.worksOn.project)",
+                "specification": "An employee may only work on projects controlled by the department in which s/he works"
+            },
+            {
+                "ocl": "context Employee inv: let totHours: Integer = self.worksOn->collect(hours)->sum() in totHours >= 30 and totHours <=50",
+                "specification": "An employee works at least 30h/week and at most 50 h/week on all its projects"
+            },
+            {
+                "ocl": "context Project inv: self.worksOn->select( hours < 10 )->size() <= 2",
+                "specification": "A project can have at most 2 employees working on the project less than 10 hours"
+            },
+            {
+                "ocl": "context Employee inv: self.worksOn->select( hours < 5 )->notEmpty() implies Department.allInstances()->collect(manages.employee)-> includes(self)",
+                "specification": "Only department managers can work less than 5 hours on a project"
+            },
+            {
+                "ocl": "context Employee inv: self.worksOn->select( hours < 5 )->notEmpty() implies self.worksFor.manages.employee=self",
+                "specification": "The only managers that can work less than 5 hours on a department project must be an employee of the department itself"
+            },
+            {
+                "ocl": "context Employee inv: self.subordinates->isEmpty() implies self.worksOn->forAll( hours >=10 )",
+                "specification": "Employees without subordinates must work at least 10 hours on every project they work"
+            },
+            {
+                "ocl": "context Department inv: self.controls->forall( p:Project | self.manages.employee.worksOn->select(hours >= 5)->contains(p) )",
+                "specification": "The manager of a department must work at least 5 hours on all projects controlled by the department"
+            },
+            {
+                "ocl": "context Employee inv: self.subordinates->excludes(self)",
+                "specification": "An employee cannot supervise him/herself"
+            },
+            {
+                "ocl": "context Employee def: allSubordinates = self.subordinates->union(self->subordinates->collect(e:Employee | e.allSubordinates)) inv: self.allSubordinates->exludes(self)",
+                "specification": "The supervision relationship must not be cyclic"
+            }
+        ]
+    },
+    {
+        "domain_name": "EURental",
+        "domain_context": "The EURental domain models a car rental system designed to ensure operational efficiency and compliance with business rules while serving customers' needs. At its core, the domain revolves around rentals, represented as agreements between customers and the agency, tied to specific cars, rental periods, and associated costs. Cars are grouped into categories through CarGroups, which help streamline inventory management across branches, with each branch functioning as a hub for pickups and drop-offs. Customer eligibility is monitored through attributes like premium status and blacklist records, preventing rentals to high-risk individuals. Temporal constraints, such as rentals not starting on Mondays or the last Friday of the month, ensure operational downtime, while rules like a minimum rental duration of ten hours and non-overlapping rentals for the same customer within a week maintain fairness and resource allocation. The domain also integrates pricing through quotes, influenced by car group, branch, and rental terms, emphasizing tailored customer service. Overall, this structure reflects a tightly integrated system where relationships between entities ensure seamless functionality and adherence to business policies.",
+        "plantuml_model": "@startuml EURental\n\n' classes '\nclass Date{\n    date: String\n}\n\nclass Car{\n    regNum: String\n}\n\nclass CarGroup{\n    category: String\n}\n\nclass Branch{\n    address: String\n}\n\nclass Quote{\n    value: Integer\n}\n\nclass Rental{\n    id: String\n    price: Real\n    state: String\n    startingDate: Date\n    endingDate: Date\n}\n\nclass Customer{\n    id: String\n    name: String\n    birthday: Date\n    licenseExpData: Date\n    premium: Boolean\n    discount: Integer\n}\n\nclass BlackListed{\n    blackListedDate: Date\n}\n\n' associations '\nCar \"car 1..*\" -- \"carGroup 1\" CarGroup\n\nCar \"car 0..1\" -- \"rentalAgreement *\" Rental\n\nCarGroup \"low 0..1\" -- \"high 0..1\" CarGroup\n\nCarGroup \"carGroup 1..*\" -- \"branch 1..*\" Branch \n(CarGroup, Branch) .. Quote\n\nBranch \"pickUpBranch 1\" -- \"pickUpRental *\" Rental\n\nBranch \"dropOffBranch 1\" -- \"dropOffRental *\" Rental\n\nRental \"rental 1..*\" -- \"driver 1..*\" Customer\n\nBlackListed --|> Customer\n\n@enduml",
+        "nl_model": "The domain model for EURental consists of several classes, each representing a different aspect of the car rental business. \n\n1. **Date Class**: This class has a single attribute, `date`, which is a string representing a specific date.\n\n2. **Car Class**: This class includes the attribute `regNum`, a string that denotes the registration number of the car.\n\n3. **CarGroup Class**: This class contains the attribute `category`, a string that specifies the category of the car group.\n\n4. **Branch Class**: This class has the attribute `address`, a string that indicates the location of the branch.\n\n5. **Quote Class**: This class includes the attribute `value`, an integer representing the monetary value of the quote.\n\n6. **Rental Class**: This class has several attributes:\n   - `id`: A string that uniquely identifies the rental.\n   - `price`: A real number indicating the price of the rental.\n   - `state`: A string representing the current state of the rental.\n   - `startingDate`: A `Date` object marking the start of the rental period.\n   - `endingDate`: A `Date` object marking the end of the rental period.\n\n7. **Customer Class**: This class includes multiple attributes:\n   - `id`: A string that uniquely identifies the customer.\n   - `name`: A string representing the customer's name.\n   - `birthday`: A `Date` object indicating the customer's date of birth.\n   - `licenseExpData`: A `Date` object showing the expiration date of the customer's driving license.\n   - `premium`: A boolean indicating whether the customer is a premium member.\n   - `discount`: An integer representing any discount applicable to the customer.\n\n8. **BlackListed Class**: This class has a single attribute, `blackListedDate`, which is a `Date` object indicating when the customer was blacklisted.\n\n**Associations**:\n- A `Car` belongs to one `CarGroup`, and each `CarGroup` can have one or more cars.\n- A `Car` can be associated with zero or one `Rental`, and each `Rental` can involve multiple cars.\n- `CarGroup` can be associated with another `CarGroup`, representing a hierarchical relationship with optional low and high categories.\n- Each `CarGroup` is associated with one or more `Branch` locations, and each `Branch` can have multiple car groups.\n- A `Branch` serves as a `pickUpBranch` for multiple rentals and as a `dropOffBranch` for multiple rentals.\n- Each `Rental` involves one or more `Customer` drivers.\n- The `BlackListed` class is a specialization of the `Customer` class, indicating that a blacklisted customer is a type of customer.",
+        "constraints": [
+            {
+                "ocl": "context Rental inv: self.startingdate <= self.endingDate",
+                "specification": "Rental ending date must be later or equal than starting date"
+            },
+            {
+                "ocl": "context Rental inv: not self.startingDate.dayOfTheWeek()<>DayOftheWeek::Monday",
+                "specification": "On Mondays the agency is close (so no rentals starting on a Monday)"
+            },
+            {
+                "ocl": "context Rental inv: (self.endDate - self.startingDate).hours() >= 10",
+                "specification": "Minimum duration of a rental is 10 hours"
+            },
+            {
+                "ocl": "context Rental inv: not self.startingdate = self.startingdate.getMonth().last('Friday')",
+                "specification": "Last Friday of each month the agency is closed"
+            }
+        ]
+    },
+    {
+        "domain_name": "Airport",
+        "domain_context": "Our air travel domain is centered around the structured management of airports, flights, airlines, and passengers, emphasizing controlled and consistent operations. Each flight connects two airports: one as the origin and the other as the destination. All departing flights originate exclusively from Amsterdam, which serves as our operational hub. Flights are operated by KLM, our designated airline, ensuring standardized service. Each flight has a calculated duration that matches the difference between its departure and arrival times, and the maximum number of passengers is capped at 1,000, maintaining safety and logistical efficiency.\n\nPassengers are associated with flights based on their booking, with age requirements enforced to ensure compliance with individual flight policies. The system accommodates passengers requiring assistance, supporting inclusivity and accessibility. In some cases, passengers can also be affiliated with an airline in an executive capacity, such as a CEO, reflecting the broader organizational relationships within the system.\n\nThe domain model captures these relationships clearly, linking airports to their flights and flights to the airline and passengers. It ensures that origin and destination airports are always distinct, reinforcing operational logic. Together, this model ensures that air travel operates within a rigorous, predefined framework, delivering a streamlined and standardized experience.",
+        "plantuml_model": "@startuml Airport\n\n' classes '\nclass Airport{\n    name: String\n}\n\nclass Flight{\n    departTime: Date\n    arrivalTime: Date\n    duration: Date\n    maxNrPassenger: Integer\n}\n\nclass Airline{\n    name: String\n}\n\nclass Passenger{\n    minAge: Integer\n    age: Integer\n    needsAssistance: Boolean\n    book(f: Flight)\n}\n\n' associations '\nAirport \"origin 1\" -- \"departingFlights *\" Flight\n\nAirport \"destination 1\" -- \"arrivingFlights *\" Flight\n\nFlight \"flights *\" -- \"airline 1\" Airline\n\nFlight \"flight 1\" -- \"passengers *\" Passenger\n\nPassenger \"CEO 0..1\" -- \"airline 0..1\" Airline\n\n@enduml",
+        "nl_model": "The domain model represents an airport system with several key entities: Airport, Flight, Airline, and Passenger.\n\n1. **Airport Class**:\n   - Attributes:\n     - `name`: A string representing the name of the airport.\n   - Associations:\n     - An airport can have multiple departing flights (`departingFlights`), each associated with one origin airport.\n     - An airport can have multiple arriving flights (`arrivingFlights`), each associated with one destination airport.\n\n2. **Flight Class**:\n   - Attributes:\n     - `departTime`: A date indicating the departure time of the flight.\n     - `arrivalTime`: A date indicating the arrival time of the flight.\n     - `duration`: A date representing the duration of the flight.\n     - `maxNrPassenger`: An integer specifying the maximum number of passengers the flight can accommodate.\n   - Associations:\n     - A flight is associated with one airline, and an airline can have multiple flights.\n     - A flight can have multiple passengers.\n\n3. **Airline Class**:\n   - Attributes:\n     - `name`: A string representing the name of the airline.\n   - Associations:\n     - An airline can have multiple flights.\n     - An airline can optionally have a CEO, who is a passenger.\n\n4. **Passenger Class**:\n   - Attributes:\n     - `minAge`: An integer specifying the minimum age requirement for a passenger.\n     - `age`: An integer representing the age of the passenger.\n     - `needsAssistance`: A boolean indicating whether the passenger requires assistance.\n   - Methods:\n     - `book(f: Flight)`: A method allowing a passenger to book a flight.\n   - Associations:\n     - A passenger can be associated with a flight.\n     - A passenger can optionally be the CEO of an airline.",
+        "constraints": [
+            {
+                "ocl": "context Flight inv: self.duration < 4",
+                "specification": "All flight objects must have a duration attribute that is less than four"
+            },
+            {
+                "ocl": "context Flight inv: self.maxNrPassenger <= 1000",
+                "specification": "The maximum number of passengers on any flight may not exceed 1000"
+            },
+            {
+                "ocl": "context Passenger inv: self.age >= self.minAge",
+                "specification": "For every passenger the age attribute must be greater than or equal to the class attribute minAge"
+            },
+            {
+                "ocl": "context Flight inv: self.duration = self.arrivalTime - self.departTime",
+                "specification": "The duration attribute of all flight objects must be equal to the difference between the arrivalTime attribute and the departTime attribute"
+            },
+            {
+                "ocl": "context Flight inv: self.origin <> self.destination",
+                "specification": "The airport from which a flight is leaving is different from the destination airport"
+            },
+            {
+                "ocl": "context Flight inv: self.origin.name = 'Amsterdam'",
+                "specification": "For every flight the name of the airport from which it is leaving must be 'Amsterdam'"
+            },
+            {
+                "ocl": "context Flight inv: self.airline.name = 'KLM'",
+                "specification": "For every flight the name of the airline must be 'KLM'"
+            }
+        ]
+    },
+    {
+        "domain_name": "QUDV",
+        "domain_context": "The QUDV (Quantities, Units, Dimensions, and Values) domain provides a robust framework for representing and managing units, quantities, and their interrelationships within scientific, engineering, and practical contexts. At its core, the domain is anchored by **Units** and **QuantityKinds**, where units serve as measurable representations of quantity kinds, such as meters for length or seconds for time. These units are organized within a **SystemOfUnits**, which aligns with a **SystemOfQuantities** to ensure coherence and consistency, particularly through constraints that mandate one base unit per base quantity within coherent systems. Specialized unit classes like **DerivedUnit** or **ConversionBasedUnit** encapsulate varying levels of complexity, such as products of base units or units derived via reference units and conversion factors. Prefixes, such as milli- or kilo-, extend units to enhance granularity and scale without introducing redundancy. Operational rules, like disallowing prefixed units as reference units or enforcing proportionality constraints in derived units, ensure logical consistency and adherence to scientific standards. By uniting these entities under a formalized structure, the domain facilitates precision, interoperability, and reliable transformation of units and quantities across diverse applications, embodying the principles of coherence and scalability fundamental to measurement systems.",
+        "plantuml_model": "@startuml QUDV\n\n' classes '\nclass Unit{\n    name: String\n    symbol: String\n    description: String\n    definitionURI: String\n}\n\nclass SystemOfUnits{\n    name String\n    symbol: String\n    description: String\n    definitionURI: String\n}\n\nclass SystemOfQuantities{\n    name String\n    symbol: String\n    description: String\n    definitionURI: String\n}\n\nclass QuantityKind{\n    name String\n    symbol: String\n    description: String\n    definitionURI: String\n}\n\nclass Prefix{\n    name: String\n    symbol: String\n    factor: Real\n}\n\nclass UnitFactor{\n    exponent: Real\n}\n\nclass AffineConversionUnit{\n    factor: Real\n    offset: Integer\n}\n\nclass GeneralConversionUnit{\n    expression: String\n    expressionLanguageURI: String\n}\n\nclass DerivedUnit{}\n\nclass SimpleUnit{}\n\nclass ConversionBasedUnit{}\n\nclass PrefixedUnit{}\n\nclass LinearConversionUnit{}\n\n' associations '\nUnit --> \"quantityKind 0..1\" QuantityKind\n\nSystemOfUnits --> \"systemofQuantities *\" SystemOfQuantities\n\nSystemOfUnits --> \"unit *\" Unit\n\nSystemOfUnits --> \"baseUnit *\" Unit\n\nSystemOfUnits --> \"prefix *\" Prefix\n\nSystemOfQuantities --> \"baseQuantityKind *\" QuantityKind\n\nUnitFactor --> \"unit 1\" Unit\n\nDerivedUnit --> \"factor 1..*\" UnitFactor\n\nConversionBasedUnit --> \"referenceUnit 1\" Unit\n\nPrefixedUnit --> \"prefix 1\" Prefix\n\nDerivedUnit --|> Unit\n\nSimpleUnit --|> Unit\n\nConversionBasedUnit --|> Unit\n\nPrefixedUnit --|> ConversionBasedUnit\n\nLinearConverionUnit --|> ConversionBasedUnit\n\nAffineConversionUnit --|> ConversionBasedUnit\n\nGeneralConversionUnit --|> ConversionBasedUnit\n\n@enduml",
+        "nl_model": "The domain model represents a system for managing units, systems of units, and related concepts. It consists of several classes, each with specific attributes and associations.\n\n1. **Unit**: This class represents a unit of measurement. It has attributes such as `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String). A `Unit` can be associated with a `QuantityKind`, indicating the type of quantity it measures, with a cardinality of 0 or 1.\n\n2. **SystemOfUnits**: This class describes a collection of units. It includes attributes like `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String). A `SystemOfUnits` is associated with multiple `SystemOfQuantities`, `Unit`, `baseUnit`, and `Prefix`.\n\n3. **SystemOfQuantities**: This class defines a system of quantities, characterized by attributes such as `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String). It is associated with multiple `baseQuantityKind` of `QuantityKind`.\n\n4. **QuantityKind**: This class represents a kind of quantity, with attributes `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String).\n\n5. **Prefix**: This class represents a prefix used in units, with attributes `name` (String), `symbol` (String), and `factor` (Real).\n\n6. **UnitFactor**: This class is used to define a factor for a unit, with an attribute `exponent` (Real). It is associated with one `Unit`.\n\n7. **AffineConversionUnit**: This class represents a unit with affine conversion, having attributes `factor` (Real) and `offset` (Integer).\n\n8. **GeneralConversionUnit**: This class represents a unit with general conversion, characterized by attributes `expression` (String) and `expressionLanguageURI` (String).\n\n9. **DerivedUnit**: This class is a type of `Unit` that is derived from other units. It is associated with one or more `UnitFactor`.\n\n10. **SimpleUnit**: This class is a straightforward type of `Unit`.\n\n11. **ConversionBasedUnit**: This class is a type of `Unit` that is based on conversion. It is associated with one `referenceUnit` of `Unit`.\n\n12. **PrefixedUnit**: This class represents a unit with a prefix, inheriting from `ConversionBasedUnit`. It is associated with one `Prefix`.\n\n13. **LinearConversionUnit**: This class is a type of `ConversionBasedUnit` that involves linear conversion.\n\n14. **AffineConversionUnit**: This class is a type of `ConversionBasedUnit` that involves affine conversion.\n\n15. **GeneralConversionUnit**: This class is a type of `ConversionBasedUnit` that involves general conversion.\n\nThe associations between these classes define how units, systems of units, and related concepts interact and are structured within the domain model.",
+        "constraints": [
+            {
+                "ocl": "context PrefixedUnit inv: not referenceUnit->oclIsTypeOf(PrefixedUnit)",
+                "specification": "The referenceUnit shall not be a PrefixedUnit"
+            },
+            {
+                "ocl": "context SystemOfUnits inv: self.systemOfQuantities.baseQuantityKind.size() = self.baseUnit->size() = 1",
+                "specification": "In a coherent system of units, there is only one base unit for each base quantity."
+            }
+        ]
+    },
+    {
+        "domain_name": "InvoicingOrders",
+        "domain_context": "The domain represents a system for managing product inventories and customer orders, ensuring seamless alignment between supply and demand. At its core are two entities: **Product**, which tracks inventory with uniquely identified items and a non-negative stock level, and **Order**, which represents customer requests for specific product quantities. Each order is tied to a product through the OrderProduct relationship, reflecting the dependency of orders on the product's availability. The system enforces strict constraints to maintain integrity and operational accuracy. Products must have unique identifiers, and their stock levels can only be adjusted positively through the supply process or reduced by releasing quantities when fulfilling orders. Orders, uniquely identified as well, must specify a valid product and a positive quantity, and their state transitions are tightly controlled. An order begins as \"pending\" and can only be invoiced if the product\u2019s stock can fulfill the requested quantity, subsequently reducing inventory. Conversely, invoiced orders can be canceled, returning the allocated stock. These constraints ensure consistency, prevent over-allocation, and maintain real-time accuracy in stock and order statuses, allowing stakeholders to confidently manage inventory levels and customer commitments within a structured, rule-driven environment.",
+        "plantuml_model": "@startuml InvoicingOrders\n\n' classes '\nclass Order{\n    id: Integer\n    quantity: Integer\n    state: String\n    Order(prd: Product, qty: Integer): OclVoid\n    cancel(): Boolean\n    invoice(): Boolean\n}\n\nclass Product{\n    id: Integer\n    stock: Integer\n    Product(): Boolean\n    supply(qty: Integer): Boolean\n    release(qty: Integer): Boolean\n}\n\n' associations '\nOrder \"order 1\" -- \"product 1\" Product: OrderProduct\n\n@enduml",
+        "nl_model": "The domain model consists of two primary classes: Order and Product.\n\nThe **Order** class has the following attributes:\n- `id`: An Integer representing the unique identifier of the order.\n- `quantity`: An Integer indicating the quantity of products in the order.\n- `state`: A String that describes the current state of the order.\n\nThe Order class includes the following operations:\n- `Order(prd: Product, qty: Integer): OclVoid`: A constructor method that initializes an Order with a specified Product and quantity.\n- `cancel(): Boolean`: A method that cancels the order and returns a Boolean indicating the success of the operation.\n- `invoice(): Boolean`: A method that generates an invoice for the order and returns a Boolean indicating the success of the operation.\n\nThe **Product** class has the following attributes:\n- `id`: An Integer representing the unique identifier of the product.\n- `stock`: An Integer indicating the current stock level of the product.\n\nThe Product class includes the following operations:\n- `Product(): Boolean`: A constructor method that initializes a Product and returns a Boolean indicating the success of the operation.\n- `supply(qty: Integer): Boolean`: A method that increases the stock by the specified quantity and returns a Boolean indicating the success of the operation.\n- `release(qty: Integer): Boolean`: A method that decreases the stock by the specified quantity and returns a Boolean indicating the success of the operation.\n\nThe association between the classes is defined as follows:\n- An Order is associated with a Product through a relationship named OrderProduct. This association indicates that each order is linked to exactly one product, and each product can be associated with exactly one order.",
+        "constraints": [
+            {
+                "ocl": "context Product inv isNat: self.stock >= 0",
+                "specification": "The stock of a Product is always a natural number, i.e., it is a positive Integer. This also ensures the definedness of the stock."
+            },
+            {
+                "ocl": "context Product inv idUnique: Product::allInstances()->forAll(p1:Product, p2:Product | p1.id <> p2.id)",
+                "specification": "The Product id is unique."
+            },
+            {
+                "ocl": "context Order inv isNat: self.quantity >= 0",
+                "specification": "The quantity of an Order is always a natural number, i.e., it is a positive Integer. This also ensures the definedness of the quantity."
+            },
+            {
+                "ocl": "context Order inv stateRange: (self.state = 'pending') or (self.state = 'invoiced')",
+                "specification": "The state of an Order should either be `pending'  or `invoiced'."
+            },
+            {
+                "ocl": "context Order inv idUnique: Order::allInstances()->forAll(o1:Order, o2:Order | o1.id <> o2.id)",
+                "specification": "The Order id is unique."
+            }
+        ]
+    },
+    {
+        "domain_name": "Mortgage",
+        "domain_context": "The domain represents a mortgage management system designed to facilitate and regulate the lending process for property ownership. At its core are individuals, represented as persons, who can own one or more houses and seek financing through mortgages. A person\u2019s eligibility to obtain a mortgage hinges on their income and ownership of the property being financed. Specifically, a house can only serve as security for a mortgage if it is owned by the borrower, ensuring alignment between asset ownership and financial liability. Mortgages are characterized by a principal amount, monthly payments, and a fixed term defined by start and end dates, with constraints ensuring the start date precedes the end date. The financial integrity of the system is upheld through additional rules, such as limiting a borrower\u2019s total mortgage obligations to no more than 30% of their salary and ensuring that the total secured debt on a house does not exceed its value. Unique identifiers, like the social security number for each person, reinforce data integrity. Together, these relationships and rules establish a structured yet flexible framework for managing property financing, balancing stakeholder interests, and safeguarding financial soundness within the system.",
+        "plantuml_model": "@startuml Mortgage\n\n' classes '\nclass Person{\n    socSecNr: Integer\n    salary: Money\n    getMortgage(sum: Money, security: House)\n}\n\nclass Mortgage{\n    principal: Money\n    monthlyPayment: Money\n    startDate: Date\n    endDate: Date\n}\n\nclass House{\n    value: Money\n}\n\n' associations '\nPerson \"owner 1\" -- \"houses *\" House\n\nHouse \"security 1\" -- \"mortgages *\" Mortgage\n\nMortgage \"mortgages *\" -- \"borrower 1\" Person\n\n@enduml",
+        "nl_model": "The domain model consists of three main classes: Person, Mortgage, and House.\n\n1. **Person Class**: \n   - Attributes:\n     - `socSecNr`: An integer representing the social security number of the person.\n     - `salary`: A Money type attribute representing the salary of the person.\n   - Methods:\n     - `getMortgage(sum: Money, security: House)`: A method that allows a person to obtain a mortgage by specifying the sum of money and the house used as security.\n   - Associations:\n     - A person can own multiple houses, as indicated by the association \"owner 1\" to \"houses *\".\n\n2. **House Class**:\n   - Attributes:\n     - `value`: A Money type attribute representing the value of the house.\n   - Associations:\n     - A house can be used as security for multiple mortgages, as indicated by the association \"security 1\" to \"mortgages *\".\n\n3. **Mortgage Class**:\n   - Attributes:\n     - `principal`: A Money type attribute representing the principal amount of the mortgage.\n     - `monthlyPayment`: A Money type attribute representing the monthly payment amount for the mortgage.\n     - `startDate`: A Date type attribute indicating the start date of the mortgage.\n     - `endDate`: A Date type attribute indicating the end date of the mortgage.\n   - Associations:\n     - A mortgage is associated with one borrower, which is a person, as indicated by the association \"mortgages *\" to \"borrower 1\".",
+        "constraints": [
+            {
+                "ocl": "context Mortgage: inv: startDate < endDate",
+                "specification": "The start date for any mortgage must be before the end date."
+            },
+            {
+                "ocl": "context Mortgage: inv: self.security.owner = self.borrower",
+                "specification": "A person may have a mortgage on a house only if that house is owned by the person."
+            },
+            {
+                "ocl": "context Person: inv: self.mortgages.security.owner->forAll(p : Person | p = self)",
+                "specification": "A person may have mortgage on a house only if that house is owned by the person (use Person as context)."
+            },
+            {
+                "ocl": "context Person: inv: Person::allInstance()->forAll(p1,p2 : Person | p1<>p2 implies p1.socSecNr <> p2.socSecNr)",
+                "specification": "The social security number of all persons must be unique (use House as a context)."
+            }
+        ]
+    },
+    {
+        "domain_name": "Train",
+        "domain_context": "The domain represents the operation and organization of a train system, focusing on its structural components and the rules governing their interactions. A train, identified uniquely, consists of a series of interconnected wagons, each contributing to the train's weight and functional load. Wagons, capable of transporting goods or passengers, have defined capacities and smoking allowances, and their load must not exceed their designed capacity, ensuring operational safety and efficiency. The system enforces consistency by requiring all trains to have the same number of wagons, reflecting standardized configurations across the fleet. The sequential arrangement of wagons is captured through successor and predecessor relationships, ensuring a logical flow and maintaining that each wagon pair belongs to the same train. Additionally, constraints on train length, which includes wagons and engines, prevent excessive size, optimizing maneuverability and infrastructure compatibility. Importantly, every train is required to have at least one engine, underscoring the operational necessity of propulsion. Collectively, these structural definitions and constraints reflect a well-organized system prioritizing reliability, safety, and consistency in train operations, aligning with real-world logistical and operational demands.",
+        "plantuml_model": "@startuml Train\n\n' classes '\nclass Train{\n    identifier: String\n    numOfWagons: Integer\n    numOfEngines: Integer\n    weight: Integer\n}\n\nclass Wagon{\n    weight: Integer\n    smoking: Boolean\n    currentLoad: Integer\n    capacity: Integer\n}\n\n' associations '\nTrain \"train 1\" -- \"wagon *\" Wagon\n\nWagon \"succ 0..1\" -- \"pred 0..1\" Wagon\n\n@enduml",
+        "nl_model": "The domain model consists of two primary classes: Train and Wagon. \n\nThe Train class has the following attributes:\n- identifier: A String that uniquely identifies the train.\n- numOfWagons: An Integer representing the number of wagons attached to the train.\n- numOfEngines: An Integer indicating the number of engines the train has.\n- weight: An Integer specifying the total weight of the train.\n\nThe Wagon class includes these attributes:\n- weight: An Integer indicating the weight of the wagon.\n- smoking: A Boolean that denotes whether smoking is allowed in the wagon.\n- currentLoad: An Integer representing the current load of the wagon.\n- capacity: An Integer specifying the maximum capacity of the wagon.\n\nThere is an association between Train and Wagon, where a Train can have multiple Wagons associated with it, indicated by the multiplicity \"wagon *\". \n\nAdditionally, there is a self-association within the Wagon class, where each Wagon can have a successor and a predecessor, both of which are optional, as indicated by the multiplicity \"succ 0..1\" and \"pred 0..1\".",
+        "constraints": [
+            {
+                "ocl": "context Train: inv: self.wagon -> size() >= 1",
+                "specification": "All the trains will have the same number of wagons."
+            },
+            {
+                "ocl": "context Wagon: inv: self.succ -> notEmpty() implies self.succ.train = self.train",
+                "specification": "A wagon and its successor wagon should belong to the same train."
+            },
+            {
+                "ocl": "context Train: inv: Train.allInstances -> forAll(x:Train,y:Train | x.wagon->size() = y.wagon->size() )",
+                "specification": "The current load of a wagon cannot exceed its capacity"
+            }
+        ]
+    },
+    {
+        "domain_name": "Person",
+        "domain_context": "The domain represents a structured ecosystem where individuals, companies, banks, and marital unions interact to model real-world social and economic dynamics. At its core, a **Person** is characterized by demographic attributes such as name, gender, age, and marital status, with relationships connecting them as family members, spouses, employees, or customers. **Companies** employ people under constraints ensuring diverse age representation, including an employee over 50, and disallowing child labor. A company\u2019s size is capped at 50 employees, its stock price remains positive, and its workforce includes unique individuals such as \"Jack.\" **Marriages** formalize spousal relationships, with constraints limiting a person to one concurrent marriage and enforcing rules on maiden names for married women. **Jobs** link individuals to companies, contributing to their income through aggregating salaries. Meanwhile, **Banks** manage financial accounts, associating customers with specific accounts. This interconnected system is further enriched by familial ties, where **Persons** recursively derive descendants from their lineage. Operational limits ensure realism, such as the total population of individuals capped at 100 and employees\u2019 age restricted to 65. This domain highlights the interplay of organizational and social structures, offering a robust framework to explore relationships, economic flows, and societal norms.",
+        "plantuml_model": "@startuml Person\n\n' classes '\nenum Gender{\n    male\n    female\n}\n\nclass Person{\n    firstName: String\n    lastName: String\n    gender: Gender\n    birthDate: Date\n    age: Integer\n    isMarried: Boolean\n    maidenName: String\n    isUnemployed: Boolean\n    income(): Integer\n    currentSpouse(): Person\n    descendants(): Set\n}\n\nclass Bank{\n    accountNo: Integer\n}\n\nclass Job{\n    title: String\n    startDate: Date\n    salary: Integer\n}\n\nclass Company{\n    name: String\n    noEmployees: Integer\n    stockPrice(): Real\n    hireEmployee(p: Person)\n}\n\nclass Marriage{\n    place: String\n    date: Date\n    ended: Boolean\n}\n\n' associations '\nPerson \"employees *\" -- \"employer *\" Company\n(Person, Company) .. Job\n\nPerson \"manager 1\" -- \"managedCompanies *\" Company\n\nPerson \"customer 0..1\" -- \"banks *\" Bank\n\nPerson \"parents 0..2\" -- \"children *\" Person\n\nPerson \"wife *\" -- \"husband *\" Person\n(Person, Person) .. Marriage\n\n@enduml",
+        "nl_model": "The domain model represents a system involving people, their employment, financial activities, and relationships. The main classes in this model are Person, Bank, Job, Company, and Marriage, each with specific attributes and associations.\n\nThe `Person` class includes attributes such as `firstName`, `lastName`, `gender` (which is an enumeration of `male` or `female`), `birthDate`, `age`, `isMarried`, `maidenName`, and `isUnemployed`. It also has methods like `income()`, which returns an integer, `currentSpouse()`, which returns a `Person`, and `descendants()`, which returns a set of persons.\n\nThe `Bank` class has a single attribute, `accountNo`, which is an integer.\n\nThe `Job` class includes attributes such as `title`, `startDate`, and `salary`, all of which are relevant to employment.\n\nThe `Company` class has attributes `name` and `noEmployees`, with a method `stockPrice()` that returns a real number. It also has a method `hireEmployee(p: Person)` to hire a person.\n\nThe `Marriage` class includes attributes `place`, `date`, and `ended`, indicating the location, date, and status of the marriage.\n\nThere are several associations between these classes:\n\n- A `Person` can be employed by multiple `Company` instances, and a `Company` can have multiple `Person` employees.\n- A `Person` can manage multiple `Company` instances, but each `Company` has only one manager.\n- A `Person` can be a customer of multiple `Bank` instances, but each `Bank` can have zero or one customer.\n- A `Person` can have up to two parents and can have multiple children.\n- A `Person` can be a wife or husband to another `Person`, and this relationship is modeled through the `Marriage` class, which connects two `Person` instances.",
+        "constraints": [
+            {
+                "ocl": "context Company inv: self.noEmployees <= 50",
+                "specification": "Value of attribute noEmployees in instances of Company must be less than or equal to 50"
+            },
+            {
+                "ocl": "context Company inv: self.stockPrice() > 0",
+                "specification": "The stock price of companies is greater than 0"
+            },
+            {
+                "ocl": "context Person inv: self.maidenName <> `' implies self.gender = Gender::female and self.isMarried = true",
+                "specification": "Only married women can have a maiden name"
+            },
+            {
+                "ocl": "context Person inv: self.marriage[wife]->select(m | m.ended = false)->size()=1 and self.marriage[husband]->select(m | m.ended = false)->size()=1",
+                "specification": "A person is currently married to at most one person"
+            },
+            {
+                "ocl": "context Person inv: Person.allInstances()->size() <= 100",
+                "specification": "There are at most 100 persons"
+            },
+            {
+                "ocl": "context Company inv: self.employees->select(age > 50)->notEmpty()",
+                "specification": "A company has at least one employee older than 50"
+            },
+            {
+                "ocl": "context Company inv: self.employees->reject(age>=18)->isEmpty()",
+                "specification": "The collection of employees of a company who are less than 18 years old is empty"
+            },
+            {
+                "ocl": "context Company inv: self.employees->forAll(age <= 65)",
+                "specification": "The age of each employee is less than or equal to 65"
+            },
+            {
+                "ocl": "context Person inv: Person.allInstances()->forAll(p1, p2 | p1 <> p2 implies p1.name <> p2.name )",
+                "specification": "All instances of persons have unique names"
+            },
+            {
+                "ocl": "context Company inv: self.employees->exists(firstName = 'Jack')",
+                "specification": "The firstName of at least one employee is equal to 'Jack'"
+            }
+        ]
+    },
+    {
+        "domain_name": "Vehicle",
+        "domain_context": "The domain centers on managing vehicle ownership, integrating individuals and their fleets under a structured system of rules and constraints to ensure compliance and clarity. A person, characterized by attributes such as name and age, serves as the central actor, capable of owning multiple vehicles, with a strict limitation of no more than three in total. Vehicles, encompassing cars and bikes, are distinguished by their color and inherit common features from the Vehicle class. Ownership rules stipulate that a vehicle owner must be at least 18 years old, ensuring maturity in vehicle management, while individuals under 18 are explicitly restricted from owning cars. Additionally, all cars in a person\u2019s fleet must be black, with the number of black vehicles in any fleet capped at three, reinforcing uniformity and control. The domain ensures that at least one red car exists in the system, maintaining variety. Behavioral constraints for the Person class, such as incrementing age through birthday calls or setting age with non-negative values via setAge, promote data consistency. These interconnected elements and constraints define a robust, purpose-driven structure that emphasizes lawful ownership and operational reliability within the vehicle management ecosystem.",
+        "plantuml_model": "@startuml Vehicle\n\n' classes '\nenum Colour{\n    black(): Colour\n    white(): Colour\n    red(): Colour\n}\n\nclass Person{\n    name: String\n    age: Integer\n    getName(): String\n    setAge(newAge:int): Integer\n    birthday()\n}\n\nclass Vehicle{\n    colour: Colour\n}\n\nclass Car{}\n\nclass Bike{}\n\n' associations '\nPerson \"owner 1\" -- \"fleet *\" Vehicle: ownership\n\nCar --|> Vehicle\n\nBike --|> Vehicle\n\n@enduml",
+        "nl_model": "The domain model consists of several classes and their relationships. The primary classes are `Person`, `Vehicle`, `Car`, and `Bike`. Additionally, there is an enumeration `Colour` which defines possible values for vehicle colors: black, white, and red.\n\nThe `Person` class has two attributes: `name` of type `String` and `age` of type `Integer`. It includes methods `getName()` which returns a `String`, `setAge(newAge: int)` which takes an integer and returns an `Integer`, and `birthday()` which likely updates the person's age.\n\nThe `Vehicle` class has one attribute, `colour`, which is of type `Colour`. This class serves as a superclass for `Car` and `Bike`, as indicated by the inheritance relationship where both `Car` and `Bike` are specialized types of `Vehicle`.\n\nThe association between `Person` and `Vehicle` is characterized by ownership. A `Person` can own a fleet of multiple `Vehicles`, while each `Vehicle` is associated with a single `owner`. This relationship is depicted with a multiplicity of \"1\" on the `Person` side and \"*\" on the `Vehicle` side, indicating a one-to-many relationship.",
+        "constraints": [
+            {
+                "ocl": "context Vehicle inv: self. owner. age >= 18",
+                "specification": "A vehicle owner must be at least 18 years old"
+            },
+            {
+                "ocl": "context Person inv: self.fleet->size <= 3",
+                "specification": "Nobody has more than 3 vehicles"
+            },
+            {
+                "ocl": "context Person inv: self.fleet->forAll(v | v.colour = #black)",
+                "specification": "All cars of a person are black"
+            },
+            {
+                "ocl": "context Person inv: self.fleet->forAll(v | v.colour = #black) -> size <= 3",
+                "specification": "Nobody has more than 3 black vehicles"
+            },
+            {
+                "ocl": "context Person inv: age<18 implies self.fleet->forAll(v | not v.oclIsKindOf(Car))",
+                "specification": "A person younger than 18 owns no cars"
+            },
+            {
+                "ocl": "context Car inv: Car.allInstances()->exists(c | c.colour=#red)",
+                "specification": "There is a red car"
+            }
+        ]
+    },
+    {
+        "domain_name": "LibraryDomain",
+        "domain_context": "The Library Domain orchestrates the borrowing, reserving, and categorization of books, aligning member privileges with predefined rules to ensure equitable access. At its core, the system manages **Books**, which are grouped into **Categories** defining thematic or subject-based classifications, while **Book Copies** represent individual, borrowable instances. Members, classified under distinct **Member Categories**, interact with these entities under operational constraints designed to balance availability and demand. A member can borrow a **Book Copy**, which becomes associated with them through a **Loan** specifying its start and end dates, constrained by the member's category-specific borrowing limits. Additionally, books may be placed on hold by multiple members in an ordered queue, though no member may duplicate their hold request for the same title. The domain also governs interdependencies between **Book Categories** and **Member Categories**, ensuring every pairing has a maximum loan period defined by the **Loan Period** entity. Constraints such as prohibiting concurrent loans and reserves on the same copy, limiting holds per category, and enforcing borrowing caps for each member's category sustain fairness and resource availability. This structured yet adaptable framework enables efficient library operations, fostering a reliable and user-friendly borrowing experience while preserving system integrity.",
+        "plantuml_model": "@startuml LibraryDomain\n\n' classes '\nclass Book{\n    title: String\n}\n\nclass BookCopy{\n    barcode: Integer\n    onReserve: Boolean\n}\n\nclass Loan{\n    startDate: Date\n    endDate: Date\n}\n\nclass Member{\n    name: String\n    email: String\n}\n\nclass MemberCategory{\n    description: String\n    maxNumberBooks: Integer\n}\n\nclass BookCategory{\n    description: String\n}\n\nclass LoanPeriod{\n    duration: Integer\n}\n\n' associations '\nBook \"bookOnHold *\" -- \"{ordered} requester *\" Member\n\nBook \"book *\" --|> \"bookcategory 1\" BookCategory\n\nBookCopy \"borrowedBook *\" -- \"currentHolder 0..1\" Member\n(BookCopy, Member) .. Loan\n\nMember \"member *\" --|> \"membercategory 1\" MemberCategory\n\nBookCopy \"copy *\" --|> \"book 1\" Book\n\nBookCategory \"bookcategory *\" -- \"membercategory *\" MemberCategory\n(BookCategory, MemberCategory) .. LoanPeriod\n\n@enduml",
+        "nl_model": "The domain model represents a library system with several classes and their relationships. \n\nThe **Book** class has an attribute `title` of type `String`. Each book can belong to one **BookCategory**, which has a `description` attribute of type `String`. A book can be on hold by multiple **Members**, with the association being ordered.\n\nThe **BookCopy** class includes attributes `barcode` of type `Integer` and `onReserve` of type `Boolean`. Each book copy is associated with one **Book** and can be borrowed by a **Member**, who can be the current holder of zero or one book copy. The relationship between **BookCopy** and **Member** is connected to the **Loan** class, which has `startDate` and `endDate` attributes of type `Date`.\n\nThe **Member** class has attributes `name` and `email`, both of type `String`. Each member belongs to one **MemberCategory**, which includes a `description` of type `String` and `maxNumberBooks` of type `Integer`. Members can request multiple books to be on hold.\n\nThe **LoanPeriod** class, which is associated with both **BookCategory** and **MemberCategory**, has a `duration` attribute of type `Integer`. This suggests that the loan period may vary depending on the book and member categories.",
+        "constraints": []
+    },
+    {
+        "domain_name": "BusinessRelations",
+        "domain_context": "The domain revolves around managing complex interactions between businesses, employees, and resources within an organization. At its core, BusinessRelations represent entities that act as Customers or Suppliers, linking them to operations such as projects, orders, and products. Customers initiate projects and orders, while Suppliers provide products. Employees play a central role in executing projects through assignments, which must align with project timelines and budgets. Departments organize employees, ensuring clear hierarchy and responsibility, with rules enforcing unique department identifiers and mandatory departmental assignments for each employee. Orders consist of multiple OrderLines, where quantities default to one and prices align with the product's rate at order placement, ensuring accurate and dynamic financial tracking. Stringent constraints maintain integrity, such as mandatory budgets for customers and projects within specified limits, salary and commission rules for employees, and automated tracking of critical changes like project dates or income. These safeguards ensure compliance, efficiency, and accuracy across operations. The system prioritizes seamless coordination, emphasizing structured relationships and robust data integrity, making it indispensable for organizations striving to balance operational complexity with strategic decision-making.",
+        "plantuml_model": "@startuml BusinessRelations\n\n' classes '\nclass BusinessRelations{\n    Id: Real\n    Name: String\n    EmailAddress: String\n    Budget: Real\n    CreditLimit: Real\n    CreatedBy: String\n    CreationDate: Date\n    LastUpdateBy: String\n    LastUpdateDate: Date\n    BurType: String\n    StreetName: String\n    StreetNumber: String\n    PostalCode: String\n    City: String\n    Country: String\n    ContactPerson: String\n    TelephoneNumber: String\n}\n\nclass Customers{\n    BurType: String\n    Budget: Real\n    CreditLimit: Real\n}\n\nclass Suppliers{\n    BurType: String\n}\n\nclass Products{\n    Id: Real\n    Name: String\n    BurId: Real\n    Description: String\n    Price: Real\n    CreatedBy: String\n    CreationDate: Date\n    LastUpdateBy: String\n    LastUpdateDate: Date\n}\n\nclass Orders{\n    Id: Real\n    BurId: String\n    DateOrdered: Date\n    DateShipped: Date\n    Remarks: String\n    CreatedBy: String\n    CreationDate: Date\n    LastUpdatedBy: String\n    LastUpdateDate: Date\n}\n\nclass Projects{\n    Id: Real\n    BurId: String\n    Name: String\n    PrjType: String\n    StartDate: Date\n    EndDate: Date\n    Budget: Real\n    CreatedBy: String\n    CreationDate: Date\n    LastUpdatedBy: String\n    LastUpdateDate: Date\n}\n\nclass OrderLines{\n    Id: Real\n    OrdId: Real\n    LastUpdateDate: Date\n    LineNumber: Real\n    ProId: Real\n    Price: Real\n    Quantity: Real\n    Total: Real\n    CreatedBy: String\n    CreationDate: Date\n    LastUpdatedBy: String\n}\n\nclass ProjectAssignments{\n    Id: Real\n    PrjId: Real\n    LastUpdatedBy: String\n    LastUpdateDate: Date\n    EmpId: Real\n    StartDate: Date\n    Rate: Real\n    Role: String\n    PercentageAllocated: Real\n    EndDate: Date\n    CreatedBy: String\n    CreationDate: Date\n}\n\nclass Employees{\n    Id: Real\n    LastName: String\n    StreetName: String\n    StreetNumber: String\n    PostalCode: String\n    City: String\n    Country: String\n    TelephoneNumber: String\n    EmailAddress: String\n    BankAccount: Real\n    CivilState: String\n    CreatedBy: String\n    FirstName: String\n    CreationDate: Date\n    LastUpdatedBy: String\n    LastUpdateDate: Date\n    Job: String\n    HireDate: Date\n    DepId: Real\n    EmpId: Real\n    OracleUsername: String\n    Salary: Real\n    Commission: Real\n}\n\nclass EmployeesJn{\n    Id: Real\n    EmpId: Real\n    Salary: Real\n    Commission: Real\n    CreatedBy: String\n    CreationDate: Date\n    LastUpdatedBy: String\n    LastUpdateDate: Date\n}\n\nclass Departments{\n    Id: Real\n    Name: String\n    Location: String\n    CreatedBy: String\n    CreationDate: Date\n    LastUpdatedBy: String\n    LastUpdateDate: Date\n}\n\n' associations '\nBusinessRelations <|-- Suppliers\n\nBusinessRelations <|-- Customers\n\nSuppliers \"suppliers 0..1\" -- \"products *\" Products\n\nCustomers \"customers 0..1\" -- \"orders *\" Orders\n\nCustomers \"customers 0..1\" -- \"projects *\" Projects\n\nProducts \"products 0..1\" -- \"orderlines *\" OrderLines\n\nOrders \"orders 0..1\" -- \"orderlines *\" OrderLines\n\nProjects \"projects 0..1\" -- \"projectassignments *\" ProjectAssignments\n\nEmployees \"employees 0..1\" -- \"projectassignments *\" ProjectAssignments\n\nEmployees \"employees 1\" -- \"employeesjn *\" EmployeesJn\n\nEmployees \"employees *\" -- \"empidemployees 0..1\" Employees\n\nEmployees \"employees *\" -- \"departments 0..1\" Departments\n\n@enduml",
+        "nl_model": "The domain model represents a business relations system with various entities and their interconnections. The primary classes in this model are BusinessRelations, Customers, Suppliers, Products, Orders, Projects, OrderLines, ProjectAssignments, Employees, EmployeesJn, and Departments. Each class has specific attributes and associations with other classes.\n\n- **BusinessRelations**: This class includes attributes such as Id, Name, EmailAddress, Budget, CreditLimit, and various address details like StreetName, StreetNumber, PostalCode, City, and Country. It also contains metadata attributes like CreatedBy, CreationDate, LastUpdateBy, and LastUpdateDate. BusinessRelations is the superclass for Suppliers and Customers.\n\n- **Customers**: A subclass of BusinessRelations, it inherits attributes like BurType, Budget, and CreditLimit. Customers are associated with multiple Orders and Projects.\n\n- **Suppliers**: Another subclass of BusinessRelations, it inherits the BurType attribute. Suppliers are associated with multiple Products.\n\n- **Products**: This class includes attributes such as Id, Name, BurId, Description, and Price, along with metadata attributes. Products are associated with multiple OrderLines.\n\n- **Orders**: This class has attributes like Id, BurId, DateOrdered, DateShipped, and Remarks, along with metadata attributes. Orders are associated with multiple OrderLines.\n\n- **Projects**: This class includes attributes such as Id, BurId, Name, PrjType, StartDate, EndDate, and Budget, along with metadata attributes. Projects are associated with multiple ProjectAssignments.\n\n- **OrderLines**: This class includes attributes like Id, OrdId, LineNumber, ProId, Price, Quantity, and Total, along with metadata attributes. OrderLines are associated with both Orders and Products.\n\n- **ProjectAssignments**: This class includes attributes such as Id, PrjId, EmpId, StartDate, Rate, Role, PercentageAllocated, and EndDate, along with metadata attributes. ProjectAssignments are associated with both Projects and Employees.\n\n- **Employees**: This class includes attributes like Id, LastName, FirstName, StreetName, StreetNumber, PostalCode, City, Country, TelephoneNumber, EmailAddress, BankAccount, CivilState, Job, HireDate, DepId, EmpId, OracleUsername, Salary, and Commission, along with metadata attributes. Employees are associated with multiple ProjectAssignments, EmployeesJn, and Departments.\n\n- **EmployeesJn**: This class includes attributes such as Id, EmpId, Salary, and Commission, along with metadata attributes. It is associated with Employees.\n\n- **Departments**: This class includes attributes like Id, Name, and Location, along with metadata attributes. Departments are associated with Employees.\n\nThe associations between these classes define the relationships, such as a Customer being linked to multiple Orders and Projects, a Supplier being linked to multiple Products, and Employees being linked to Departments and ProjectAssignments.",
+        "constraints": []
+    },
+    {
+        "domain_name": "HealthRecord",
+        "domain_context": "The domain represents a healthcare management system centered on the creation, maintenance, and secure handling of patient health records. At its core, the **HealthRecord** class serves as a container linking patients to their **MedicalInfo** and **Prescriptions**, ensuring comprehensive documentation of their treatment history. Each health record is owned by a **Patient** and associates with multiple **MedicalInfo** entries and prescriptions, fostering a complete and organized representation of the patient's medical history. The **MedicalInfo** entity captures details about a patient's condition, authored exclusively by doctors, either associated with the patient or external, reinforcing the system\u2019s role in facilitating informed care. Prescriptions, linked to specific medical information, outline drug details, quantities, and prescribing doctors, ensuring traceability and compliance. Stringent operational constraints promote system integrity: only doctors can create medical information; prescriptions require corresponding medical context; and closed records remain accessible solely to their creators. Additionally, safety limits, such as restricting prescription amounts, and the adherence to patient-doctor associations underscore the system's emphasis on ethical and secure healthcare delivery. This framework ensures that all interactions, from record creation to data access, align with medical and legal standards, ultimately empowering providers to deliver precise, patient-focused care.",
+        "plantuml_model": "@startuml HealthRecord\n\n' classes '\nclass HealthRecord{\n    readMedicalInfo(MedicalInfo: OclVoid)\n    createMedicalInfo(description: String): HealthRecord\n    updateMedicalInfo(description: String): HealthRecord\n    createPrescription(info: MedicalInfo, prescription: Prescription): HealthRecord\n    deletePrescription(prescription: Prescription): HealthRecord\n    readPrescription(): Prescription\n}\n\nclass Prescription{\n    drug: String\n    amount: Integer\n    creator: Doctor\n}\n\nclass MedicalInfo{\n    description: String\n    creator: Doctor\n    open: Boolean\n}\n\nclass Patient{\n    name: String\n}\n\nclass Doctor{}\n\nclass Pharmacist{}\n\n' associations '\nHealthRecord \"record 1\" -- \"owner 1\" Patient\n\nHealthRecord \"record 1\" -- \"prescription *\" Prescription\n\nHealthRecord \"record 1\" -- \"medicalinfo *\" MedicalInfo\n\nPrescription \"prescription *\" -- \"medicalinfo 1\" MedicalInfo\n\nPatient \"treats *\" <|-- \"treatedBy *\" Doctor\n\nPatient \"treats *\" <|-- Pharmacist\n\n@enduml",
+        "nl_model": "The domain model represents a healthcare system involving several key entities: HealthRecord, Prescription, MedicalInfo, Patient, Doctor, and Pharmacist.\n\nThe **HealthRecord** class manages medical information and prescriptions associated with a patient. It includes methods to read, create, update, and delete medical information and prescriptions. The methods are:\n- `readMedicalInfo(MedicalInfo: OclVoid)`: Reads medical information.\n- `createMedicalInfo(description: String): HealthRecord`: Creates a new medical information entry.\n- `updateMedicalInfo(description: String): HealthRecord`: Updates existing medical information.\n- `createPrescription(info: MedicalInfo, prescription: Prescription): HealthRecord`: Creates a new prescription linked to medical information.\n- `deletePrescription(prescription: Prescription): HealthRecord`: Deletes a prescription.\n- `readPrescription(): Prescription`: Reads a prescription.\n\nThe **Prescription** class includes attributes:\n- `drug: String`: The name of the drug prescribed.\n- `amount: Integer`: The quantity of the drug prescribed.\n- `creator: Doctor`: The doctor who created the prescription.\n\nThe **MedicalInfo** class contains:\n- `description: String`: A description of the medical information.\n- `creator: Doctor`: The doctor who created the medical information.\n- `open: Boolean`: Indicates if the medical information is open or closed.\n\nThe **Patient** class has a single attribute:\n- `name: String`: The name of the patient.\n\nThe **Doctor** and **Pharmacist** classes do not have specified attributes.\n\nAssociations between the classes are as follows:\n- A **HealthRecord** is associated with one **Patient**, indicating ownership of the record.\n- A **HealthRecord** can have multiple **Prescriptions** and multiple **MedicalInfo** entries.\n- Each **Prescription** is linked to one **MedicalInfo** entry.\n- A **Patient** can be treated by multiple **Doctors** and **Pharmacists**, indicating a many-to-many relationship between patients and healthcare professionals.",
+        "constraints": [
+            {
+                "ocl": "context Prescription inv AmountNotTooLarge: self.amount < 1000",
+                "specification": "The amount of a prescription must not be too large"
+            }
+        ]
+    },
+    {
+        "domain_name": "ISP",
+        "domain_context": "The domain represents an Internet Service Provider (ISP) system, focused on managing customer subscriptions, service usage, and billing processes while ensuring compliance with operational constraints. Customers are central entities, each uniquely identified and linked to a service provider that offers internet plans with specific attributes like price, quality of service (QoS), and free download limits. Each customer interacts with the system through services provided by their assigned provider and maintains surf records that track download rates. Bills are generated based on service usage, with the system ensuring that charges align with predefined conditions; for instance, if a customer\u2019s usage remains within their free download limit, the bill reflects only the service\u2019s price. Unpaid bills exceeding 30 days automatically deactivate the customer\u2019s account, emphasizing the system\u2019s operational rigor. Additionally, customers can only view their own usage data, upholding privacy. Providers manage service enablement, billing, and customer activation or deactivation, ensuring a seamless operational flow. Constraints, such as maintaining a fixed free download limit for specific services (e.g., 1GB), reinforce consistency and fairness across offerings. This domain exemplifies a structured yet adaptable system designed to balance customer satisfaction, service quality, and operational efficiency.",
+        "plantuml_model": "@startuml ISP\n\n' classes '\nclass Customer{\n    id: Integer\n    name: String\n    address: String\n    active: Boolean\n    changeService(s: Service): Boolean\n}\n\nclass Bill{\n    send_date: Date\n    paid_date: Date\n    amount: Real\n    confirm_payment(): Boolean\n}\n\nclass SurfRecord{\n    downloadRate: Integer\n    setRate(rate: Integer): Integer\n    getRate(): Integer\n}\n\nclass Provider{\n    disableService(): OclVoid\n    enableService(): OclVoid\n    disableCustomer(): OclVoid\n    reenableCustomer(c: Customer): OclVoid\n    sendBill(): OclVoid\n}\n\nclass Service{\n    price: Real\n    QoS: Integer\n    freedownload: Integer\n    provide_service(): Boolean\n}\n\nclass Date{\n    today(): Date\n    durationInDays(d: Date): Integer\n}\n\nclass Max1GB{}\n\nclass Max10GB{}\n\nclass Max100GB{}\n\n' associations '\nCustomer \"customer\" -- \"bill\" Bill\n\nCustomer \"customer\" -- \"service\" Service\n\nCustomer \"customer 1..*\" -- \"provider\" Provider\n\nCustomer \"customer\" -- \"surfRecord\" SurfRecord\n\nBill \"bill\" -- \"surfRecord\" SurfRecord\n\nBill \"bill\" -- \"service\" Service\n\nSurfRecord \"surfRecord 1..*\" -- \"provider\" Provider\n\nProvider \"provider\" -- \"services 1..*\" Service\n\nService <|-- Max1GB\n\nService <|-- Max10GB\n\nService <|-- Max100GB\n\n@enduml",
+        "nl_model": "The domain model describes an Internet Service Provider (ISP) system with several classes and their relationships. The main classes in the model are Customer, Bill, SurfRecord, Provider, Service, and Date. Additionally, there are specialized service classes: Max1GB, Max10GB, and Max100GB, which inherit from the Service class.\n\n- **Customer Class**: Represents a customer with attributes such as id (Integer), name (String), address (String), and active (Boolean). It includes a method changeService(s: Service) that returns a Boolean value.\n\n- **Bill Class**: Represents a bill with attributes send_date (Date), paid_date (Date), and amount (Real). It has a method confirm_payment() that returns a Boolean.\n\n- **SurfRecord Class**: Represents a record of internet usage with an attribute downloadRate (Integer). It includes methods setRate(rate: Integer) and getRate(), both returning an Integer.\n\n- **Provider Class**: Represents a service provider with methods to manage services and customers, such as disableService(), enableService(), disableCustomer(), reenableCustomer(c: Customer), and sendBill(), all returning OclVoid.\n\n- **Service Class**: Represents a service with attributes price (Real), QoS (Integer), and freedownload (Integer). It includes a method provide_service() that returns a Boolean. The Service class has three specialized subclasses: Max1GB, Max10GB, and Max100GB.\n\n- **Date Class**: Represents a date with methods today() returning a Date, and durationInDays(d: Date) returning an Integer.\n\nThe associations between classes are as follows:\n\n- A Customer is associated with one or more Bills, Services, and Providers, and has a single SurfRecord.\n- A Bill is associated with a SurfRecord and a Service.\n- A SurfRecord is associated with one or more Providers.\n- A Provider is associated with one or more Services.\n- The Service class is the superclass for Max1GB, Max10GB, and Max100GB, indicating these are specific types of services offered.",
+        "constraints": [
+            {
+                "ocl": "context Max1GB inv : self.freedownload = 1024",
+                "specification": "For the service ``1GB'' the free download variable should be invariant and be set to 1."
+            },
+            {
+                "ocl": "context Provider inv onlyOfferedService: self.services->includesAll(self.customer->collect(c:Customer | c.service)->asSet())",
+                "specification": "A customer can only have a service from his service provider"
+            },
+            {
+                "ocl": "context Bill inv: self.surfRecord.downloadRate <= self.service.freedownload implies self.amount = self.service.price",
+                "specification": "If the download rate of a customer (in Surf-Record) is lower than the freedownload of his service, then the amount_of_money in his bill is equal to the price in the service."
+            },
+            {
+                "ocl": "context Customer inv: self.bill.send_date.durationInDays(self.bill.paid_date.today()) > 30 and self.bill.send_date.durationInDays(self.bill.paid_date) > 30 implies not self.active ",
+                "specification": "If the bill has not been paid for 30 days, the customer's flag active will be set to false"
+            },
+            {
+                "ocl": "context Customer inv: self.allInstances()->isUnique(self.id)",
+                "specification": "Each customer must have a unique ID."
+            }
+        ]
+    }
+]

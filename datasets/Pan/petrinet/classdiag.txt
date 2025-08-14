@@ -1,0 +1,51 @@
+### Domain Model Description for Petri Net
+
+1. **PetriNet**
+   - Represents a Petri Net model.
+   - Attributes:
+     - name (type: EString): The name of the Petri Net.
+   - Relationships:
+     - A PetriNet contains zero or more PetriNetElements.
+
+2. **PetriNetElement**
+   - A base class that represents any element within a Petri Net.
+   - Relationships:
+     - This is a generalization for other elements like Arc and Node.
+
+3. **Arc**
+   - Represents a connection between nodes in the Petri Net.
+   - Attributes:
+     - poids (type: EInt): The weight of the arc.
+     - linkType (type: ArcType): The type of the arc, which can be either normal or read.
+   - Relationships:
+     - An Arc connects:
+       - Exactly one predecessor (of type Node).
+       - Exactly one successor (of type Node).
+
+4. **Node**
+   - Represents a generic node in the Petri Net.
+   - Attributes:
+     - name (type: EString): The name of the node.
+   - Relationships:
+     - This is a generalization for Transition and Place.
+
+5. **Transition**
+   - A specialized type of Node that represents a transition in the Petri Net.
+   - Does not have additional attributes beyond those inherited from Node.
+
+6. **Place**
+   - A specialized type of Node that represents a place in the Petri Net.
+   - Attributes:
+     - nbJeton (type: EInt): The number of tokens present in the place.
+
+7. **ArcType** (Enumeration)
+   - Represents the type of an arc in the Petri Net.
+   - Values:
+     - normal: A standard arc.
+     - read: A read-only arc.
+
+### Summary of Relationships
+- A PetriNet is composed of zero or more PetriNetElements.
+- PetriNetElement can be either an Arc or a Node.
+- A Node can be either a Transition or a Place.
+- An Arc must have one predecessor and one successor, both of which are Nodes. 

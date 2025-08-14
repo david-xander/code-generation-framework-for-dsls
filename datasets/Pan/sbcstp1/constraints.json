@@ -1,0 +1,30 @@
+[
+{
+        "ocl": "context PumpController_ClosePump inv: PCPre.PumpControlerPump.mode = State::On implies PCPost.PumpControlerPump.mode = State::Off",
+        "specification": "If the pump controller's pump mode was 'On' before initiating a 'ClosePump' operation, then the pump mode must be 'Off' after the operation is completed."
+    },
+    {
+        "ocl": "context ControlProgram inv: let CS:Snapshot = self.SnapshotControlProgram in let NS: Snapshot= CS.getNext() in self.wlmdFailure implies NS.ControlProgramSnapshot.mode = Mode::Rescue",
+        "specification": "In the context of a Control Program, if a 'wlmdFailure' occurs, the mode of the next snapshot of the control program must be set to 'Rescue'."
+    },
+    {
+        "ocl": "context SteamBoiler_OpenValve inv: SBPre.valveOpen = ValveState::Closed implies SBPost.valveOpen = ValveState::Open",
+        "specification": "If the valve was closed in the previous state, it must be open in the subsequent state of the steam boiler."
+    },
+    {
+        "ocl": "context ControlProgram_Start inv: CPPost.mode = Mode::Normal",
+        "specification": "The mode of the control program must be set to Normal when started."
+    },
+    {
+        "ocl": "context WaterLevelMeaurementDevice_getLevel inv: wlmdPost.waterLevel = ret",
+        "specification": "The water level returned by the WaterLevelMeasurementDevice_getLevel function should be equal to the water level of the device after the function is called."
+    },
+    {
+        "ocl": "context SteamBoiler inv: self.valveOpen=ValveState::Open implies self.SteamBoilerControlProgram.mode=Mode::Initialization",
+        "specification": "If the valve of the steam boiler is open, then the steam boiler control program must be in the initialization mode."
+    },
+    {
+        "ocl": "context PumpController_OpenPump inv: PCPre.PumpControlerPump.mode = State::Off implies PCPost.PumpControlerPump.mode = State::On",
+        "specification": "If the PumpController's pump is initially in the 'Off' state, it must be in the 'On' state after opening the pump."
+    }
+]

@@ -1,0 +1,60 @@
+[
+  {
+	"ocl": "context Library inv: address<>''",
+        "specification": "A library must have a non-empty address."
+  },
+  {
+        "ocl": "context Library inv: books->notEmpty()",
+        "specification": "A library must have at least one book."
+  },
+  {
+	"ocl": "context Library inv: books->forAll(l1,l2|l1<>l2 and l1.author=l2.author implies l1.title<>l2.title)",
+        "specification": "In a library, if two books have the same author, then their titles must be different."
+  },
+  {
+	"ocl": "context Library inv: authors->forAll(a1,a2|a1<>a2 implies a1.name<>a2.name)",
+        "specification": "In a library, all authors must have unique full names."
+  },
+  {
+	"ocl": "context Libro inv: self.author->notEmpty()",
+        "specification": "A book must have at least one author."
+  },
+  {
+	"ocl": "context Loan inv: self.startDate <> null",
+        "specification": "A loan must have a start date."
+  },
+  {
+	"ocl": "context Loan inv: self.endDate <> null",
+        "specification": "A loan must have an end date."
+  },
+  {
+	"ocl": "context Loan inv: self.member <> null",
+        "specification": "A loan must be associated with a member."
+  },
+  {
+	"ocl": "context Loan inv: self.copy <> null",
+        "specification": "A loan must have an associated copy."
+  },
+  {
+	"ocl": "context Fine inv: self.loan <> null",
+        "specification": "A fine must have an associated loan."
+  },
+  {
+	"ocl": "context Fine inv: self.date <> null",
+        "specification": "A fine must have a non-null date associated with it."
+  },
+  {
+	"ocl": "context Fine inv: self.amount = self.exceedingDays * 10",
+        "specification": "The fine amount should equal the number of days exceeded multiplied by 10."
+  },
+  {
+	"ocl": "context Author inv: name <> ''",
+        "specification": "An author must have a non-empty full name."
+
+  },
+  {
+	"ocl": "context Author inv: not books->isEmpty()",
+        "specification": "An author must have at least one book."
+  }
+
+]

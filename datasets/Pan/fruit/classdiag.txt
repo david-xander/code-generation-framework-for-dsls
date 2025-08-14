@@ -1,0 +1,40 @@
+1. **Color (Enumeration)**:  
+   - Represents the possible colors of fruits.
+   - Values include: `black`, `red`, `green`, `yellow`, `orange`, `brown`, `pink`.
+
+2. **Fruit (Class)**:  
+   - Represents a generic fruit.
+   - Attributes:
+     - `color` (of type `Color`): The color of the fruit.
+     - `name` (of type `String`): The name of the fruit.
+   - Relationships:
+     - A fruit can have multiple related fruits (0..*).
+
+3. **Apple (Class)**:  
+   - A specific type of fruit.
+   - Attributes:
+     - `label` (of type `String`): A label for the apple.
+   - Inheritance:
+     - Inherits from the `Fruit` class.
+   - Relationships:
+     - An apple can optionally have a stem (0..1).
+
+4. **Stem (Class)**:  
+   - Represents the stem of a fruit.
+
+5. **FruitUtil (Class)**:  
+   - A utility class for managing fruits in collections.
+   - Relationships:
+     - Can hold fruits in various collections:
+       - `orderedSet` (0..*): A collection of fruits ordered in some way.
+       - `set` (0..*): A collection of unique fruits.
+       - `bag` (0..*): A collection that allows duplicate fruits.
+       - `sequence` (0..*): A sequential list of fruits.
+
+6. **Tree (Class)**:  
+   - Represents a tree.
+   - Attributes:
+     - `name` (of type `String`): The name of the tree.
+   - Relationships:
+     - A tree can have multiple fruits growing on it (0..*).
+     - A tree can have multiple fruits dropped under it (0..*).

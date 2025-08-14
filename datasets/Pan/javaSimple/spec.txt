@@ -1,0 +1,17 @@
+This represents a model of Java code. There are all kinds of code elements being represented — like classes, methods, loops, conditionals, variables, expressions, comments, and even things like annotations and modifiers (e.g. public, private, static). All of these show up in actual code, and the diagram gives them a formal structure.
+
+For example, there are classes for things like IfStatement, ForStatement, TryStatement, Assignment, MethodDeclaration, FieldDeclaration, and so on — basically everything one can find in a Java file.
+
+There are also categories of expressions like prefix and postfix operations (e.g. ++x or x--), infix expressions (like math or logic operations: a + b, a && b), and assignment types (=, +=, -=, etc.).
+
+Things like types and modifiers are handled carefully — so if something is a final int, or an abstract class, or a public method, that info is all represented.
+
+There are also comments (// or /* ... */), JavaDoc, literals (like "hello" or 42), and annotations (@Override, @Deprecated).
+
+Special Java constructs like anonymous classes, enums, interfaces, and type parameters (e.g. generics like <T>) all get their own place in this structure.
+
+Relationships are all considered too — for instance, a class might have a superclass, methods, fields, and so on. A method might have parameters, a body, return type, and it might throw exceptions.
+
+There are also mechanisms for unresolved items — which is a way for the system to deal with parts of the code that are incomplete or still being worked on, like unknown variables or missing class references. This is super useful for code editors that need to stay flexible.
+
+On top of all that, there are ways to trace things back to the original source files, compilation units, or even archives like .jar files.

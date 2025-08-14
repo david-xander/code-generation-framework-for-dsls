@@ -1,0 +1,9 @@
+We are in front of a process management system.
+
+A process is composed of various elements. These elements represent different components or activities involved in the process. Three key types of process elements are defined: work definition, guidance and resource.
+
+Work definition – Represents a specific task or unit of work within the process. Each work definition can have a name and is associated with both preceding and succeeding tasks through work sequences. These sequences define the logical flow and timing between tasks using a linkType, which can be one of four types: Start-to-Start, Finish-to-Start, Start-to-Finish, Finish-to-Finish. This allows for complex scheduling and coordination between tasks.
+
+Guidance – Provides supporting information or instructions for one or more process elements. It is associated with textual content that helps explain or guide the execution of those elements.
+
+Resource – Represents tangible or intangible assets required to complete a task (e.g., people, tools, materials). Each resource has a type and a defined number of occurrences. Resources are connected to work definitions via ResourceUtilise relationships, which specify how many units of a resource are used in a particular task. This is, the ResourceUtilise component acts as a bridge between a WorkDefinition and a Resource, indicating the quantity of that resource needed for the work.

@@ -1,0 +1,41 @@
+@startuml
+enum WorkSequenceType{
+startToStart
+finishToStart
+startToFinish
+finishToFinish
+}
+class Process {
+name : EString
+}
+class ProcessElement {
+
+}
+class WorkDefinition {
+name : EString
+}
+class WorkSequence {
+linkType : WorkSequenceType
+}
+class Guidance {
+text : EString
+}
+class Resource {
+type : EString
+occurence : EInt
+}
+class ResourceUtilise {
+occurenceutilise : EInt
+}
+Process  *--> "processElements 0..*" ProcessElement
+ProcessElement  --> "process 1..1" Process
+ProcessElement <|-- WorkDefinition
+WorkDefinition "linksToPredecessors 0..*" -- "successor 1..1" WorkSequence
+WorkDefinition "linksToSuccessors 0..*" -- "predecessor 1..1" WorkSequence
+WorkDefinition  *--> "resource_utilise 0..*" ResourceUtilise
+ProcessElement <|-- WorkSequence
+ProcessElement <|-- Guidance
+Guidance  --> "element 0..*" ProcessElement
+ProcessElement <|-- Resource
+Resource "resource 1..1" -- "resource_utilise 0..*" ResourceUtilise
+@enduml

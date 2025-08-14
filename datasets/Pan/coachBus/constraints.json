@@ -1,0 +1,26 @@
+[
+  {
+	"ocl": "context Coach inv: self.noOfSeats >= 10",
+        "specification": "The number of seats in a coach must be at least 10."
+  },
+  {
+	"ocl": "context Coach inv: self.trips->forAll(t | t.passengers->size() <= noOfSeats)",
+        "specification": "For every trip managed by a coach, the number of passengers must not exceed the number of seats available on the coach."
+  },
+  {
+	"ocl": "context Ticket inv: Ticket.allInstances()->isUnique(t | t.number)",
+        "specification": "Each Ticket instance should have a unique ticket number."
+  },
+  {
+	"ocl": "context Passenger inv: self.age >= 0",
+        "specification": "The age of a passenger should be non-negative."
+  },
+  {
+	"ocl": "context Employee inv: Employee.allInstances()->isUnique(e | e.id)",
+        "specification": "Each employee must have a unique identification number."
+  },
+  {
+	"ocl": "context Employee inv: self.baseSalary >= 0",
+        "specification": "The base salary of an employee should be a non-negative value."
+  }
+]

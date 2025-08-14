@@ -1,0 +1,26 @@
+@startuml
+
+class Machine {
+id : EString
+}
+class Conveyor {
+capacity : EInt
+id : EString
+}
+class Piece {
+id : EString
+}
+class Raw {
+
+}
+class Processed {
+
+}
+Machine "om 0..1" *-- "ic 0..*" Conveyor
+Machine "im 0..1" *-- "oc 0..*" Conveyor
+Conveyor "piece 0..*" *-- "conveyor 0..1" Piece
+Conveyor "next 0..*" -- "prev 0..1" Conveyor
+Piece <|-- Raw
+Piece <|-- Processed
+
+@enduml

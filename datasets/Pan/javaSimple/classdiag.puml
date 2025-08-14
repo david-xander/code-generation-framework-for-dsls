@@ -1,0 +1,744 @@
+@startuml
+
+enum AssignmentKind{
+ASSIGN
+PLUS_ASSIGN
+MINUS_ASSIGN
+TIMES_ASSIGN
+DIVIDE_ASSIGN
+BIT_AND_ASSIGN
+BIT_OR_ASSIGN
+BIT_XOR_ASSIGN
+REMAINDER_ASSIGN
+LEFT_SHIFT_ASSIGN
+RIGHT_SHIFT_SIGNED_ASSIGN
+RIGHT_SHIFT_UNSIGNED_ASSIGN
+}
+enum InfixExpressionKind{
+TIMES
+DIVIDE
+REMAINDER
+PLUS
+MINUS
+LEFT_SHIFT
+RIGHT_SHIFT_SIGNED
+RIGHT_SHIFT_UNSIGNED
+LESS
+GREATER
+LESS_EQUALS
+GREATER_EQUALS
+EQUALS
+NOT_EQUALS
+XOR
+AND
+OR
+CONDITIONAL_AND
+CONDITIONAL_OR
+}
+enum InheritanceKind{
+none
+abstract
+final
+}
+enum PostfixExpressionKind{
+INCREMENT
+DECREMENT
+}
+enum PrefixExpressionKind{
+INCREMENT
+DECREMENT
+PLUS
+MINUS
+COMPLEMENT
+NOT
+}
+enum VisibilityKind{
+none
+public
+private
+protected
+}
+class AbstractMethodDeclaration {
+
+}
+class AbstractMethodInvocation {
+
+}
+class AbstractTypeDeclaration {
+
+}
+class AbstractTypeQualifiedExpression {
+
+}
+class AbstractVariablesContainer {
+
+}
+class Annotation {
+
+}
+class Archive {
+originalFilePath : EString
+}
+class AssertStatement {
+
+}
+class ASTNode {
+
+}
+class AnnotationMemberValuePair {
+
+}
+class AnnotationTypeDeclaration {
+
+}
+class AnnotationTypeMemberDeclaration {
+
+}
+class AnonymousClassDeclaration {
+
+}
+class ArrayAccess {
+
+}
+class ArrayCreation {
+
+}
+class ArrayInitializer {
+
+}
+class ArrayLengthAccess {
+
+}
+class ArrayType {
+dimensions : EInt
+}
+class Assignment {
+operator : AssignmentKind
+}
+class BodyDeclaration {
+
+}
+class BooleanLiteral {
+value : EBoolean
+}
+class BlockComment {
+
+}
+class Block {
+
+}
+class BreakStatement {
+
+}
+class CastExpression {
+
+}
+class CatchClause {
+
+}
+class CharacterLiteral {
+escapedValue : EString
+}
+class ClassFile {
+originalFilePath : EString
+}
+class ClassInstanceCreation {
+
+}
+class ConstructorDeclaration {
+
+}
+class ConditionalExpression {
+
+}
+class ConstructorInvocation {
+
+}
+class ClassDeclaration {
+
+}
+class Comment {
+content : EString
+enclosedByParent : EBoolean
+prefixOfParent : EBoolean
+}
+class CompilationUnit {
+originalFilePath : EString
+}
+class ContinueStatement {
+
+}
+class DoStatement {
+
+}
+class EmptyStatement {
+
+}
+class EnhancedForStatement {
+
+}
+class EnumConstantDeclaration {
+
+}
+class EnumDeclaration {
+
+}
+class Expression {
+
+}
+class ExpressionStatement {
+
+}
+class FieldAccess {
+
+}
+class FieldDeclaration {
+
+}
+class ForStatement {
+
+}
+class IfStatement {
+
+}
+class ImportDeclaration {
+static : EBoolean
+}
+class InfixExpression {
+operator : InfixExpressionKind
+}
+class Initializer {
+
+}
+class InstanceofExpression {
+
+}
+class InterfaceDeclaration {
+
+}
+class Javadoc {
+
+}
+class LabeledStatement {
+
+}
+class LineComment {
+
+}
+class Manifest {
+
+}
+class ManifestAttribute {
+key : EString
+value : EString
+}
+class ManifestEntry {
+name : EString
+}
+class MemberRef {
+
+}
+class MethodDeclaration {
+extraArrayDimensions : EInt
+}
+class MethodInvocation {
+
+}
+class MethodRef {
+
+}
+class MethodRefParameter {
+name : EString
+varargs : EBoolean
+}
+class Model {
+name : EString
+}
+class Modifier {
+visibility : VisibilityKind
+inheritance : InheritanceKind
+static : EBoolean
+transient : EBoolean
+volatile : EBoolean
+native : EBoolean
+strictfp : EBoolean
+synchronized : EBoolean
+}
+class NamedElement {
+name : EString
+proxy : EBoolean
+}
+class NamespaceAccess {
+
+}
+class NumberLiteral {
+tokenValue : EString
+}
+class NullLiteral {
+
+}
+class Package {
+
+}
+class PackageAccess {
+
+}
+class ParameterizedType {
+
+}
+class ParenthesizedExpression {
+
+}
+class PostfixExpression {
+operator : PostfixExpressionKind
+}
+class PrefixExpression {
+operator : PrefixExpressionKind
+}
+class PrimitiveType {
+
+}
+class PrimitiveTypeBoolean {
+
+}
+class PrimitiveTypeByte {
+
+}
+class PrimitiveTypeChar {
+
+}
+class PrimitiveTypeDouble {
+
+}
+class PrimitiveTypeShort {
+
+}
+class PrimitiveTypeFloat {
+
+}
+class PrimitiveTypeInt {
+
+}
+class PrimitiveTypeLong {
+
+}
+class PrimitiveTypeVoid {
+
+}
+class ReturnStatement {
+
+}
+class SingleVariableAccess {
+
+}
+class SingleVariableDeclaration {
+varargs : EBoolean
+}
+class Statement {
+
+}
+class StringLiteral {
+escapedValue : EString
+}
+class SuperConstructorInvocation {
+
+}
+class SuperFieldAccess {
+
+}
+class SuperMethodInvocation {
+
+}
+class SwitchCase {
+default : EBoolean
+}
+class SwitchStatement {
+
+}
+class SynchronizedStatement {
+
+}
+class TagElement {
+tagName : EString
+}
+class TextElement {
+text : EString
+}
+class ThisExpression {
+
+}
+class ThrowStatement {
+
+}
+class TryStatement {
+
+}
+class Type {
+
+}
+class TypeAccess {
+
+}
+class TypeDeclaration {
+
+}
+class TypeDeclarationStatement {
+
+}
+class TypeLiteral {
+
+}
+class TypeParameter {
+
+}
+class UnresolvedItem {
+
+}
+class UnresolvedItemAccess {
+
+}
+class UnresolvedAnnotationDeclaration {
+
+}
+class UnresolvedAnnotationTypeMemberDeclaration {
+
+}
+class UnresolvedClassDeclaration {
+
+}
+class UnresolvedEnumDeclaration {
+
+}
+class UnresolvedInterfaceDeclaration {
+
+}
+class UnresolvedLabeledStatement {
+
+}
+class UnresolvedMethodDeclaration {
+
+}
+class UnresolvedSingleVariableDeclaration {
+
+}
+class UnresolvedType {
+
+}
+class UnresolvedTypeDeclaration {
+
+}
+class UnresolvedVariableDeclarationFragment {
+
+}
+class VariableDeclaration {
+extraArrayDimensions : EInt
+}
+class VariableDeclarationExpression {
+
+}
+class VariableDeclarationFragment {
+
+}
+class VariableDeclarationStatement {
+extraArrayDimensions : EInt
+}
+class WildCardType {
+upperBound : EBoolean
+}
+class WhileStatement {
+
+}
+BodyDeclaration <|-- AbstractMethodDeclaration
+AbstractMethodDeclaration "body 0..1" *--> Block
+AbstractMethodDeclaration "parameters 0..*" *-- "methodDeclaration 0..1" SingleVariableDeclaration
+AbstractMethodDeclaration "thrownExceptions 0..*" *--> TypeAccess
+AbstractMethodDeclaration "typeParameters 0..*" *--> TypeParameter
+AbstractMethodDeclaration "usagesInDocComments 0..*" -- "method 1..1" MethodRef
+AbstractMethodDeclaration "usages 0..*" -- "method 1..1" AbstractMethodInvocation
+ASTNode <|-- AbstractMethodInvocation
+AbstractMethodInvocation "arguments 0..*" *--> Expression
+AbstractMethodInvocation "typeArguments 0..*" *--> TypeAccess
+BodyDeclaration <|-- AbstractTypeDeclaration
+Type <|-- AbstractTypeDeclaration
+AbstractTypeDeclaration "bodyDeclarations 0..*" *-- "abstractTypeDeclaration 0..1" BodyDeclaration
+AbstractTypeDeclaration "commentsBeforeBody 0..*" *--> Comment
+AbstractTypeDeclaration "commentsAfterBody 0..*" *--> Comment
+AbstractTypeDeclaration "package 0..1" --* "ownedElements 0..*" Package
+AbstractTypeDeclaration "superInterfaces 0..*" *--> TypeAccess
+Expression <|-- AbstractTypeQualifiedExpression
+AbstractTypeQualifiedExpression "qualifier 0..1" *--> TypeAccess
+ASTNode <|-- AbstractVariablesContainer
+AbstractVariablesContainer "type 0..1" *--> TypeAccess
+AbstractVariablesContainer "fragments 0..*" *-- "variablesContainer 0..1" VariableDeclarationFragment
+Expression <|-- Annotation
+Annotation "type 1..1" *--> TypeAccess
+Annotation "values 0..*" *--> AnnotationMemberValuePair
+NamedElement <|-- Archive
+Archive "classFiles 0..*" *--> ClassFile
+Archive "manifest 0..1" *--> Manifest
+Statement <|-- AssertStatement
+AssertStatement "message 0..1" *--> Expression
+AssertStatement "expression 1..1" *--> Expression
+ASTNode "comments 0..*" *--> Comment
+ASTNode "originalCompilationUnit 0..1" --> CompilationUnit
+ASTNode "originalClassFile 0..1" --> ClassFile
+NamedElement <|-- AnnotationMemberValuePair
+AnnotationMemberValuePair "member 0..1" -- "usages 0..*" AnnotationTypeMemberDeclaration
+AnnotationMemberValuePair "value 1..1" *--> Expression
+AbstractTypeDeclaration <|-- AnnotationTypeDeclaration
+BodyDeclaration <|-- AnnotationTypeMemberDeclaration
+AnnotationTypeMemberDeclaration "default 0..1" *--> Expression
+AnnotationTypeMemberDeclaration "type 1..1" *--> TypeAccess
+ASTNode <|-- AnonymousClassDeclaration
+AnonymousClassDeclaration "bodyDeclarations 0..*" *-- "anonymousClassDeclarationOwner 0..1" BodyDeclaration
+AnonymousClassDeclaration "classInstanceCreation 0..1" --* "anonymousClassDeclaration 0..1" ClassInstanceCreation
+Expression <|-- ArrayAccess
+ArrayAccess "array 1..1" *--> Expression
+ArrayAccess "index 1..1" *--> Expression
+Expression <|-- ArrayCreation
+ArrayCreation "dimensions 0..*" *--> Expression
+ArrayCreation "initializer 0..1" *--> ArrayInitializer
+ArrayCreation "type 1..1" *--> TypeAccess
+Expression <|-- ArrayInitializer
+ArrayInitializer "expressions 0..*" *--> Expression
+Expression <|-- ArrayLengthAccess
+ArrayLengthAccess "array 1..1" *--> Expression
+Type <|-- ArrayType
+ArrayType "elementType 1..1" *--> TypeAccess
+Expression <|-- Assignment
+Assignment "leftHandSide 1..1" *--> Expression
+Assignment "rightHandSide 1..1" *--> Expression
+NamedElement <|-- BodyDeclaration
+BodyDeclaration "annotations 0..*" *--> Annotation
+BodyDeclaration "modifier 0..1" *-- "bodyDeclaration 0..1" Modifier
+Expression <|-- BooleanLiteral
+Comment <|-- BlockComment
+Statement <|-- Block
+Block "statements 0..*" *--> Statement
+Statement <|-- BreakStatement
+BreakStatement "label 0..1" -- "usagesInBreakStatements 0..*" LabeledStatement
+Expression <|-- CastExpression
+CastExpression "expression 1..1" *--> Expression
+CastExpression "type 1..1" *--> TypeAccess
+Statement <|-- CatchClause
+CatchClause "exception 1..1" *-- "catchClause 0..1" SingleVariableDeclaration
+CatchClause "body 1..1" *--> Block
+Expression <|-- CharacterLiteral
+NamedElement <|-- ClassFile
+ClassFile "type 0..1" --> AbstractTypeDeclaration
+ClassFile "attachedSource 0..1" --> CompilationUnit
+ClassFile "package 0..1" --> Package
+Expression <|-- ClassInstanceCreation
+AbstractMethodInvocation <|-- ClassInstanceCreation
+ClassInstanceCreation "expression 0..1" *--> Expression
+ClassInstanceCreation "type 1..1" *--> TypeAccess
+AbstractMethodDeclaration <|-- ConstructorDeclaration
+Expression <|-- ConditionalExpression
+ConditionalExpression "elseExpression 1..1" *--> Expression
+ConditionalExpression "expression 1..1" *--> Expression
+ConditionalExpression "thenExpression 1..1" *--> Expression
+Statement <|-- ConstructorInvocation
+AbstractMethodInvocation <|-- ConstructorInvocation
+TypeDeclaration <|-- ClassDeclaration
+ClassDeclaration "superClass 0..1" *--> TypeAccess
+ASTNode <|-- Comment
+NamedElement <|-- CompilationUnit
+CompilationUnit "commentList 0..*" --> Comment
+CompilationUnit "imports 0..*" *--> ImportDeclaration
+CompilationUnit "package 0..1" --> Package
+CompilationUnit "types 0..*" --> AbstractTypeDeclaration
+Statement <|-- ContinueStatement
+ContinueStatement "label 0..1" -- "usagesInContinueStatements 0..*" LabeledStatement
+Statement <|-- DoStatement
+DoStatement "expression 1..1" *--> Expression
+DoStatement "body 1..1" *--> Statement
+Statement <|-- EmptyStatement
+Statement <|-- EnhancedForStatement
+EnhancedForStatement "body 1..1" *--> Statement
+EnhancedForStatement "expression 1..1" *--> Expression
+EnhancedForStatement "parameter 1..1" *-- "enhancedForStatement 0..1" SingleVariableDeclaration
+BodyDeclaration <|-- EnumConstantDeclaration
+VariableDeclaration <|-- EnumConstantDeclaration
+EnumConstantDeclaration "anonymousClassDeclaration 0..1" *--> AnonymousClassDeclaration
+EnumConstantDeclaration "arguments 0..*" *--> Expression
+AbstractTypeDeclaration <|-- EnumDeclaration
+EnumDeclaration "enumConstants 0..*" *--> EnumConstantDeclaration
+ASTNode <|-- Expression
+Statement <|-- ExpressionStatement
+ExpressionStatement "expression 1..1" *--> Expression
+Expression <|-- FieldAccess
+FieldAccess "field 1..1" *--> SingleVariableAccess
+FieldAccess "expression 1..1" *--> Expression
+BodyDeclaration <|-- FieldDeclaration
+AbstractVariablesContainer <|-- FieldDeclaration
+Statement <|-- ForStatement
+ForStatement "expression 0..1" *--> Expression
+ForStatement "updaters 0..*" *--> Expression
+ForStatement "initializers 0..*" *--> Expression
+ForStatement "body 1..1" *--> Statement
+Statement <|-- IfStatement
+IfStatement "expression 1..1" *--> Expression
+IfStatement "thenStatement 1..1" *--> Statement
+IfStatement "elseStatement 0..1" *--> Statement
+ASTNode <|-- ImportDeclaration
+ImportDeclaration "importedElement 1..1" -- "usagesInImports 0..*" NamedElement
+Expression <|-- InfixExpression
+InfixExpression "rightOperand 1..1" *--> Expression
+InfixExpression "leftOperand 1..1" *--> Expression
+InfixExpression "extendedOperands 0..*" *--> Expression
+BodyDeclaration <|-- Initializer
+Initializer "body 1..1" *--> Block
+Expression <|-- InstanceofExpression
+InstanceofExpression "rightOperand 1..1" *--> TypeAccess
+InstanceofExpression "leftOperand 1..1" *--> Expression
+TypeDeclaration <|-- InterfaceDeclaration
+Comment <|-- Javadoc
+Javadoc "tags 0..*" *--> TagElement
+NamedElement <|-- LabeledStatement
+Statement <|-- LabeledStatement
+LabeledStatement "body 1..1" *--> Statement
+Comment <|-- LineComment
+Manifest "mainAttributes 0..*" *--> ManifestAttribute
+Manifest "entryAttributes 0..*" *--> ManifestEntry
+ManifestEntry "attributes 0..*" *--> ManifestAttribute
+ASTNode <|-- MemberRef
+MemberRef "member 1..1" --> NamedElement
+MemberRef "qualifier 0..1" *--> TypeAccess
+AbstractMethodDeclaration <|-- MethodDeclaration
+MethodDeclaration "returnType 0..1" *--> TypeAccess
+MethodDeclaration "redefinedMethodDeclaration 0..1" -- "redefinitions 0..*" MethodDeclaration
+Expression <|-- MethodInvocation
+AbstractMethodInvocation <|-- MethodInvocation
+MethodInvocation "expression 0..1" *--> Expression
+ASTNode <|-- MethodRef
+MethodRef "qualifier 0..1" *--> TypeAccess
+MethodRef "parameters 0..*" *--> MethodRefParameter
+ASTNode <|-- MethodRefParameter
+MethodRefParameter "type 1..1" *--> TypeAccess
+Model "ownedElements 0..*" *-- "model 0..1" Package
+Model "orphanTypes 0..*" *--> Type
+Model "unresolvedItems 0..*" *--> UnresolvedItem
+Model "compilationUnits 0..*" *--> CompilationUnit
+Model "classFiles 0..*" *--> ClassFile
+Model "archives 0..*" *--> Archive
+ASTNode <|-- Modifier
+Modifier "singleVariableDeclaration 0..1" --* "modifier 0..1" SingleVariableDeclaration
+Modifier "variableDeclarationStatement 0..1" --* "modifier 0..1" VariableDeclarationStatement
+Modifier "variableDeclarationExpression 0..1" --* "modifier 0..1" VariableDeclarationExpression
+ASTNode <|-- NamedElement
+ASTNode <|-- NamespaceAccess
+Expression <|-- NumberLiteral
+Expression <|-- NullLiteral
+NamedElement <|-- Package
+Package "ownedPackages 0..*" *-- "package 0..1" Package
+Package "usagesInPackageAccess 0..*" -- "package 1..1" PackageAccess
+NamespaceAccess <|-- PackageAccess
+PackageAccess "qualifier 0..1" *--> PackageAccess
+Type <|-- ParameterizedType
+ParameterizedType "type 1..1" *--> TypeAccess
+ParameterizedType "typeArguments 0..*" *--> TypeAccess
+Expression <|-- ParenthesizedExpression
+ParenthesizedExpression "expression 1..1" *--> Expression
+Expression <|-- PostfixExpression
+PostfixExpression "operand 1..1" *--> Expression
+Expression <|-- PrefixExpression
+PrefixExpression "operand 1..1" *--> Expression
+Type <|-- PrimitiveType
+PrimitiveType <|-- PrimitiveTypeBoolean
+PrimitiveType <|-- PrimitiveTypeByte
+PrimitiveType <|-- PrimitiveTypeChar
+PrimitiveType <|-- PrimitiveTypeDouble
+PrimitiveType <|-- PrimitiveTypeShort
+PrimitiveType <|-- PrimitiveTypeFloat
+PrimitiveType <|-- PrimitiveTypeInt
+PrimitiveType <|-- PrimitiveTypeLong
+PrimitiveType <|-- PrimitiveTypeVoid
+Statement <|-- ReturnStatement
+ReturnStatement "expression 0..1" *--> Expression
+Expression <|-- SingleVariableAccess
+SingleVariableAccess "variable 1..1" -- "usageInVariableAccess 0..*" VariableDeclaration
+SingleVariableAccess "qualifier 0..1" *--> Expression
+VariableDeclaration <|-- SingleVariableDeclaration
+SingleVariableDeclaration "type 1..1" *--> TypeAccess
+SingleVariableDeclaration "annotations 0..*" *--> Annotation
+ASTNode <|-- Statement
+Expression <|-- StringLiteral
+Statement <|-- SuperConstructorInvocation
+AbstractMethodInvocation <|-- SuperConstructorInvocation
+SuperConstructorInvocation "expression 0..1" *--> Expression
+AbstractTypeQualifiedExpression <|-- SuperFieldAccess
+SuperFieldAccess "field 1..1" *--> SingleVariableAccess
+AbstractTypeQualifiedExpression <|-- SuperMethodInvocation
+AbstractMethodInvocation <|-- SuperMethodInvocation
+Statement <|-- SwitchCase
+SwitchCase "expression 0..1" *--> Expression
+Statement <|-- SwitchStatement
+SwitchStatement "expression 1..1" *--> Expression
+SwitchStatement "statements 0..*" *--> Statement
+Statement <|-- SynchronizedStatement
+SynchronizedStatement "body 1..1" *--> Block
+SynchronizedStatement "expression 1..1" *--> Expression
+ASTNode <|-- TagElement
+TagElement "fragments 0..*" *--> ASTNode
+ASTNode <|-- TextElement
+AbstractTypeQualifiedExpression <|-- ThisExpression
+Statement <|-- ThrowStatement
+ThrowStatement "expression 1..1" *--> Expression
+Statement <|-- TryStatement
+TryStatement "body 1..1" *--> Block
+TryStatement "finally 0..1" *--> Block
+TryStatement "catchClauses 0..*" *--> CatchClause
+NamedElement <|-- Type
+Type "usagesInTypeAccess 0..*" -- "type 1..1" TypeAccess
+Expression <|-- TypeAccess
+NamespaceAccess <|-- TypeAccess
+TypeAccess "qualifier 0..1" *--> NamespaceAccess
+AbstractTypeDeclaration <|-- TypeDeclaration
+TypeDeclaration "typeParameters 0..*" *--> TypeParameter
+Statement <|-- TypeDeclarationStatement
+TypeDeclarationStatement "declaration 1..1" *--> AbstractTypeDeclaration
+Expression <|-- TypeLiteral
+TypeLiteral "type 1..1" *--> TypeAccess
+Type <|-- TypeParameter
+TypeParameter "bounds 0..*" *--> TypeAccess
+NamedElement <|-- UnresolvedItem
+Expression <|-- UnresolvedItemAccess
+NamespaceAccess <|-- UnresolvedItemAccess
+UnresolvedItemAccess "element 0..1" --> UnresolvedItem
+UnresolvedItemAccess "qualifier 0..1" *--> ASTNode
+AnnotationTypeDeclaration <|-- UnresolvedAnnotationDeclaration
+UnresolvedItem <|-- UnresolvedAnnotationDeclaration
+AnnotationTypeMemberDeclaration <|-- UnresolvedAnnotationTypeMemberDeclaration
+UnresolvedItem <|-- UnresolvedAnnotationTypeMemberDeclaration
+ClassDeclaration <|-- UnresolvedClassDeclaration
+UnresolvedItem <|-- UnresolvedClassDeclaration
+EnumDeclaration <|-- UnresolvedEnumDeclaration
+UnresolvedItem <|-- UnresolvedEnumDeclaration
+InterfaceDeclaration <|-- UnresolvedInterfaceDeclaration
+UnresolvedItem <|-- UnresolvedInterfaceDeclaration
+LabeledStatement <|-- UnresolvedLabeledStatement
+UnresolvedItem <|-- UnresolvedLabeledStatement
+MethodDeclaration <|-- UnresolvedMethodDeclaration
+UnresolvedItem <|-- UnresolvedMethodDeclaration
+SingleVariableDeclaration <|-- UnresolvedSingleVariableDeclaration
+UnresolvedItem <|-- UnresolvedSingleVariableDeclaration
+Type <|-- UnresolvedType
+UnresolvedItem <|-- UnresolvedType
+AbstractTypeDeclaration <|-- UnresolvedTypeDeclaration
+UnresolvedItem <|-- UnresolvedTypeDeclaration
+VariableDeclarationFragment <|-- UnresolvedVariableDeclarationFragment
+UnresolvedItem <|-- UnresolvedVariableDeclarationFragment
+NamedElement <|-- VariableDeclaration
+VariableDeclaration "initializer 0..1" *--> Expression
+Expression <|-- VariableDeclarationExpression
+AbstractVariablesContainer <|-- VariableDeclarationExpression
+VariableDeclarationExpression "annotations 0..*" *--> Annotation
+VariableDeclaration <|-- VariableDeclarationFragment
+Statement <|-- VariableDeclarationStatement
+AbstractVariablesContainer <|-- VariableDeclarationStatement
+VariableDeclarationStatement "annotations 0..*" *--> Annotation
+Type <|-- WildCardType
+WildCardType "bound 0..1" *--> TypeAccess
+Statement <|-- WhileStatement
+WhileStatement "expression 1..1" *--> Expression
+WhileStatement "body 1..1" *--> Statement

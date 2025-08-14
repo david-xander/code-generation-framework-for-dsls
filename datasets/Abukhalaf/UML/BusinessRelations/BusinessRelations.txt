@@ -1,0 +1,25 @@
+The domain model represents a business relations system with various entities and their interconnections. The primary classes in this model are BusinessRelations, Customers, Suppliers, Products, Orders, Projects, OrderLines, ProjectAssignments, Employees, EmployeesJn, and Departments. Each class has specific attributes and associations with other classes.
+
+- **BusinessRelations**: This class includes attributes such as Id, Name, EmailAddress, Budget, CreditLimit, and various address details like StreetName, StreetNumber, PostalCode, City, and Country. It also contains metadata attributes like CreatedBy, CreationDate, LastUpdateBy, and LastUpdateDate. BusinessRelations is the superclass for Suppliers and Customers.
+
+- **Customers**: A subclass of BusinessRelations, it inherits attributes like BurType, Budget, and CreditLimit. Customers are associated with multiple Orders and Projects.
+
+- **Suppliers**: Another subclass of BusinessRelations, it inherits the BurType attribute. Suppliers are associated with multiple Products.
+
+- **Products**: This class includes attributes such as Id, Name, BurId, Description, and Price, along with metadata attributes. Products are associated with multiple OrderLines.
+
+- **Orders**: This class has attributes like Id, BurId, DateOrdered, DateShipped, and Remarks, along with metadata attributes. Orders are associated with multiple OrderLines.
+
+- **Projects**: This class includes attributes such as Id, BurId, Name, PrjType, StartDate, EndDate, and Budget, along with metadata attributes. Projects are associated with multiple ProjectAssignments.
+
+- **OrderLines**: This class includes attributes like Id, OrdId, LineNumber, ProId, Price, Quantity, and Total, along with metadata attributes. OrderLines are associated with both Orders and Products.
+
+- **ProjectAssignments**: This class includes attributes such as Id, PrjId, EmpId, StartDate, Rate, Role, PercentageAllocated, and EndDate, along with metadata attributes. ProjectAssignments are associated with both Projects and Employees.
+
+- **Employees**: This class includes attributes like Id, LastName, FirstName, StreetName, StreetNumber, PostalCode, City, Country, TelephoneNumber, EmailAddress, BankAccount, CivilState, Job, HireDate, DepId, EmpId, OracleUsername, Salary, and Commission, along with metadata attributes. Employees are associated with multiple ProjectAssignments, EmployeesJn, and Departments.
+
+- **EmployeesJn**: This class includes attributes such as Id, EmpId, Salary, and Commission, along with metadata attributes. It is associated with Employees.
+
+- **Departments**: This class includes attributes like Id, Name, and Location, along with metadata attributes. Departments are associated with Employees.
+
+The associations between these classes define the relationships, such as a Customer being linked to multiple Orders and Projects, a Supplier being linked to multiple Products, and Employees being linked to Departments and ProjectAssignments.

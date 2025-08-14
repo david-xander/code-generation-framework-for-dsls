@@ -1,0 +1,7 @@
+There are machines and conveyors moving pieces. Some pieces are processed and some are raw.
+
+Each machine might have a conveyor (or a few) bringing pieces in, and maybe some sending pieces out.
+
+The conveyors themselves have a capacity, and they can be linked together—this is, one feeding into the next.
+
+Pieces have IDs.

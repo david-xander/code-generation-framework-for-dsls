@@ -1,0 +1,35 @@
+### Domain Model Description
+
+1. **Entities and Attributes**:
+   - **Bank**: Represents a financial institution.
+   - **Client**:
+     - Attributes:
+       - name: A string representing the name of the client.
+       - capacity: An integer representing the financial capacity of the client.
+   - **Manager**:
+     - Attributes:
+       - name: A string representing the name of the manager.
+   - **Account**:
+     - Attributes:
+       - credit: A double representing the account's available credit.
+       - overdraft: A double representing the account's overdraft limit.
+   - **Card**:
+     - Attributes:
+       - number: A double representing the card's number.
+       - type: A card type (credit or debit) represented by the CardType enumeration.
+   - **CardType (Enumeration)**:
+     - Values:
+       - credit: Represents a credit card.
+       - debit: Represents a debit card.
+
+2. **Relationships**:
+   - A **Bank**:
+     - Can have zero or more **Managers**.
+     - Can manage zero or more **Accounts**.
+     - Can serve zero or more **Clients**.
+   - A **Client**:
+     - Can be associated with zero or more **Managers** (bidirectional relationship).
+     - Can own zero or more **Accounts**.
+     - Can sponsor zero or more other **Clients**.
+   - An **Account**:
+     - Can be associated with zero or more **Cards**.

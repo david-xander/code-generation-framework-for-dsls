@@ -1,0 +1,11 @@
+We want to capture how a car rental company works — who's involved, what cars we have, and how the rentals are managed.
+
+We've got people — both employees and customers. Everyone's just a person at the base, with basic info like first name, last name, age, and whether they're married. Customers have an address, and employees have a salary. Employees work at branches, and some of them manage those branches. Each branch has a location, and can have a numerous employees and a manager.
+
+We also have cars, and we don't just track individual vehicles — we organize them into car groups, like compact, intermediate, and luxury. Car groups can even be ranked, this is, one group being “higher” than another, maybe for pricing or upgrade purposes.
+
+A rental is tied to a customer and usually to a branch. Sometimes the rental is for a specific car, and other times it's just for a group of cars. Each rental has a start and end date. A customer can have multiple rentals, and cars might go through different rentals over time.
+
+There's also this idea of a service depot — basically just a location, probably where cars get maintained or stored. And there's also a "check", which contains a description — maybe that's for inspections or service reports.
+
+Finally, customers can't exist in isolation — they're linked to rentals, which are linked to cars, which are linked to branches.

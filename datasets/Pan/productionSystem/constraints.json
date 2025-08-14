@@ -1,0 +1,6 @@
+[
+  {
+        "ocl": "context Conveyor inv: Conveyor.allInstances()->forAll(var | var.piece->size()<=var.capacity) and Piece.allInstances()->forAll(z| z.conveyor->size() =1)",
+        "specification": "Every conveyor must have a piece count that does not exceed its capacity, and each piece must belong to exactly one conveyor."
+    }
+]

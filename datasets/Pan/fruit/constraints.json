@@ -1,0 +1,14 @@
+[
+  {
+	"ocl": "context Fruit inv: self.color <> Color::black",
+        "specification": "The color of a fruit should not be black."
+  },
+  {
+  	"ocl": "context Fruit inv: self.name <> 'Foo'",
+        "specification": "The name of a fruit should not be 'Foo'."
+  },
+  {
+  	"ocl": "context Apple inv: label.oclIsUndefined() implies true",
+        "specification": "If the label of an apple is undefined, then the condition is considered as true."
+  }
+]

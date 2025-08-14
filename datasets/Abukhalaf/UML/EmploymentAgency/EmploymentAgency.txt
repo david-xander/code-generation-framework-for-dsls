@@ -1,0 +1,21 @@
+The domain model represents an employment agency system with several classes and their relationships. 
+
+The **Employee** class includes attributes such as SSN (Integer), firstName (String), lastName (String), birthDate (Date), sex (String), salary (Integer), address (String), hireDate (Date), and a method age(). An Employee can be associated with multiple other entities.
+
+The **Department** class has attributes number (Integer), name (String), locations (String), and nbrEmployees (Integer). A Department can have one manager and is associated with employees and projects.
+
+The **Project** class contains attributes number (Integer), name (String), and location (String). Projects are controlled by departments and worked on by employees.
+
+The **Dependent** class includes attributes name (String), relationship (String), sex (String), and birthDate (Date). Each Employee can have multiple Dependents.
+
+The **Manages** class represents a relationship between an Employee and a Department, with a startDate (Date) attribute, indicating when the management role began.
+
+The **WorksOn** class represents a relationship between an Employee and a Project, with an attribute hours (Integer) indicating the number of hours worked on the project.
+
+Associations between these classes are as follows:
+- An Employee can manage one Department, indicated by the "manager 1" to "department 0..1" association.
+- An Employee works for exactly one Department, with the "employee 4..*" to "department 1" association labeled as WorksFor.
+- An Employee can work on multiple Projects, and each Project can have multiple Employees working on it, as shown by the "owned 1..*" to "worksOn 1..*" association.
+- An Employee can supervise multiple other Employees, with the "supervisor 0..1" to "subordinates *" association labeled as Supervision.
+- An Employee can have multiple Dependents, indicated by the "employee 1" to "dependents *" association.
+- A Department controls one or more Projects, as shown by the "department 1..*" to "controls 1" association.

@@ -1,0 +1,39 @@
+@startuml
+enum ProjectSize{
+small
+medium
+big
+}
+enum ProjectStatus{
+planned
+active
+finished
+suspended
+}
+class Company {
+name : EString
+}
+class Worker {
+nickname : EString
+salary : EInt
+}
+class Project {
+name : EString
+size : ProjectSize
+status : ProjectStatus
+}
+class Qualification {
+description : EString
+}
+class Training {
+
+}
+Company "company 1..1" -- "projects 0..*" Project
+Company "employer 0..1" -- "employees 1..*" Worker
+Worker "workers 0..*" -- "qualifications 1..*" Qualification
+Worker "members 0..*" -- "projects 0..*" Project
+Project "projects 0..*" -- "requirements 1..*" Qualification
+Project "predecessors 0..*" -- "successors 0..*" Project
+Qualification "trained 1..*" -- "trainings 0..1" Training
+Project <|-- Training
+@enduml

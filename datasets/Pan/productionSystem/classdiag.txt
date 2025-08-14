@@ -1,0 +1,25 @@
+### Domain Model Description
+
+1. **Classes and Attributes**:
+   - **Machine**:
+     - Has a unique identifier (id) of type EString.
+   - **Conveyor**:
+     - Has a unique identifier (id) of type EString.
+     - Has a capacity attribute (capacity) of type EInt.
+   - **Piece**:
+     - Has a unique identifier (id) of type EString.
+   - **Raw**:
+     - A subtype of Piece.
+   - **Processed**:
+     - A subtype of Piece.
+
+2. **Relationships**:
+   - **Machine to Conveyor**:
+     - A Machine can optionally have one or more outgoing conveyors (oc relationship) and zero or one incoming conveyors (ic relationship).
+   - **Conveyor to Piece**:
+     - A Conveyor can hold zero or more Pieces.
+     - A Piece is associated with zero or one Conveyor.
+   - **Conveyor to Conveyor**:
+     - A Conveyor can point to one or more subsequent conveyors (next relationship) and can optionally point to a preceding conveyor (prev relationship).
+   - **Piece to Subtypes**:
+     - A Piece can be specialized into Raw or Processed.

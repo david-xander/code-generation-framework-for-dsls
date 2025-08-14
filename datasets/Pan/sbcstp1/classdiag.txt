@@ -1,0 +1,83 @@
+### **Domain Model: Steam Boiler Control System**
+
+#### **Entities and Attributes**
+
+1. **State** (Enum)
+   - Possible values:
+     - On
+     - Off
+
+2. **ValveState** (Enum)
+   - Possible values:
+     - Open
+     - Closed
+
+3. **Mode** (Enum)
+   - Possible values:
+     - Initialization
+     - Rescue
+     - EmergencyStop
+     - Normal
+     - Damaged
+     - Degraded
+
+4. **WaterLevelMeasurementDevice**
+   - Attributes:
+     - waterLevel (type: EDouble): Represents the water level measured by the device.
+
+5. **Pump**
+   - Attributes:
+     - mode (type: State): Represents the operational state of the pump (On or Off).
+
+6. **SteamBoiler**
+   - Attributes:
+     - valveOpen (type: ValveState): Represents whether the boiler valve is open or closed.
+
+7. **ControlProgram**
+   - Attributes:
+     - mode (type: Mode): Represents the current operating mode of the program.
+     - wlmdFailure (type: EBoolean): Indicates whether the water level measurement device has failed.
+
+8. **Snapshot**
+   - Links:
+     - Associated with one ControlProgram.
+     - Associated with one Transition after it.
+
+9. **Transition**
+   - Links:
+     - Can represent various transitions such as opening/closing pumps, opening boiler valves, starting control programs, or getting water level measurements.
+
+#### **Actions and Relationships**
+
+1. **PumpController_OpenPump**
+   - Inherits from Transition.
+   - Pre-transition state: Associated with a PumpControler (optional).
+   - Post-transition state: Associated with another PumpControler (optional).
+
+2. **PumpController_ClosePump**
+   - Inherits from Transition.
+   - Pre-transition state: Associated with a PumpControler (optional).
+   - Post-transition state: Associated with another PumpControler (optional).
+
+3. **SteamBoiler_OpenValve**
+   - Inherits from Transition.
+   - Pre-transition state: Associated with a SteamBoiler (optional).
+   - Post-transition state: Associated with another SteamBoiler (optional).
+
+4. **WaterLevelMeasurementDevice_getLevel**
+   - Inherits from Transition.
+   - Post-transition state: Associated with a WaterLevelMeasurementDevice (optional).
+   - Returns ret (type: EDouble): The measured water level.
+
+5. **ControlProgram_Start**
+   - Inherits from Transition.
+   - Post-transition state: Associated with a ControlProgram (optional).
+
+6. **Relationships**
+   - **PumpController**: Controls one Pump.
+   - **Snapshot**: Captures the state of one ControlProgram and one Transition.
+   - **SteamBoiler**: Controlled by one ControlProgram.
+   - **Transition**: Captures the state change resulting in one Snapshot.
+
+#### **High-Level Summary**
+The system models the operation of a steam boiler using various components, such as pumps, valves, and measurement devices. Transitions represent state changes in these components, managed by control programs. The system captures snapshots of operational states for monitoring and debugging purposes.

@@ -1,0 +1,73 @@
+### **Domain Model for Library System**
+
+1. **Library**  
+   - **Attributes**:  
+     - address: A string representing the address of the library.  
+   - **Relationships**:  
+     - Contains multiple books (0..*).  
+     - Contains multiple authors (0..*).  
+     - Contains multiple members (0..*).
+
+2. **Book**  
+   - **Attributes**:  
+     - ISBN: A string representing the unique identifier for the book.  
+     - title: A string representing the title of the book.  
+     - editorial: A string indicating the editorial information of the book.  
+     - year: An integer specifying the publication year of the book.  
+     - genre: An enumeration representing the genre of the book. Possible values are:  
+       - Lyric, Epic, Narrative, Dramatic, Didactic, Horror.  
+     - active: A boolean indicating whether the book is active (available).  
+   - **Relationships**:  
+     - Each book is authored by exactly one author (1..1).
+
+3. **Author**  
+   - **Attributes**:  
+     - name: A string representing the name of the author.  
+     - nacionality: A string indicating the nationality of the author.  
+     - birthYear: A date representing the birth year of the author.  
+   - **Relationships**:  
+     - Authors can write one or more books (1..*).
+
+4. **Member**  
+   - **Attributes**:  
+     - membershipNumber: An integer representing the unique membership number of the member.  
+     - name: A string representing the name of the member.  
+     - phone: A string indicating the phone number of the member.  
+     - address: A string representing the address of the member.  
+     - age: An integer specifying the age of the member.  
+     - birthDate: A date indicating the member's birth date.  
+   - **Relationships**:  
+     - Members can have multiple loans (0..*).  
+     - Members can have multiple penalties (0..*).
+
+5. **Loan**  
+   - **Attributes**:  
+     - startDate: A date representing the starting date of the loan.  
+     - endDate: A date indicating the expected return date of the loan.  
+     - returnDate: A date indicating when the book was actually returned.  
+   - **Relationships**:  
+     - Each loan is associated with exactly one copy of a book (1..1).  
+     - Each loan is associated with exactly one member (1..1).
+
+6. **Fine**  
+   - **Attributes**:  
+     - date: A date when the fine was issued.  
+     - amount: An integer indicating the amount of the fine.  
+     - exceedingDays: An integer specifying the number of days the return date was exceeded.  
+     - paymentDate: A date representing when the fine was paid.  
+   - **Relationships**:  
+     - Each fine is related to exactly one loan (1..1).
+
+7. **Copy**  
+   - **Attributes**:  
+     - copyNumber: An integer representing the unique number of the copy of the book.  
+     - state: An enumeration representing the condition of the book. Possible values are:  
+       - Good, Bad.  
+   - **Relationships**:  
+     - Each copy is associated with a loan (1..1).
+
+8. **Genre Enumeration**  
+   - Represents the possible genres a book can belong to: Lyric, Epic, Narrative, Dramatic, Didactic, Horror.
+
+9. **State Enumeration**  
+   - Represents the condition of a copy of a book: Good, Bad.

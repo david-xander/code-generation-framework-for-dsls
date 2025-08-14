@@ -1,0 +1,9 @@
+There's a Library, and it has books, authors, and members.
+
+Books have the usual information like title, ISBN, who published them, the year they came out, and what genre they belong to (which can be lyric, epic, narrative, dramatic, didactic and horror. There's also a little note about whether the book is currently active or not (meaning if it's available or in circulation). Each book has one author, but authors can write as many books as they want.
+
+Members are the people who borrow the books. They have personal details like name, phone number, address, birth date, and a membership number. They can take out books on loan, and if they return them late, they might get a fine.
+
+Loans show when someone borrowed a book copy, when they were supposed to return it, and when they actually did. Note that it's specific copies of books they're borrowing. So each Copy has its own number and a condition (either good or bad).
+
+If a member brings a book back late, they get a fine. The system keeps track of when the fine was given, how much it was, how many days they were late, and when (or if) they paid it.

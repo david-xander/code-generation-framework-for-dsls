@@ -1,0 +1,50 @@
+enum CarGroupKind{
+compact
+intermediate
+luxury
+}
+class Person {
+firstname : EString
+lastname : EString
+age : EInt
+isMarried : EBoolean
+}
+class Customer {
+address : EString
+}
+class Employee {
+salary : EDouble
+}
+class Branch {
+location : EString
+}
+class Rental {
+framDate : EString
+untilDate : EString
+}
+class CarGroup {
+kind : CarGroupKind
+}
+class Car {
+id : EString
+}
+class ServiceDepot {
+location : EString
+}
+class Check {
+description : EString
+}
+Person <|-- Customer
+Rental "rental 0..*" -- "customer 1..1" Customer
+Person <|-- Employee
+Employee  --> "managedBranch 0..1" Branch
+Employee  --> "employer 1..1" Branch
+Branch  --> "manager 1..1" Employee
+Branch  --> "employee 0..*" Employee
+Branch "branch 1..1" -- "car 0..*" Car
+Branch "branch 0..*" -- "carGroup 0..*"  CarGroup
+Branch  "branch 1..1" -- "rental 0..*" Rental
+Rental "rental 0..1" -- "car 0..1" Car
+Rental "rental 0..*" -- "carGroup 1..1" CarGroup
+CarGroup "carGroup 1..1"-- "car 0..*" Car
+CarGroup "higher 0..1" -- "lower 0..1" CarGroup

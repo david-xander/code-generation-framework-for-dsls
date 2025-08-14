@@ -1,0 +1,33 @@
+The domain model represents a system for managing units, systems of units, and related concepts. It consists of several classes, each with specific attributes and associations.
+
+1. **Unit**: This class represents a unit of measurement. It has attributes such as `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String). A `Unit` can be associated with a `QuantityKind`, indicating the type of quantity it measures, with a cardinality of 0 or 1.
+
+2. **SystemOfUnits**: This class describes a collection of units. It includes attributes like `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String). A `SystemOfUnits` is associated with multiple `SystemOfQuantities`, `Unit`, `baseUnit`, and `Prefix`.
+
+3. **SystemOfQuantities**: This class defines a system of quantities, characterized by attributes such as `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String). It is associated with multiple `baseQuantityKind` of `QuantityKind`.
+
+4. **QuantityKind**: This class represents a kind of quantity, with attributes `name` (String), `symbol` (String), `description` (String), and `definitionURI` (String).
+
+5. **Prefix**: This class represents a prefix used in units, with attributes `name` (String), `symbol` (String), and `factor` (Real).
+
+6. **UnitFactor**: This class is used to define a factor for a unit, with an attribute `exponent` (Real). It is associated with one `Unit`.
+
+7. **AffineConversionUnit**: This class represents a unit with affine conversion, having attributes `factor` (Real) and `offset` (Integer).
+
+8. **GeneralConversionUnit**: This class represents a unit with general conversion, characterized by attributes `expression` (String) and `expressionLanguageURI` (String).
+
+9. **DerivedUnit**: This class is a type of `Unit` that is derived from other units. It is associated with one or more `UnitFactor`.
+
+10. **SimpleUnit**: This class is a straightforward type of `Unit`.
+
+11. **ConversionBasedUnit**: This class is a type of `Unit` that is based on conversion. It is associated with one `referenceUnit` of `Unit`.
+
+12. **PrefixedUnit**: This class represents a unit with a prefix, inheriting from `ConversionBasedUnit`. It is associated with one `Prefix`.
+
+13. **LinearConversionUnit**: This class is a type of `ConversionBasedUnit` that involves linear conversion.
+
+14. **AffineConversionUnit**: This class is a type of `ConversionBasedUnit` that involves affine conversion.
+
+15. **GeneralConversionUnit**: This class is a type of `ConversionBasedUnit` that involves general conversion.
+
+The associations between these classes define how units, systems of units, and related concepts interact and are structured within the domain model.

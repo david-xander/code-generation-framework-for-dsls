@@ -1,0 +1,53 @@
+### **Domain Concepts**
+
+#### Enumerations:
+1. **AssignmentKind**: Represents the types of assignment operators (e.g., `ASSIGN`, `PLUS_ASSIGN`, `MINUS_ASSIGN`).
+2. **InfixExpressionKind**: Represents binary operations (e.g., `TIMES`, `DIVIDE`, `PLUS`, `MINUS`).
+3. **InheritanceKind**: Specifies inheritance types (e.g., `none`, `abstract`, `final`).
+4. **PostfixExpressionKind**: Describes postfix operations (e.g., `INCREMENT`, `DECREMENT`).
+5. **PrefixExpressionKind**: Defines prefix operations (e.g., `PLUS`, `MINUS`, `NOT`).
+6. **VisibilityKind**: Indicates visibility modifiers (e.g., `public`, `private`, `protected`).
+
+---
+
+#### Core Entities and Their Relationships:
+1. **ASTNode**: Represents a basic building block of the abstract syntax tree. It can contain comments, a reference to the original compilation unit, or a class file.
+2. **NamedElement**: A named entity with attributes like `name` and `proxy`. Examples include `Archive`, `AnnotationMemberValuePair`, and `Package`.
+3. **Expression**: Represents expressions in the syntax tree. Derived entities include `ArrayAccess`, `Assignment`, `ConditionalExpression`, and more.
+4. **Statement**: Represents executable code blocks. Derived entities include `AssertStatement`, `BreakStatement`, and `IfStatement`.
+5. **Type**: Represents types in the syntax tree. Derived entities include `ArrayType`, `ParameterizedType`, `PrimitiveType`, and `WildCardType`.
+
+---
+
+#### Specialized Entities:
+1. **AbstractMethodDeclaration**: A method definition with optional body, parameters, and exceptions.
+2. **AbstractMethodInvocation**: A method call with arguments and optional type arguments.
+3. **Annotation**: Represents an annotation with associated type and value pairs.
+4. **ClassFile**: Represents a compiled class file with a reference to its type, package, and source code (if available).
+5. **CompilationUnit**: A source file containing import declarations, types, and a reference to its package.
+6. **Modifier**: Specifies attributes of a code element, such as visibility, inheritance, and flags like `static`, `transient`, or `synchronized`.
+
+---
+
+#### Entities with Aggregated Properties:
+1. **Model**: Represents the overall project or workspace, containing packages, types, unresolved items, compilation units, class files, and archives.
+2. **AnnotationTypeDeclaration**: A special type declaration for annotations.
+3. **ClassDeclaration**: A type declaration for classes with optional superclasses.
+4. **EnumDeclaration**: A type declaration for enumerations with a list of constants.
+5. **InterfaceDeclaration**: A type declaration for interfaces.
+
+---
+
+#### Key Relationships:
+1. **Composition**:
+   - `AbstractMethodDeclaration` has a body (`Block`) and parameters (`SingleVariableDeclaration`).
+   - `CompilationUnit` contains `AbstractTypeDeclaration`, `ImportDeclaration`, and `Package`.
+   - `Annotation` contains a `TypeAccess` and a list of `AnnotationMemberValuePair`.
+
+2. **Inheritance**:
+   - Entities like `AnnotationTypeDeclaration` and `ClassDeclaration` inherit from `AbstractTypeDeclaration`.
+   - Entities like `BooleanLiteral`, `CharacterLiteral`, and `NumberLiteral` inherit from `Expression`.
+
+3. **Associations**:
+   - `ClassFile` is associated with a `Package`, `CompilationUnit`, and `AbstractTypeDeclaration`.
+   - `InfixExpression` connects operands (`Expression`) with an operator (`InfixExpressionKind`).

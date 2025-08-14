@@ -1,0 +1,27 @@
+The domain model consists of three primary classes: Player, Match, and Tournament.
+
+1. **Player Class**: 
+   - This class does not have any explicitly defined attributes or methods in the provided model.
+
+2. **Match Class**:
+   - Attributes:
+     - `starDate`: Date
+     - `endDate`: Date
+   - Methods:
+     - `playMove(p, m)`: A method likely used to record a player's move in the match.
+     - `getScore()`: A method to retrieve the score of the match.
+
+3. **Tournament Class**:
+   - Attributes:
+     - `name`: String
+     - `startDate`: Date
+     - `endDate`: Date
+   - Methods:
+     - `acceptPlayer(p)`: A method to add a player to the tournament.
+     - `removePlayer(p)`: A method to remove a player from the tournament.
+     - `schedule()`: A method to organize or plan the tournament events.
+
+**Associations**:
+- A Tournament is associated with multiple Matches, indicated by the relationship "matches *" on the Match side and "tournament 1" on the Tournament side, signifying that each tournament can have multiple matches.
+- A Match is associated with multiple Players, as shown by "matches *" on the Match side and "players *" on the Player side, indicating that each match can involve multiple players.
+- A Player can participate in multiple Tournaments, and a Tournament can have multiple Players, as depicted by "players *" on the Player side and "tournaments *" on the Tournament side.

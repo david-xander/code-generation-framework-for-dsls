@@ -1,0 +1,25 @@
+The domain model consists of three main classes: Person, Mortgage, and House.
+
+1. **Person Class**: 
+   - Attributes:
+     - `socSecNr`: An integer representing the social security number of the person.
+     - `salary`: A Money type attribute representing the salary of the person.
+   - Methods:
+     - `getMortgage(sum: Money, security: House)`: A method that allows a person to obtain a mortgage by specifying the sum of money and the house used as security.
+   - Associations:
+     - A person can own multiple houses, as indicated by the association "owner 1" to "houses *".
+
+2. **House Class**:
+   - Attributes:
+     - `value`: A Money type attribute representing the value of the house.
+   - Associations:
+     - A house can be used as security for multiple mortgages, as indicated by the association "security 1" to "mortgages *".
+
+3. **Mortgage Class**:
+   - Attributes:
+     - `principal`: A Money type attribute representing the principal amount of the mortgage.
+     - `monthlyPayment`: A Money type attribute representing the monthly payment amount for the mortgage.
+     - `startDate`: A Date type attribute indicating the start date of the mortgage.
+     - `endDate`: A Date type attribute indicating the end date of the mortgage.
+   - Associations:
+     - A mortgage is associated with one borrower, which is a person, as indicated by the association "mortgages *" to "borrower 1".

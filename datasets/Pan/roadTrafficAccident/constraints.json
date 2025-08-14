@@ -1,0 +1,18 @@
+[
+    {
+        "ocl": "context RearEndCollision inv: self.vehicles->size()=2",
+        "specification": "A rear-end collision must involve exactly two vehicles."
+    },
+    {
+        "ocl": "context TravelingVehicle inv: self.travel.travelers->one(v|v.oclIsKindOf(Driver))",
+        "specification": "A traveling vehicle should have exactly one traveler who is a driver."
+    },
+    {
+        "ocl": "context RoadTrafficAccident inv: self.vehicles->size()=1",
+        "specification": "A road traffic accident should involve exactly one vehicle."
+    },
+    {
+        "ocl": "context CrashedVehicle inv: self.travel.travelers->forAll(t|t.oclIsKindOf(Victim) and t.oclAsType(Victim).accident = self.accident)",
+        "specification": "For all travelers in a crashed vehicle, each traveler must be a victim of the accident associated with that vehicle."
+    }
+]

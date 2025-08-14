@@ -1,0 +1,38 @@
+[
+  {
+        "ocl": "context Process inv: false",
+        "specification": "The warning severity for a process should be false."
+    },
+    {
+        "ocl": "context Process inv: false",
+        "specification": "It is specified that the message 'Explicit message in process ' followed by the process's name and ' (withMessage)' should indicate the condition is always false."
+    },
+    {
+        "ocl": "context Process inv: null",
+        "specification": "The error severity in a process should be null."
+    },
+    {
+        "ocl": "context Process inv:  self.name.matches('[A-Za-z_][A-Za-z0-9_]*')",
+        "specification": "The name of a process must match the pattern: it starts with a letter or an underscore, followed by any combination of letters, digits, or underscores."
+    },
+    {
+        "ocl": "context WorkSequence inv: self.predecessor <> self.successor",
+        "specification": "In a work sequence, the predecessor must not be the same as the successor."
+    },
+    {
+        "ocl": "context WorkDefinition inv:  self.name.size() >= 3",
+        "specification": "The name of a work definition must be at least 3 characters long."
+    },
+    {
+        "ocl": "context WorkDefinition inv:  self.name.matches('[A-Za-z_][A-Za-z0-9_]+')",
+        "specification": "The name of a WorkDefinition must start with a letter or underscore, followed by any combination of letters, digits, or underscores."
+    },
+    {
+        "ocl": "context Resource inv: self.occurence >=0",
+        "specification": "The number of occurrences of a resource should be non-negative."
+    },
+    {
+        "ocl": "context Resource inv: self.type.matches('[A-Za-z_][A-Za-z0-9_]+')",
+        "specification": "The type of a resource should match the pattern where it starts with a letter or an underscore, followed by any mixture of letters, digits, and underscores."
+    }
+]

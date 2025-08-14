@@ -1,0 +1,34 @@
+@startuml
+
+enum ArcType{
+normal
+read
+}
+class PetriNet {
+name : EString
+}
+class PetriNetElement {
+
+}
+class Arc {
+poids : EInt
+linkType : ArcType
+}
+class Node {
+name : EString
+}
+class Transition {
+
+}
+class Place {
+nbJeton : EInt
+}
+PetriNet  *--> "petrinetelement 0..*" PetriNetElement
+PetriNetElement <|-- Arc
+Arc  --> "predecessor 1..1" Node
+Arc  --> "successor 1..1" Node
+PetriNetElement <|-- Node
+Node <|-- Transition
+Node <|-- Place
+
+@enduml

@@ -1,0 +1,23 @@
+The domain model consists of two primary classes: Order and Product.
+
+The **Order** class has the following attributes:
+- `id`: An Integer representing the unique identifier of the order.
+- `quantity`: An Integer indicating the quantity of products in the order.
+- `state`: A String that describes the current state of the order.
+
+The Order class includes the following operations:
+- `Order(prd: Product, qty: Integer): OclVoid`: A constructor method that initializes an Order with a specified Product and quantity.
+- `cancel(): Boolean`: A method that cancels the order and returns a Boolean indicating the success of the operation.
+- `invoice(): Boolean`: A method that generates an invoice for the order and returns a Boolean indicating the success of the operation.
+
+The **Product** class has the following attributes:
+- `id`: An Integer representing the unique identifier of the product.
+- `stock`: An Integer indicating the current stock level of the product.
+
+The Product class includes the following operations:
+- `Product(): Boolean`: A constructor method that initializes a Product and returns a Boolean indicating the success of the operation.
+- `supply(qty: Integer): Boolean`: A method that increases the stock by the specified quantity and returns a Boolean indicating the success of the operation.
+- `release(qty: Integer): Boolean`: A method that decreases the stock by the specified quantity and returns a Boolean indicating the success of the operation.
+
+The association between the classes is defined as follows:
+- An Order is associated with a Product through a relationship named OrderProduct. This association indicates that each order is linked to exactly one product, and each product can be associated with exactly one order.

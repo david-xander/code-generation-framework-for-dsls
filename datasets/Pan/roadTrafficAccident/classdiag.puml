@@ -1,0 +1,64 @@
+@startuml
+
+class CrashedVehicle {
+
+}
+class DeceasedPerson {
+
+}
+class Driver {
+
+}
+class LivingPerson {
+
+}
+class Passenger {
+
+}
+class Person {
+
+}
+class RearEndCollision {
+
+}
+class RoadTrafficAccident {
+fatalvictims : EInt
+}
+class Roadway {
+
+}
+class RoadwayWithAccident {
+
+}
+class Travel {
+
+}
+class Traveler {
+
+}
+class TravelingVehicle {
+
+}
+class Vehicle {
+
+}
+class Victim {
+
+}
+TravelingVehicle <|-- CrashedVehicle
+CrashedVehicle "vehicles 1..*" -- "accident 1..1" RoadTrafficAccident
+CrashedVehicle "crashedvehicle 1..*" -- "roadwaywithaccident 1..1" RoadwayWithAccident
+Person <|-- DeceasedPerson
+Traveler <|-- Driver
+Person <|-- LivingPerson
+Traveler <|-- Passenger
+RoadTrafficAccident <|-- RearEndCollision
+RoadTrafficAccident "accident 1..1" -- "victims 1..*" Victim
+RoadTrafficAccident "roadtrafficaccident 1..*" -- "roadwaywithaccident 1..1" RoadwayWithAccident
+Roadway <|-- RoadwayWithAccident
+Travel "travel 1..1" -- "travelers 1..*" Traveler
+Travel "travel 1..1" -- "vehicle 1..1" TravelingVehicle
+Person <|-- Traveler
+Vehicle <|-- TravelingVehicle
+Traveler <|-- Victim
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+
+enum cards{
+small
+medium
+big
+}
+class map {
+name : String
+isCity : Boolean
+country : String
+size : cards
+}
+class Road {
+name : String
+length : Int
+district : String
+}
+class PublicSpace {
+name : String
+}
+class Street {
+
+}
+class Boulevard {
+
+}
+class Pedestrian {
+
+}
+class Garden {
+
+}
+class Square {
+
+}
+map  *--> "roads 0..*" Road
+map  *--> "spaces 0..*" PublicSpace
+Road "borderedBy 1..*" -- "border 0..*" PublicSpace
+Road  --> "meet 0..*" Road
+Road <|-- Street
+Road <|-- Boulevard
+Road <|-- Pedestrian
+PublicSpace <|-- Garden
+PublicSpace <|-- Square
+
+@enduml

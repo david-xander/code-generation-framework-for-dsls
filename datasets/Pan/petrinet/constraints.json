@@ -1,0 +1,30 @@
+[
+{
+        "ocl": "context PetriNet inv:  self.name.matches('[A-Za-z_][A-Za-z0-9_]*')",
+        "specification": "The name of a PetriNet must only contain alphabetic characters, digits, or underscores, and must start with an alphabetic character or an underscore."
+    },
+    {
+        "ocl": "context Place inv:  self.name.matches('[A-Za-z_][A-Za-z0-9_]+')",
+        "specification": "The name of a place must start with a letter or underscore, followed by any combination of letters, digits, or underscores."
+    },
+    {
+        "ocl": "context Place inv: self.nbJeton >= 0",
+        "specification": "The number of tokens at a place should be zero or positive."
+    },
+    {
+        "ocl": "context Transition inv: self.name.matches('[A-Za-z_][A-Za-z0-9_]+')",
+        "specification": "The name of a transition must match the pattern where it starts with a letter or underscore, followed by any number of letters, digits, or underscores."
+    },
+    {
+        "ocl": "context Arc inv: self.predecessor <> self.successor",
+        "specification": "The predecessor and successor of an arc must not be the same."
+    },
+    {
+        "ocl": "context Arc inv: (self.predecessor.oclIsKindOf(Place) and self.successor.oclIsKindOf(Transition) or (self.predecessor.oclIsKindOf(Transition) and self.successor.oclIsKindOf(Place)))",
+        "specification": "An arc should connect either a place to a transition or a transition to a place, but not entities of the same type."
+    },
+    {
+        "ocl": "context Arc inv: self.poids >= 1",
+        "specification": "The weight of an arc must be greater than or equal to 1."
+    }
+]

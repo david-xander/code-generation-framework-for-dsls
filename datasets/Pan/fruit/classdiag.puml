@@ -1,0 +1,49 @@
+@startuml
+
+enum Color{
+    black
+    red
+    green
+    yellow
+    orange
+    brown
+    pink
+}
+
+class Fruit {
+    color : Color,
+    name : String
+}
+class Apple {
+    label : String
+}
+
+class Stem {}
+
+class FruitUtil {}
+
+class Tree {
+    name : String
+}
+
+
+ Fruit "relatedFruits 0..*" --> Fruit
+
+ Fruit <|-- Apple
+
+ Apple "stem 0..1" *--> Stem
+
+ FruitUtil "orderedSet 0..*" --> Fruit
+
+ FruitUtil "set 0..*" --> Fruit
+
+ FruitUtil "bag 0..*" --> Fruit
+
+ FruitUtil "sequence 0..*" --> Fruit
+
+ Tree "fruits 0..*" *--> Fruit
+
+ Tree "fruitsDroppedUnder 0..*" --> Fruit
+
+
+@enduml

@@ -1,0 +1,74 @@
+@startuml
+enum State{
+On
+Off
+}
+enum ValveState{
+Open
+Closed
+}
+enum Mode{
+Initialization
+Rescue
+EmergencyStop
+Normal
+Dameged
+Degraded
+}
+class PumpController_OpenPump {
+
+}
+class WaterLevelMeasurementDevice {
+waterLevel : EDouble
+}
+class SteamBoiler_OpenValve {
+
+}
+class PumpControler {
+
+}
+class Snapshot {
+
+}
+class Pump {
+mode : State
+}
+class ControlProgram_Start {
+
+}
+class SteamBoiler {
+valveOpen : ValveState
+}
+class Transition {
+
+}
+class WaterLevelMeaurementDevice_getLevel {
+ret : EDouble
+}
+class ControlProgram {
+mode : Mode
+wlmdFailure : EBoolean
+}
+class PumpController_ClosePump {
+
+}
+Transition <|-- PumpController_OpenPump
+PumpController_OpenPump  --> "PCPre 0..1" PumpControler
+PumpController_OpenPump  --> "PCPost 0..1" PumpControler
+Transition <|-- SteamBoiler_OpenValve
+SteamBoiler_OpenValve  --> "SBPre 0..1" SteamBoiler
+SteamBoiler_OpenValve  --> "SBPost 0..1" SteamBoiler
+PumpControler  --> "PumpControlerPump 1..1" Pump
+Snapshot  --> "ControlProgramSnapshot 1..1" ControlProgram
+Snapshot  --> "AfterTrans 1..1" Transition
+Transition <|-- ControlProgram_Start
+ControlProgram_Start  --> "CPPost 0..1" ControlProgram
+SteamBoiler  --> "SteamBoilerControlProgram 1..1" ControlProgram
+Transition  --> "AfterTrans 1..1" Snapshot
+Transition <|-- WaterLevelMeaurementDevice_getLevel
+WaterLevelMeaurementDevice_getLevel  --> "wlmdPost 0..1" WaterLevelMeasurementDevice
+ControlProgram  --> "SnapshotControlProgram 1..1" Snapshot
+Transition <|-- PumpController_ClosePump
+PumpController_ClosePump  --> "PCPre 0..1" PumpControler
+PumpController_ClosePump  --> "PCPost 0..1" PumpControler
+@enduml

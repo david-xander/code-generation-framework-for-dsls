@@ -1,0 +1,7 @@
+The domain model consists of several classes and their relationships. The primary classes are `Person`, `Vehicle`, `Car`, and `Bike`. Additionally, there is an enumeration `Colour` which defines possible values for vehicle colors: black, white, and red.
+
+The `Person` class has two attributes: `name` of type `String` and `age` of type `Integer`. It includes methods `getName()` which returns a `String`, `setAge(newAge: int)` which takes an integer and returns an `Integer`, and `birthday()` which likely updates the person's age.
+
+The `Vehicle` class has one attribute, `colour`, which is of type `Colour`. This class serves as a superclass for `Car` and `Bike`, as indicated by the inheritance relationship where both `Car` and `Bike` are specialized types of `Vehicle`.
+
+The association between `Person` and `Vehicle` is characterized by ownership. A `Person` can own a fleet of multiple `Vehicles`, while each `Vehicle` is associated with a single `owner`. This relationship is depicted with a multiplicity of "1" on the `Person` side and "*" on the `Vehicle` side, indicating a one-to-many relationship.

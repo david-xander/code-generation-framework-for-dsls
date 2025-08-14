@@ -1,0 +1,18 @@
+We need to design a control and monitoring system for a steam boiler.
+
+There is a control program that governs the behavior of the entire setup. It operates in different modes such as Initialization, Rescue, EmergencyStop, Normal, Damaged, and Degraded, reflecting various operational and fault conditions. The control program also tracks whether the water level measurement device (WLMD) has failed.
+
+The steam boiler is one of the key components in the system and is associated with a valve that can be either Open or Closed (represented by the ValveState which is open or closed).
+
+Pumps are also managed within the system and can be in a state of On or Off (defined by the State which is on or off). Each pump is connected to a PumpController, which is responsible for managing the pump's operation.
+
+To capture the dynamics of the functioning system, there are transitions modeled for operations. Specific transitions are:
+- openPump and ClosePump (to operate the pump controller),
+- opening the valve (to operate the steam boiler),
+These transactions link the states of their associated physical component before and after the operation. For instance, specific transitions such as PumpController_OpenPump and PumpController_ClosePump represent the actions of starting or stopping a pump, showing how the controller's state changes before and after the operation.
+
+There are two more transitions, which are:
+- start for the control program, and
+- getLevel for the water level measurement device
+
+Each transition results in a new Snapshot, which reflects the state of the system after the action, including an updated ControlProgram state.

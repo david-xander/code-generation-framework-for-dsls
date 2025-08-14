@@ -1,0 +1,34 @@
+[
+	{
+		"ocl": "context Person inv: age > 0 and age < 80",
+	        "specification": "The age of a person should be greater than 0 and less than 80."
+	},
+  	{
+		"ocl": "context Employee inv: employer->isEmpty() xor managedBranch->isEmpty()",
+	        "specification": "An employee must either have no employer or not manage any branches, but not both."    
+ 	},
+	{	
+		"ocl": "context Branch inv: self.employee->includes(self.manager)",
+	       "specification": "A manager must also be listed as an employee in their own branch."
+	},
+	{
+		"ocl": "context Branch inv: self.employee->forAll(e | e <> self.manager implies self.manager.salary > e.salary)",
+       	"specification": "For every employee in a branch, if the employee is not the manager, then the manager's salary should be higher than that of the employee."
+	},
+	{
+		"ocl": "context CarGroup inv: higher <> self and lower <> self",
+        	"specification": "A CarGroup should not list itself in its 'higher' or 'lower' properties."
+	},
+	{
+		"ocl": "context CarGroup inv: higher.higher <> self and lower.lower <> self",
+        	"specification": "A car group must not be the higher group of its own higher group, and it must not be the lower group of its own lower group."
+	},
+	{
+		"ocl": "context Car inv: rental->isEmpty()",
+        	"specification": "A car should not have any rentals."
+	},
+	{
+		"ocl": "context Rental inv: self.branch.carGroup->includes(self.carGroup)",
+        	"specification": "The car group of a rental should be included in the car groups of the branch associated with the rental."
+	}
+]

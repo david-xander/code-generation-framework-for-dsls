@@ -1,0 +1,114 @@
+### Domain Model
+
+#### Operator
+- Represents a general operation.
+- Attributes:
+  - executed: A boolean indicating whether the operation has been executed.
+- Relationships:
+  - Has an optional association with Result.
+
+#### Result
+- Represents the outcome of an operation.
+
+#### CREATE
+- A type of Operator responsible for creating a new instance.
+- Relationships:
+  - Requires a TypeVariable as the newInstanceVariable.
+  - Requires a Referrable as the parent.
+  - Associated with a single EReference as the parentCompositeReference.
+
+#### DELETE
+- A type of Operator responsible for deleting a Referrable.
+- Relationships:
+  - Requires a Referrable as the deletion.
+
+#### ASSIGN
+- A type of Operator responsible for assigning values.
+- Attributes:
+  - value: Holds the value to be assigned.
+- Relationships:
+  - Requires an EAttribute as the attribute.
+  - Requires a Referrable as the attributeOwner.
+
+#### SET
+- A type of Operator responsible for setting references.
+- Relationships:
+  - Requires an EReference as the reference.
+  - Requires a Referrable as the value.
+  - Requires a Referrable as the referenceOwner.
+
+#### MOVE
+- A type of Operator responsible for moving objects.
+- Relationships:
+  - Requires a Referrable as the newParent.
+  - Requires an EReference as the parentReference.
+  - Requires a Referrable as the movee.
+
+#### SPLIT
+- A type of Operator responsible for splitting objects into sets.
+- Relationships:
+  - Requires one or more StructuralFeatureSet as the splitSets.
+  - Requires a Referrable as the splitObject.
+
+#### MERGE
+- A type of Operator responsible for merging multiple objects.
+- Relationships:
+  - Requires two or more Referrable objects as the mergeObjects.
+
+#### VAR
+- A type of Operator responsible for handling variables.
+- Relationships:
+  - Requires a QueryVariable as the variable.
+
+#### Variable
+- Represents a named variable.
+- Attributes:
+  - name: The name of the variable.
+
+#### TypeVariable
+- A type of Variable representing a type and its instance.
+- Relationships:
+  - Associated with one EClass as the type.
+  - Associated with one EObject as the instance.
+
+#### QueryVariable
+- A type of Variable used for querying.
+- Relationships:
+  - Associated with a Referrable as the queryObject.
+  - Associated with a Result as the queryResult.
+  - Associated with a QueryVariableQualifier.
+
+#### QueryVariableQualifier
+- Qualifies a QueryVariable.
+- Specializations:
+  - EOperationQualifier:
+    - Qualifies a query using an EOperation.
+    - Relationships:
+      - Associated with one EOperation.
+  - EReferenceQualifier:
+    - Qualifies a query using an EReference.
+    - Relationships:
+      - Associated with one EReference.
+
+#### Referrable
+- Represents an entity that can be referenced.
+
+#### EObjectReference
+- A specialization of Result and Referrable.
+- Relationships:
+  - Associated with one or more EObject instances as elements.
+
+#### PrimitiveReference
+- A specialization of Result.
+- Attributes:
+  - value: Holds a primitive value.
+
+#### VariableReference
+- A specialization of Referrable.
+- Relationships:
+  - Associated with a Variable as the referencedVariable.
+
+#### StructuralFeatureSet
+- Represents a set of structural features.
+- Relationships:
+  - Associated with one or more EStructuralFeature.
