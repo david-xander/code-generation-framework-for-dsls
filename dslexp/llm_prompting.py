@@ -6,6 +6,7 @@ import re
 from abc import ABC, abstractmethod
 from ollama import Client as OLlamaClient
 from datetime import datetime
+import time
 
 class LLMPrompting(ABC):
     def __init__(self, model):
@@ -31,31 +32,114 @@ class LLMPrompting(ABC):
     def run_and_get_result(self, add_response_to_context=True):
         pass
 
+
 class OpenAIPrompting(LLMPrompting):
     def __init__(self, model):
         super().__init__(model)
-        api_key = "YOUR API KEY"
+        api_key = os.getenv("OPENAI_API_KEY")
         self.client = OpenAI(
             api_key=api_key
         )
 
-    def run_and_get_result(self, add_response_to_context=True):
-        try:        
-            chat_completion = self.client.chat.completions.create(
-                model=self.model,
-                messages=self.get_context(),
-                # max_tokens=800,  # Adjust based on task complexity
-                temperature=0.3  # Lower temperature for deterministic outputs
-            )
+    def run_and_get_result(self, add_response_to_context=True, response_format=None):
+        try:
+            temperature = 0.3
+            if self.model == "o3":
+                temperature = 1
+
+            kwargs = {
+                "model": self.model,
+                "messages": self.get_context(),
+                "temperature": temperature,
+            }
+
+            if response_format is not None:
+                kwargs["response_format"] = {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "name": response_format.get("title", "schema"),
+                        "schema": response_format
+                    }
+                }
+
+            chat_completion = self.client.chat.completions.create(**kwargs)
             response = chat_completion.choices[0].message.content
+
             if add_response_to_context:
                 self.add_to_context_as_assistant(response)
+
             return response
-        
+
         except Exception as e:
             print(f"Error while calling OpenAI API: {e}")
             return "Error generating code."
 
+class AzureAIPrompting(LLMPrompting):
+    def __init__(self, model):
+        super().__init__(model)
+        endpoint = os.getenv("AZUREAI_ENDPOINT_URL")
+        api_key = os.getenv("AZUREAI_API_KEY")
+        self.client = OpenAI(
+            base_url=f"{endpoint}",
+            api_key=api_key
+        )
+
+        # retry config
+        self.base_delay = 8
+        self.rate_limit_delay = 30
+        self.max_retries = 5        
+
+    def run_and_get_result(self, add_response_to_context=True, response_format=None):
+        retries = 0
+
+        kwargs = {
+            "model": self.model,
+            "messages": self.get_context(),
+            "temperature": 0.3,
+        }
+
+        if response_format is not None:
+            kwargs["response_format"] = {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": response_format.get("title", "schema"),
+                    "schema": response_format
+                }
+            }
+
+        while retries <= self.max_retries:
+            try:
+                # Baseline delay
+                time.sleep(self.base_delay)
+
+                chat_completion = self.client.chat.completions.create(**kwargs)
+                response = chat_completion.choices[0].message.content
+
+                if add_response_to_context:
+                    self.add_to_context_as_assistant(response)
+
+                return response
+
+            except Exception as e:
+                message = str(e).lower()
+                status_code = getattr(e, "status_code", None)
+
+                # Rate limit detection (Azure-style)
+                if status_code == 429 or "rate limit" in message or "throttl" in message:
+                    retries += 1
+                    print(
+                        f"Rate limit hit (retry {retries}/{self.max_retries}). "
+                        f"Waiting {self.rate_limit_delay}s..."
+                    )
+                    time.sleep(self.rate_limit_delay)
+                    continue
+
+                # Any other error → do not retry
+                print(f"Non-retriable error: {e}")
+                break
+
+        return "Error: exceeded retry attempts due to rate limiting."
+    
 class OLlamaPrompting(LLMPrompting):
     def __init__(self, model):
         super().__init__(model)
